@@ -1,0 +1,92 @@
+/// Event wrapper
+
+@mixin on-event($self: false) {
+	@if $self {
+		&,
+		&:hover,
+		&:active,
+		&:focus {
+			@content;
+		}
+	} @else {
+		&:hover,
+		&:active,
+		&:focus {
+			@content;
+		}
+	}
+}
+
+/// Make a context based selector a little more friendly
+
+@mixin when-inside($context) {
+	#{$context} & {
+		@content;
+	}
+}
+
+// <ANIMATIONS> ========================================================================================================
+// <ANIMATION DECLARATIONS> ============================================================================================
+@mixin anim_fadein($name, $delay) {
+	animation: #{$name} 1 1s cubic-bezier(.37, .05, .41, 1) $delay;
+	animation-fill-mode: backwards;
+}
+
+// </ANIMATION DECLARATIONS> ===========================================================================================
+// <ANIMATION KEYFRAMES> ===============================================================================================
+@mixin fadein($name, $distance) {
+	@keyframes #{$name} {
+		0% {
+			transform: translateX($distance)
+		}
+		100% {
+			transform: translateX(0px)
+		}
+	}
+}
+
+@mixin glow() {
+	@keyframes __glow {
+		0% {
+			text-shadow: 0 0 5px #aaa000;
+		}
+		5% {
+			text-shadow: 0 0 7px #aaa000;
+		}
+		10% {
+			text-shadow: 0 0 5px #aaa000;
+		}
+		45% {
+			text-shadow: 0 0 7px #aaa000;
+		}
+		50% {
+			text-shadow: 0 0 5px #aaa000;
+		}
+		55% {
+			text-shadow: 0 0 7px #aaa000;
+		}
+		100% {
+			text-shadow: 0 0 5px #aaa000;
+		}
+	}
+}
+
+@mixin splashPulse() {
+	@keyframes __splashPulse {
+		0% {
+			transform: scale(1) rotate(-10deg);
+		}
+		50% {
+			transform: scale(0.95) rotate(-10deg);
+		}
+		100% {
+			transform: scale(1) rotate(-10deg);
+		}
+	}
+}
+
+// </ANIMATION KEYFRAMES> ==============================================================================================
+// </ANIMATIONS> =======================================================================================================
+
+
+

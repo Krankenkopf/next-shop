@@ -1,0 +1,106 @@
+h1 {
+	font-size: calc(30px + 2vw);
+	line-height: calc(35 / 30 * 100%);
+}
+
+h2 {
+	font-size: calc(20px + 2vw);
+	line-height: calc(25 / 20 * 100%);
+}
+
+h3 {
+	font-size: calc(14px + 2vw);
+	line-height: calc(20 / 14 * 100%);
+}
+
+h4 {
+	font-size: calc(10px + 2vw);
+	line-height: calc(15 / 10 * 100%);
+}
+
+.title {
+	display: flex;
+	flex-direction: column;
+	color: $primary;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-family: "Courier New", monospace;
+	font-weight: normal !important;
+	z-index: 5;
+	margin-bottom: 30px;
+	/* -webkit-text-stroke: 1px #fff;*/
+}
+
+.text {
+	color: $primary;
+	font-size: 20px;
+	line-height: 25 / 20 * 100%;
+	text-indent: 40px;
+
+	p {
+		padding: 0 0 10px 0;
+	}
+
+	:last-child {
+		padding: 0;
+	}
+
+	@media (max-width: $md3+px) {
+		font-size: 18px;
+		line-height: 22 / 18 * 100%;
+	}
+	@media (max-width: $md4+px) {
+		font-size: 15px;
+		line-height: 20 / 15 * 100%;
+	}
+}
+
+.preloader {
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	background-color: $secondary;
+	// .preloader__container
+	&__container {
+		position: absolute;
+		width: 25%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 5;
+		opacity: 0;
+		animation: pl__fade 1s forwards 1 ;
+		img {
+			animation: appLogoSpin  infinite 1.5s 1.5s running;
+		}
+
+	}
+}
+
+@keyframes pl__fade {
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes appLogoSpin {
+	0% {
+		transform: rotate(0deg);
+	}
+	13% {
+		transform: rotate(0deg);
+	}
+	20% {
+		transform: rotate(-20deg);
+	}
+	27% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+

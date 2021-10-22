@@ -1,0 +1,76 @@
+.footer {
+	width: 100%;
+	background-color: $bg;
+	z-index: 100;
+	height: 80px;
+	@media (max-width: $md4+px) {
+		height: 66px;
+	}
+	// .footer__content
+	&__content {
+		height: 100%;
+		position: relative;
+		padding: 15px 33px;
+		margin: auto;
+		max-width: 1200px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		@media (max-width: $md4+px) {
+			padding: 10px 11px;
+		}
+	}
+
+	// .footer__firstBlock
+	&__firstBlock {
+		position: relative;
+		display: flex;
+		flex: 1 1 auto;
+		height: 100%;
+		padding-right: 30px;
+		align-items: center;
+		justify-content: space-between;
+		@media (max-width: $md3+px) {
+			flex-direction: column-reverse;
+			justify-content: space-between;
+			align-items: flex-start;
+		}
+		@media (max-width: $md4+px) {
+			padding-right: 10px;
+		}
+	}
+	// .footer__text
+	&__text {
+		text-indent: 0 !important;
+		@media (max-width: $md3+px) {
+			font-size: 15px !important;
+		}
+
+	}
+	// .footer__icon
+	&__icon {
+		margin-right: 10px;
+		&:last-child {
+			margin-right: 0;
+		}
+		@media (min-width: $md3+px) {
+			width: 44px !important;
+			height: 44px !important;
+		}
+	}
+	// .footer__logo
+	&__logo {
+		width: 50px;
+		height: 50px;
+		img {
+			height: 50px;
+			width: 50px;
+			animation: logoSpin infinite 9s linear;
+		}
+	}
+}
+@keyframes logoSpin {
+	100% {
+		transform: rotate(360deg);
+	}
+}
