@@ -1,5 +1,5 @@
 import App from 'next/app'
-import "../styles/globals.css"
+import "../p-app/a1-ui/u2-styles/style.scss"
 import type { AppProps , AppContext } from 'next/app'
 import React from 'react';
 

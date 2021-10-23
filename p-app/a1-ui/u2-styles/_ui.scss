@@ -1,21 +1,33 @@
 h1 {
-	font-size: calc(30px + 2vw);
+	font-size: calc(30px + 1vw);
 	line-height: calc(35 / 30 * 100%);
 }
 
 h2 {
-	font-size: calc(20px + 2vw);
+	font-size: calc(20px + 1vw);
 	line-height: calc(25 / 20 * 100%);
 }
 
 h3 {
-	font-size: calc(14px + 2vw);
+	font-size: calc(10px + 1vw);
 	line-height: calc(20 / 14 * 100%);
 }
 
 h4 {
-	font-size: calc(10px + 2vw);
+	font-size: calc(10px + 1vw);
 	line-height: calc(15 / 10 * 100%);
+}
+
+a {
+	cursor: pointer;
+	font-weight: bold;
+	font-variant-caps: all-small-caps;
+	letter-spacing: 0.5px;
+	color: #292825;
+	&:hover {
+		color: #776222;
+		font-size: 1.1em;
+	}
 }
 
 .title {

@@ -13,7 +13,7 @@
 
 // <FONT BY DEFAULT> ===============================================================================================
 $fontFamily: "";
-$text-font-stack: 'Open Sans', 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !default;
+$text-font-stack: 'Roboto', 'Open Sans', 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !default;
 $code-font-stack: 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Monaco', monospace !default;
 
 // <VARIABLES> =====================================================================================================
@@ -34,7 +34,9 @@ $secondary: #202020;
 @import "null";
 body {
   color: #000;
-  font-size: 14px;
+  font-size: 15px;
+  background-color: rgb(255, 255, 235);
+  font-family: 'Roboto', sans-serif;
   &._lock {
     overflow: hidden;
   }
@@ -49,7 +51,6 @@ body {
   height: fit-content;
   display: flex;
   flex-direction: column;
-  background-color: #202020;
 
   &._loaded {
     animation: none;
@@ -70,6 +71,9 @@ body {
     max-width: none;
     padding: 0 10px;
   }
+}
+main {
+  display: inline-block;
 }
 // </MAIN GRID> =====================================================================================================
 

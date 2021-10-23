@@ -3,9 +3,23 @@ import { useState } from "react"
 import { useRouter } from "next/dist/client/router"
 import logo from "./../../../../public/images/handm.svg"
 import Head from "next/head"
+import { Sidebar } from "../cp2-modules/Sidebar/Sidebar"
 
 export const MainLayout = ({ children, title = 'Noname Shop' }: any) => {
     const router = useRouter()
+    const headerLinkNames = ["ladies", "divided", "men", "babies", "kids", "household", "sale"]
+    const headerLinks = headerLinkNames.map((n, i, arr) => {
+        if (n === "household") {
+            return <h3 key={n} style={{width: `calc(100%/${arr.length})`, height: '30px', textAlign: 'center'}}>
+                <Link href="/household">H&M Home</Link>
+            </h3>
+        }
+        else return <h3 key={n} style={{width: `calc(100%/${arr.length})`, height: '30px', textAlign: 'center'}}>
+            <Link href={`/${n}`}>
+                {`${n.slice(0, 1).toUpperCase()}${n.slice(1)}`}
+            </Link>
+        </h3>
+    })
     return (
         <>
             <Head>
@@ -26,16 +40,11 @@ export const MainLayout = ({ children, title = 'Noname Shop' }: any) => {
                 <div id="search"></div>
                 <div id="userbar"></div>
             </header>
-            <nav style={{display: "flex", justifyContent: "space-around"}}>
-                <div><Link href="/ladies">Ladies</Link></div>
-                <div><Link href="/divided">Divided</Link></div>
-                <div><Link href="/men">Men</Link></div>
-                <div><Link href="/babies">Babies</Link></div>
-                <div><Link href="/kids">Kids</Link></div>
-                <div><Link href="/household">H&M Home</Link></div>
-                <div><Link href="/sale">Sale</Link></div>
+            <nav style={{display: "flex", justifyContent: "space-around", margin: '20px 0 20px'}}>
+                {headerLinks}
             </nav>
             <main>
+                <Sidebar />
                 {children}
             </main>
         </>
