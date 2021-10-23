@@ -1,0 +1,40 @@
+.productItem {
+    margin: 0 4px 4px 0;
+    display: inline-block;
+    width: calc(100% / 3 - 4px - 4px - 0.01px);
+    vertical-align: top;
+    article {
+        margin-bottom: 20px;
+    }
+}
+
+.colorVariant {
+    display: inline-block;
+    width: calc(100%/6 - 12px - 0.01px);
+    margin-right: 2px;
+    &:before {
+        content: "";
+        float: left;
+          //essentially the aspect ratio. 100% means the
+          //div will remain 100% as tall as it is wide, or
+          //square in other words.
+        padding-bottom: 100%;
+    }
+        //this is a clearfix. you can use whatever
+        //clearfix you usually use, add
+        //overflow:hidden to the parent element,
+        //or simply float the parent container.
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    div {
+        margin: -125% 0 -125%;
+        width: 400%;
+        padding-bottom: 400%;
+        border: 2px solid #202020;
+        border-radius: 50%;
+        transform: scale(0.25, 0.25) translateX(-150%);
+    }
+}

@@ -5,17 +5,24 @@ import { ProductItem } from "../../p-app/a1-ui/u1-components/cp2-modules/Product
 import { MainLayout } from "../../p-app/a1-ui/u1-components/cp4-layouts/MainLayout"
 
 
-export default function Men() {
-    const [results, setResults] = useState<TProductsResponse>([] as unknown as TProductsResponse)
-    useEffect(() => {
-        async function onLoad() {
-            const res = await fetch("https://localhost:4200/results")
-            const json = await res.json()
-            setResults(json)
-        }
-    })
-    const mappedProducts = results && results.results.map((item: TProduct, i) => {
-        return <ProductItem name={item.name}
+export default function Men({ products }: TProductsResponse) {
+    // const [products, setProducts] = useState<TProductsResponse>([] as unknown as TProductsResponse)
+    // useEffect(() => {
+    //     async function onLoad() {
+    //         const res = await fetch("http://localhost:4200/results")
+    //         const json = await res.json()
+    //         console.log(json);
+            
+    //         setProducts(json)
+    //     }
+    //     onLoad()
+    // }, [])
+    // console.log(products);
+    
+    const mappedProducts = products && products.map((item: TProduct, i) => {
+        return <ProductItem key={item.code}
+            code={item.articles[0].code}
+            name={item.name}
             price={item.price.formattedValue}
             imgSrc={item.images[0].url}
             rgbColors={item.rgbColors}
@@ -25,7 +32,7 @@ export default function Men() {
     
     return (
         <MainLayout title={"Men"}>
-            <main>
+            <div className="page-content">
                 <div>
                     <h1>All</h1>
                 </div>
@@ -34,7 +41,13 @@ export default function Men() {
                         {mappedProducts}
                     </ul>
                 </div>
-            </main>
+            </div>   
         </MainLayout>
     )
+}
+
+Men.getInitialProps = async () => {
+    const response = await fetch("http://localhost:4200/results")
+    const products = await response.json()
+    return {products}
 }

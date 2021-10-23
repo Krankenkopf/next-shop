@@ -1,5 +1,5 @@
-export interface TProductsResponse {
-    results: TProduct[];
+export type TProductsResponse = {
+    products: TProduct[]
 }
 
 export type TProduct = {
