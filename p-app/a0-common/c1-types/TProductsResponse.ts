@@ -1,5 +1,5 @@
 export type TProductsResponse = {
-    products: TProduct[]
+    products: TProduct[] | null
 }
 
 export type TProduct = {
