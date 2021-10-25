@@ -1,11 +1,8 @@
-import Link from "next/link"
-import { useState } from "react"
 import { useRouter } from "next/dist/client/router"
 import Head from "next/head"
-import { Sidebar } from "../cp2-modules/Sidebar/Sidebar"
 import { Header } from "../cp2-modules/Header/Header"
 
-export const MainLayout = ({ children, title = 'Noname Shop' }: any) => {
+export const LandingLayout = ({ children, title = 'Noname Shop' }: any) => {
     const router = useRouter()
     return (
         <>
@@ -17,7 +14,6 @@ export const MainLayout = ({ children, title = 'Noname Shop' }: any) => {
             </Head>
             <Header />
             <main>
-                <Sidebar />
                 {children}
             </main>
         </>

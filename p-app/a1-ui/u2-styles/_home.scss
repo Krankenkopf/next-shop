@@ -1,4 +1,147 @@
-.page-content {
-	display: inline-block;
-	width: calc(100% - 300px - 0.01px);
+section {
+	width: 100%;
+	text-align: center;
+}
+section#unique_propositions {
+	padding-bottom: 20px;
+	ul {
+		height: 60px;
+		display: flex;
+		justify-content: center;
+	}
+	li {
+		position: relative;
+		padding: 2%;
+		width: 33.33%;
+		font-size: 80%;
+		a {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+}
+
+section#banner {
+	margin-bottom: 20px;
+	background-color: #ffcccc;
+	font-size: 80%;
+	text-align: center;
+	.banner__title {
+		letter-spacing: 1px;
+	}
+	> a > div {
+		padding: 2%;
+	}
+}
+
+section#campaign {
+	margin-bottom: 20px;
+	position: relative;
+	& div:first-child {
+		min-height: 300px;
+	}
+	& div:nth-child(2n) {
+		position: absolute;
+		top: 0;
+		height: 100%;
+		width: 100%;
+		background-color: rgba(255, 240, 240, 0.5);
+		transition: all .5s ease-out;
+	}
+	& a:hover div:nth-child(2n) {
+		background-color: transparent;
+	}
+	img {
+		width: 100%;
+	}
+	
+	a:hover h2, a:hover button, a:hover p{
+		color: $softRed;
+		border-color: $softRed;
+	}
+	.campaign__block {
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		transform: translate(-50%, 0);
+		text-align: center;
+		button {
+			color: $primary;
+			border-color: $primary;
+		}
+		p {
+			color: $primary;
+			padding-bottom: 10px;
+			transition: all .5s ease-out;
+			letter-spacing: 1px;
+		}
+		h2 {
+			padding-bottom: 10px;
+			transition: all .5s ease-out;
+			letter-spacing: 1px;
+		}
+		div {
+			height: 40px;
+			margin-bottom: 30px;
+		}
+	}
+}
+
+section#carousel {
+	padding: 20px;
+	h3 {
+		padding-bottom: 20px;
+	}
+	.carousel {
+		display: flex;
+		justify-content: center;
+		transition: all 1s ease-out;
+		ul {
+			width: 100%;
+			display: flex;
+			align-content: center;
+			flex-wrap: nowrap;
+		}
+		
+		&__item__container {
+			min-width: calc(100%/6);
+			display: flex;
+			justify-content: center;
+		}
+		&__item {
+			
+		}
+		&__imgContainer {
+			width: 88px;
+			height: 88px;
+			img {
+				width: 100%;
+				height: 100%;
+				border-radius: 50%;
+			}
+		}
+		&__controls {
+			li {
+				display: inline-block;
+				margin-right: 10px;
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+			&__button {
+				height: 10px;
+				width: 10px;
+				background: none;
+				color: inherit;
+				border: 1px solid $primary;
+				border-radius: 50%;
+				padding: 0;
+				font: inherit;
+				cursor: pointer;
+				outline: inherit;	
+			}
+		}
+	}
 }
