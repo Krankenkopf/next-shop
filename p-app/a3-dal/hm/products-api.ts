@@ -1,33 +1,34 @@
+import { TProduct } from "../../a0-common/c1-types/TProductsResponse"
 import { HMAPI } from "../api"
 
 
 export const ProductsAPI = {
     getList(required: TGetProductsListRequestRequiredData, optional: TGetProductsListRequestOptionalData) {
         return (
-            HMAPI.get(`products/list`, {params: {...required, ...optional}})
+            HMAPI.get<{results: TProduct[]}>(`products/list`, {params: {...required, ...optional}})
         )
     },
 }
 
-type TGetProductsListRequestRequiredData = {
+export type TGetProductsListRequestRequiredData = {
     country: CountryCodes,
     lang: LanguageCodes,
     currentpage: number,
     pagesize: number,
 }
 
-type TGetProductsListRequestOptionalData = {
-    categories: string | "men_all" //It is tagCodes field gotten from /categories/list endpoint, pass this param multiple times to filter by multiple categories
-    sizes: string //Look for the value in "facets" object with "code": "sizes", pass this param multiple times to filter by multiple sizes
-    sortBy: "ascPrice"|"descPrice"|"stock"|"newProduct" //default is stock
-    contexts: string //Look for the value in "facets" object with "code": "contexts", pass this param multiple times to filter by multiple contexts
-    concepts: string | "H&M MAN" //Look for the value in "facets" object with "code": "concepts", pass this param multiple times to filter by multiple concepts
-    collection: string //Look for the value in "facets" object with "code": "collection", pass this param multiple times to filter by multiple collection
-    qualities: string //Look for the value in "facets" object with "code": "qualities", pass this param multiple times to filter by multiple qualities
-    fits: string //Look for the value in "facets" object with "code": "fits", pass this param multiple times to filter by multiple fits
-    descriptiveLengths: string //Look for the value in "facets" object with "code": "descriptiveLengths", pass this param multiple times to filter by multiple lengths
-    functions: string //Look for the value in "facets" object with "code": "functions", pass this param multiple times to filter by multiple functions
-    colorWithNames: string //Look for the value in "facets" object with "code": "colorWithNames", pass this param multiple times to filter by multiple colors
+export type TGetProductsListRequestOptionalData = {
+    categories?: string | "men_all" //It is tagCodes field gotten from /categories/list endpoint, pass this param multiple times to filter by multiple categories
+    sizes?: string //Look for the value in "facets" object with "code": "sizes", pass this param multiple times to filter by multiple sizes
+    sortBy?: "ascPrice"|"descPrice"|"stock"|"newProduct" //default is stock
+    contexts?: string //Look for the value in "facets" object with "code": "contexts", pass this param multiple times to filter by multiple contexts
+    concepts?: string | "H&M MAN" //Look for the value in "facets" object with "code": "concepts", pass this param multiple times to filter by multiple concepts
+    collection?: string //Look for the value in "facets" object with "code": "collection", pass this param multiple times to filter by multiple collection
+    qualities?: string //Look for the value in "facets" object with "code": "qualities", pass this param multiple times to filter by multiple qualities
+    fits?: string //Look for the value in "facets" object with "code": "fits", pass this param multiple times to filter by multiple fits
+    descriptiveLengths?: string //Look for the value in "facets" object with "code": "descriptiveLengths", pass this param multiple times to filter by multiple lengths
+    functions?: string //Look for the value in "facets" object with "code": "functions", pass this param multiple times to filter by multiple functions
+    colorWithNames?: string //Look for the value in "facets" object with "code": "colorWithNames", pass this param multiple times to filter by multiple colors
 }
 
 export enum LanguageCodes {

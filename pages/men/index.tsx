@@ -1,8 +1,10 @@
+import { AxiosResponse } from "axios"
 import Router from "next/router"
 import { useEffect, useState } from "react"
 import { TProduct, TProductsResponse } from "../../p-app/a0-common/c1-types/TProductsResponse"
 import { ProductItem } from "../../p-app/a1-ui/u1-components/cp2-modules/ProductItem/ProductItem"
 import { MainLayout } from "../../p-app/a1-ui/u1-components/cp4-layouts/MainLayout"
+import { CountryCodes, LanguageCodes, ProductsAPI, TGetProductsListRequestRequiredData } from "../../p-app/a3-dal/hm/products-api"
 
 
 export default function Men({ products }: TProductsResponse) {
@@ -47,7 +49,20 @@ export default function Men({ products }: TProductsResponse) {
 }
 
 Men.getInitialProps = async () => {
-    const response = await fetch("http://localhost:4200/results")
-    const products = await response.json()
-    return {products}
+    try {
+        const requiredParams: TGetProductsListRequestRequiredData = {
+            country: CountryCodes.Poland,
+            lang: LanguageCodes.Polski,
+            currentpage: 0,
+            pagesize: 50,
+        }
+        //const response = await fetch("http://localhost:4200/results")
+        const response = await ProductsAPI.getList(requiredParams, {})
+        const products = response.data.results
+        return {products}
+    } catch (e) {
+        console.log(e);
+        return {}
+    }
+    
 }
