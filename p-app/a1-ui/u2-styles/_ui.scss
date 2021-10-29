@@ -16,16 +16,22 @@ h3 {
 }
 
 h4 {
-	font-size: calc(10px + 1vw);
+	font-size: calc(8px + 1vw);
 	line-height: calc(15 / 10 * 100%);
 }
 
 a {
 	cursor: pointer;
 	letter-spacing: 0.5px;
-	color: #292825;
+	color: $primary;
 	&:hover {
-		color: #E50010;
+		color: $secondary;
+	}
+	&.dashed {
+		border-bottom: 1px solid $primary;
+		&:hover {
+			border-bottom: 1px solid $secondary
+		}
 	}
 }
 
@@ -45,7 +51,7 @@ a {
 .text {
 	color: $primary;
 	font-size: 20px;
-	line-height: 25 / 20 * 100%;
+	line-height: calc(25 / 20 * 100%);
 	text-indent: 40px;
 
 	p {
@@ -58,11 +64,11 @@ a {
 
 	@media (max-width: $md3+px) {
 		font-size: 18px;
-		line-height: 22 / 18 * 100%;
+		line-height: calc(22 / 18 * 100%);
 	}
 	@media (max-width: $md4+px) {
 		font-size: 15px;
-		line-height: 20 / 15 * 100%;
+		line-height: calc(20 / 15 * 100%);
 	}
 }
 

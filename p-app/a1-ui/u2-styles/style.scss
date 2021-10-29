@@ -37,9 +37,12 @@ body {
   font-size: 15px;
   background-color: rgb(255, 255, 235);
   font-family: 'Roboto', sans-serif;
-  &._lock {
-    overflow: hidden;
-  }
+  overflow-x: hidden;
+//  &._lock {
+//    overflow: hidden;
+//    overflow-x: hidden;
+//    overflow-y: hidden;
+//  }
 }
 // </NULLIFICATION> ================================================================================================
 
@@ -48,20 +51,19 @@ main {
   //position: fixed;
   width: 100%;
   min-height: 100%;
-  height: fit-content;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  overflow-x: hidden;
+  // height: fit-content;
+  // display: flex;
+  // align-items: center;
+  // flex-direction: column;
+  
   &._loaded {
     animation: none;
   }
 }
 .wrapper {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  margin: 0 auto;
+  //overflow-x: hidden;
+  position: relative;
 }
 // </WRAPPER> ======================================================================================================
 
