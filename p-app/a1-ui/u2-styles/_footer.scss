@@ -1,76 +1,72 @@
 .footer {
-	width: 100%;
-	background-color: $bg;
-	z-index: 100;
-	height: 80px;
-	@media (max-width: $md4+px) {
-		height: 66px;
+	padding: 30px 20px 20px;
+	background-color: rgb(187, 255, 255);
+	//.footer-content
+	&-content {
+		margin-bottom: 20px;
+		nav, section {
+			display: inline-block;
+			vertical-align: top;
+			text-align: left;
+			width: calc(100%/4 - 3%);
+			margin-right: 4%;
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+		h4 {
+			color: $primary;
+			margin-bottom: 20px;
+		}
+		li {
+			margin-bottom: 15px;
+		}
+		p {
+			margin-bottom: 30px;
+		}
 	}
-	// .footer__content
-	&__content {
-		height: 100%;
+	//.footer-social
+	&-social {
 		position: relative;
-		padding: 15px 33px;
-		margin: auto;
-		max-width: 1200px;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		@media (max-width: $md4+px) {
-			padding: 10px 11px;
+		text-align: center;
+		margin-bottom: 20px;
+		a {
+			position: relative;
+			width: 36px;
+			height: 36px;
+		}
+		.icon
+		div {
+			position: absolute;
+			top: -100%;
+			width: 100%;
+			height: 100%;
+		}
+		li {
+			width: 36px;
+			height: 36px;
+			vertical-align: top;
+			display: inline-block;
+			margin-right: 1%;
+			&:last-child {
+				margin-right: 0;
+			}
 		}
 	}
-
-	// .footer__firstBlock
-	&__firstBlock {
+	//.footer-copyright
+	&-copyright {
+		text-align: center;
+		margin: 0 auto 20px;
+		max-width: 60%;
+	}
+	//.footer-logo 
+	&-logo {
+		text-align: center;
+		margin-bottom: 20px;
+	}
+	.country-info {
 		position: relative;
-		display: flex;
-		flex: 1 1 auto;
-		height: 100%;
-		padding-right: 30px;
-		align-items: center;
-		justify-content: space-between;
-		@media (max-width: $md3+px) {
-			flex-direction: column-reverse;
-			justify-content: space-between;
-			align-items: flex-start;
-		}
-		@media (max-width: $md4+px) {
-			padding-right: 10px;
-		}
-	}
-	// .footer__text
-	&__text {
-		text-indent: 0 !important;
-		@media (max-width: $md3+px) {
-			font-size: 15px !important;
-		}
-
-	}
-	// .footer__icon
-	&__icon {
-		margin-right: 10px;
-		&:last-child {
-			margin-right: 0;
-		}
-		@media (min-width: $md3+px) {
-			width: 44px !important;
-			height: 44px !important;
-		}
-	}
-	// .footer__logo
-	&__logo {
-		width: 50px;
-		height: 50px;
-		img {
-			height: 50px;
-			width: 50px;
-			animation: logoSpin infinite 9s linear;
-		}
-	}
-}
-@keyframes logoSpin {
-	100% {
-		transform: rotate(360deg);
+		right: 1%;
+		text-align: center;
 	}
 }
