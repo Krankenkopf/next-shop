@@ -3,10 +3,10 @@ import { AppContext } from "next/app";
 import { useRouter } from "next/dist/client/router"
 import Router from "next/router";
 import { FC } from "react";
-import { TProduct, TProductsResponse } from "../../p-app/a0-common/c1-types/TProductsResponse";
+import { TProduct, TProductsResponse } from "../../p-app/a0-common/c1-types/t3-response/TProductsResponse";
 import { jsonParser } from "../../p-app/a0-common/c4-utils/jsonParser";
 import { ProductDetail } from "../../p-app/a1-ui/u1-components/cp2-modules/ProductDetail/ProductDetail";
-import { MainLayout } from "../../p-app/a1-ui/u1-components/cp4-layouts/MainLayout";
+import { ProductLayout } from "../../p-app/a1-ui/u1-components/cp4-layouts/ProductLayout";
 
 type TProductPage = {
     history: Array<string>
@@ -26,14 +26,14 @@ export default function ProductPage({ history, product }: TProductPage)  {
         }
     }
     return (
-        <MainLayout>
+        <ProductLayout>
             <h1>{`Product ${router.query.id}`}</h1>
             <button onClick={backHadler}>Go back</button>
             <ProductDetail code={product.articles[0].code}
             name={product.name}
             price={product.price.formattedValue}
             imgSrc={product.images[0].url}/>
-        </MainLayout>
+        </ProductLayout>
     )
 }
 

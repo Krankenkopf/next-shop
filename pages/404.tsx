@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Router, { useRouter } from "next/router"
-import { MainLayout } from "../p-app/a1-ui/u1-components/cp4-layouts/MainLayout"
+import { ProductLayout } from "../p-app/a1-ui/u1-components/cp4-layouts/ProductLayout"
 
 export default function NotFound({ history, props }: any) {
     const router = useRouter()
@@ -15,12 +15,12 @@ export default function NotFound({ history, props }: any) {
     }
     
     return (
-        <MainLayout title={"Page Not Found"}>
+        <ProductLayout title={"Page Not Found"}>
             <main>
                 <h2>Page not found</h2>
                 <p>Go to <span onClick = {backHadler}>previous</span> 
                 </p>
             </main>
-        </MainLayout>
+        </ProductLayout>
     )
 }

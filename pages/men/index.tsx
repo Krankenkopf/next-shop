@@ -1,9 +1,9 @@
 import { AxiosResponse } from "axios"
 import Router from "next/router"
 import { useEffect, useState } from "react"
-import { TProduct, TProductsResponse } from "../../p-app/a0-common/c1-types/TProductsResponse"
+import { TProduct, TProductsResponse } from "../../p-app/a0-common/c1-types/t3-response/TProductsResponse"
 import { ProductItem } from "../../p-app/a1-ui/u1-components/cp2-modules/ProductItem/ProductItem"
-import { MainLayout } from "../../p-app/a1-ui/u1-components/cp4-layouts/MainLayout"
+import { ProductLayout } from "../../p-app/a1-ui/u1-components/cp4-layouts/ProductLayout"
 import { CountryCodes, LanguageCodes, ProductsAPI, TGetProductsListRequestRequiredData } from "../../p-app/a3-dal/hm/products-api"
 
 
@@ -33,7 +33,7 @@ export default function Men({ products }: TProductsResponse) {
     })
     
     return (
-        <MainLayout title={"Men"}>
+        <ProductLayout title={"Men"}>
             <div className="page-content">
                 <div>
                     <h1>All</h1>
@@ -44,7 +44,7 @@ export default function Men({ products }: TProductsResponse) {
                     </ul>
                 </div>
             </div>   
-        </MainLayout>
+        </ProductLayout>
     )
 }
 
