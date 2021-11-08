@@ -1,9 +1,10 @@
 import React, {ButtonHTMLAttributes, CSSProperties, DetailedHTMLProps} from 'react'
-import css from './Button.module.css'
+import css from './Button.module.scss'
 
 type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
 type ExtraButtonPropsType = DefaultButtonPropsType & {
+    mode?: "text" | "icon"
     style?: CSSProperties
     variant?: 'ok' | 'cancel' | 'active' | 'inactive' | 'disabled'
     backgroundImage?: boolean
@@ -11,18 +12,18 @@ type ExtraButtonPropsType = DefaultButtonPropsType & {
 
 const Button: React.FC<ExtraButtonPropsType> = (
     {
-        variant, style, backgroundImage,
-        ...restProps// все остальные пропсы попадут в объект restProps, там же будет children
+        mode = "text", variant, style, backgroundImage,
+        ...restProps
     }
 ) => {
-    let className
+    let className = mode ==="text" ? css.button : css.iconButton
     switch (variant) {
-        case "active": className = `${css.active} ${css.button}`; break
-        case "inactive": className = `${css.inactive} ${css.button}`; break
-        case "ok": className = `${css.ok} ${css.button}`; break
-        case "cancel": className = `${css.cancel} ${css.button}`; break
-        case "disabled": className = `${css.disabled} ${css.button}`; break
-        default: className = css.button
+        case "active": className = `${css.active} ${className}`; break
+        case "inactive": className = `${css.inactive} ${className}`; break
+        case "ok": className = `${css.ok} ${className}`; break
+        case "cancel": className = `${css.cancel} ${className}`; break
+        case "disabled": className = `${css.disabled} ${className}`; break
+        default: className = className
     }
 
     if (backgroundImage) {
