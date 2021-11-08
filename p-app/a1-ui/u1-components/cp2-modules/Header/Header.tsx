@@ -1,17 +1,15 @@
-import link from "next/link"
 import Link from "next/link"
-import React from "react"
+import React, { FC } from "react"
 import Input from "../../cp1-elements/el01-Input/Input"
+import { TModal } from "../Modal/Modals"
 
-export const Header = React.memo(() => {
+type THeaderProps = {
+    revealModal: (modalType: TModal) => void
+}
+
+export const Header: FC<THeaderProps> = React.memo(({revealModal}) => {
     const menuServicesTitles = ["Customer Service", "Ahrlist Discount", "Find a store"]
     const menuServices = menuServicesTitles.map((item) => {
-        return (<li key={item} style={{ display: "inline-block" }}>
-            <Link href="/"><a>{item}</a></Link>
-        </li>)
-    })
-    const menuSessionTitles = ["Sign In", "Favorites", "Cart"]
-    const menuSession = menuSessionTitles.map((item) => {
         return (<li key={item} style={{ display: "inline-block" }}>
             <Link href="/"><a>{item}</a></Link>
         </li>)
@@ -49,7 +47,15 @@ export const Header = React.memo(() => {
                 </div>
                 <div className="header-menu-session">
                     <ul>
-                        {menuSession}
+                        <li style={{ display: "inline-block" }}>
+                            <a onClick={() => revealModal("signup")}>Sign Up</a>
+                        </li>
+                        <li style={{ display: "inline-block" }}>
+                            <Link href="/"><a>Favorites</a></Link>
+                        </li>
+                        <li style={{ display: "inline-block" }}>
+                            <Link href="/"><a>Cart</a></Link>
+                        </li>
                     </ul>
                 </div>
                 <div className="header-menu-primary">

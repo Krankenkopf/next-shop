@@ -38,6 +38,8 @@ body {
   background-color: rgb(255, 255, 235);
   font-family: 'Roboto', sans-serif;
   overflow-x: hidden;
+  overflow-y: inherit;
+
 //  &._lock {
 //    overflow: hidden;
 //    overflow-x: hidden;
@@ -48,7 +50,9 @@ body {
 
 // <WRAPPER> =======================================================================================================
 main {
-  //position: fixed;
+  position: relative;
+  top: 0;
+  left: 0;
   width: 100%;
   min-height: 100%;
   // height: fit-content;
@@ -70,13 +74,13 @@ main {
 // <MAIN GRID> =====================================================================================================
 ._container {
   max-width: $maxWidthContainer + px;
-  @media (max-width: $md1+px) {
+  @media (max-width: ($md1 + px)) {
     max-width: 970px;
   }
-  @media (max-width: $md2+px) {
+  @media (max-width: ($md2 + px)) {
     max-width: 930px;
   }
-  @media (max-width: $md3+px) {
+  @media (max-width: ($md3 + px)) {
     max-width: none;
     padding: 0 10px;
   }
