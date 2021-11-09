@@ -2,6 +2,7 @@ import React, { FC, useCallback, useEffect, useLayoutEffect, useState } from "re
 import ReactDOM from "react-dom";
 import { Login } from "../AuthModules/Login";
 import { Signup } from "../AuthModules/Signup";
+import css from "./Modal.module.scss"
 import { Modal } from "./Modal"
 
 export type TModal = "signup" | "login" | "cart" | null
@@ -67,10 +68,10 @@ export const Modals: FC<TModalsProps> = ({ modal, revealModal, onClose }) => {
         }
     }, [modal])
 
-    const className = `modal ${current
+    const className = `${css.modal} ${current
         ? closingModal
-            ? "modal__closing"
-            : "modal__revealed"
+            ? css.modal__closing
+            : css.modal__revealed
         : ""}`
 
     if (isBrowser) {
