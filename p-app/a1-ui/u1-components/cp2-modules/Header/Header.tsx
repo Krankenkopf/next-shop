@@ -51,7 +51,7 @@ export const Header: FC<THeaderProps> = React.memo(({revealModal}) => {
                             <a onClick={() => revealModal("signup")}>Sign Up</a>
                         </li>
                         <li style={{ display: "inline-block" }}>
-                            <Link href="/"><a>Favorites</a></Link>
+                            <a onClick={() => revealModal("login")}>Favorites</a>
                         </li>
                         <li style={{ display: "inline-block" }}>
                             <Link href="/"><a>Cart</a></Link>
