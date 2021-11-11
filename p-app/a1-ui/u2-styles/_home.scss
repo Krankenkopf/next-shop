@@ -5,7 +5,7 @@ section {
 }
 section#unique_propositions {
 	ul {
-		height: 60px;
+		min-height: 60px;
 		display: flex;
 		justify-content: center;
 	}
@@ -14,11 +14,9 @@ section#unique_propositions {
 		padding: 2%;
 		width: 33.33%;
 		font-size: 80%;
+		display: flex;
 		a {
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			transform: translate(-50%, -50%);
+			margin: auto;
 		}
 	}
 }
@@ -72,6 +70,7 @@ section#campaign {
 	}
 	.campaign__block {
 		position: absolute;
+		width: 100%;
 		bottom: 0;
 		left: 50%;
 		transform: translate(-50%, 0);

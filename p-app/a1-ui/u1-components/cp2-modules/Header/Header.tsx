@@ -17,15 +17,15 @@ export const Header: FC<THeaderProps> = React.memo(({revealModal}) => {
     const headerLinkNames = ["ladies", "divided", "men", "babies", "kids", "household", "sale"]
     const headerLinks = headerLinkNames.map((n, i, arr) => {
         if (n === "household") {
-            return <h3 key={n} style={{width: `calc(100%/${arr.length})`, height: '30px', textAlign: 'center'}}>
+            return <h4 key={n} style={{width: `calc(100%/${arr.length})`, height: '30px', textAlign: 'center'}}>
                 <Link href="/household"><a>H&M Home</a></Link>
-            </h3>
+            </h4>
         }
-        else return <h3 key={n} style={{width: `calc(100%/${arr.length})`, height: '30px', textAlign: 'center'}}>
+        else return <h4 key={n} style={{width: `calc(100%/${arr.length})`, height: '30px', textAlign: 'center'}}>
             <Link href={`/${n}`}>
                 <a>{`${n.slice(0, 1).toUpperCase()}${n.slice(1)}`}</a>
             </Link>
-        </h3>
+        </h4>
     })
     return (
         <header>
@@ -48,7 +48,9 @@ export const Header: FC<THeaderProps> = React.memo(({revealModal}) => {
                 <div className="header-menu-session">
                     <ul>
                         <li style={{ display: "inline-block" }}>
-                            <a onClick={() => revealModal("signup")}>Sign Up</a>
+                            <a onClick={() => revealModal("signup")}>
+                                Sign Up
+                            </a>
                         </li>
                         <li style={{ display: "inline-block" }}>
                             <a onClick={() => revealModal("login")}>Favorites</a>
