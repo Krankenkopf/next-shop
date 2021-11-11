@@ -1,4 +1,4 @@
-import { FC, useEffect, MouseEvent, useRef, useLayoutEffect } from "react"
+import { FC, useEffect, MouseEvent, useRef } from "react"
 import css from "./Modal.module.scss"
 import Button from "../../cp1-elements/el02-Button/Button"
 import { TModal } from "./Modals"

@@ -1,27 +1,32 @@
 h1 {
-	font-size: calc(30px + 1vw);
+	//font-size: calc(30px + 1vw);
+	font-size: 300%;
 	line-height: calc(35 / 30 * 100%);
 }
 
 h2 {
-	font-size: calc(25px + 1vw);
+	//font-size: calc(25px + 1vw);
+	font-size: 250%;
 	line-height: calc(25 / 20 * 100%);
 	letter-spacing: 1px;
 }
 
 h3 {
-	font-size: calc(10px + 1vw);
+	//font-size: calc(10px + 1vw);
+	font-size: 150%;
 	line-height: calc(20 / 14 * 100%);
 	letter-spacing: 1px;
 }
 
 h4 {
-	font-size: calc(8px + 1vw);
+	//font-size: calc(8px + 1vw);
+	font-size: 120%;
 	line-height: calc(15 / 10 * 100%);
 }
 
 a {
 	cursor: pointer;
+	//font-size: calc(15px + 0.5vw);
 	letter-spacing: 0.5px;
 	color: $primary;
 	&:hover {
@@ -36,15 +41,11 @@ a {
 }
 
 .title {
-	display: flex;
-	flex-direction: column;
+	//display: flex;
+	//flex-direction: column;
 	color: $primary;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	font-family: "Courier New", monospace;
-	font-weight: normal !important;
-	z-index: 5;
-	margin-bottom: 30px;
 	/* -webkit-text-stroke: 1px #fff;*/
 }
 
@@ -71,13 +72,38 @@ a {
 		line-height: calc(20 / 15 * 100%);
 	}
 }
+//var (--primary, #000)
 
+.icon {
+	&__container.test {
+		height: 70px;
+		transition: all 1s ease-in-out 10s;
+		&:hover {
+			transition: all 0s ease-in-out;
+			//transform: rotate(90deg);
+		}
+	}
+	&.test svg {
+		--primary: #ffbb00;
+		--primary-opacity: 0.8;
+		--secondary: #2600ff;
+		--secondary-opacity: 0.8;
+		&:hover {
+		--primary: #ffbb00;
+		--primary-opacity: 1;
+		--secondary: #2600ff;
+		--secondary-opacity: 1;
+		}
+	}
+	&.test.dimmed {
+		.icon__container.test {
+			border-radius: 50%;
+			background-color: #000000cc;
+		}
+	}
 
-.smth{
-	overflow: auto;
-	padding-left: 35px;
 }
-
+	
 .preloader {
 	width: 100vw;
 	height: 100vh;
