@@ -7,7 +7,7 @@ header {
     display: grid;
     position: relative;
     grid-template-columns: 1fr 80px 1fr;
-    grid-template-rows: 25px 25px 20px 30px;
+    grid-template-rows: 25px 25px 25px 30px;
     grid-template-areas: 
     "services logo session"
     "services logo search"
@@ -26,6 +26,13 @@ header {
   }
   .header-menu-services {
     grid-area: services;
+    a {
+      display: flex;
+      height: 25px;
+      * {
+        margin-top: auto;
+      }
+    }
   }
   .header-logo {
     grid-area: logo;
@@ -42,6 +49,18 @@ header {
   .header-menu-session {
     grid-area: session;
     text-align: right;
+    span {
+      margin-top: auto;
+      
+    }
+    svg {
+      height: 80%;
+      width: 80%;
+    }
+    .link__decorated {
+      height: 25px;
+    }
+      
   }
   .header-menu-primary {
     grid-area: primary;
@@ -55,6 +74,9 @@ header {
   .header-search {
     grid-area: search;
     margin: auto 0 auto auto;
+    position: relative;
+    min-width: 100px;
+    height: 30px;
   }
 }
 
