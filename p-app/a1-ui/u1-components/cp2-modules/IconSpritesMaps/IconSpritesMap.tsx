@@ -1,6 +1,49 @@
 // Almost all what you need for beautiful life
 // Don't push it all, be wise and keep it low
 // UX is more important than your wet phantasies
+const ids = [
+    'angle-right', 'arrow-down-1-9', 'arrow-down-9-1',
+    'arrow-down-a-z', 'arrow-down-arrow-up', 'arrow-down-z-a',
+    'arrow-right', 'arrow-right-arrow-left', 'arrow-right-from-bracket',
+    'arrow-right-from-line', 'arrow-right-long', 'arrow-right-to-bracket',
+    'arrow-right-to-line', 'arrow-rotate-forward', 'arrow-trend-up',
+    'arrow-turn-up', 'arrows-rotate', 'arrows-up-down-left-right',
+    'asterisk', 'at', 'badge',
+    'badge-check', 'badge-percent', 'bag-shopping',
+    'bags-shopping', 'ban', 'bars', 'basket-shopping',
+    'basket-shopping-simple', 'bell', 'bitcoin-sign',
+    'bookmark', 'bookmark-slash', 'calculator',
+    'caret-right', 'cart-arrow-down', 'cart-plus',
+    'cart-shopping', 'cart-shopping-fast',
+    'certificate', 'circle', 'check', 'check-double',
+    'chevron-right', 'chevrons-right', 'credit-card',
+    'database', 'do-not-enter', 'dollar-sign',
+    'download', 'earth-africa', 'earth-americas',
+    'earth-asia', 'earth-europa', 'ellipsis',
+    'envelope', 'envelope-duo', 'envelope-dot',
+    'envelope-open-text', 'euro-sign', 'exclamation',
+    'eye', 'eye-slash', 'filter', 'filter-circle-xmark',
+    'filter-list', 'filter-slash', 'filters',
+    'floppy-disk', 'gear', 'globe',
+    'grid', 'grid-2', 'grid-2-plus',
+    'grid-4', 'heart', 'home',
+    'key', 'language', 'language-duo',
+    'list', 'magnifying-glass', 'mailbox',
+    'percent', 'power-off', 'question',
+    'rocket-launch', 'rotate', 'rotate-forward',
+    'ruler-triangle', 'server', 'sliders',
+    'star', 'star-half-stroke', 'tag',
+    'tags', 'trash-can', 'trash-can-arrow-up',
+    'trash-can-clock', 'trash-can-list', 'trash-can-slash',
+    'trash-can-undo', 'truck', 'user',
+    'user-check', 'user-group', 'xmark',
+] as const
+type ElementType < T extends ReadonlyArray < unknown > > = T extends ReadonlyArray<infer ElementType>
+  ? ElementType
+  : never
+
+export type TIconName = ElementType<typeof ids> // this is correctly inferred as literal "A" | "B"
+
 export const IconSpritesMap = () => {
     return <svg id="main-sprite" xmlns="http://www.w3.org/2000/svg" style={{display: "none"}}>
         <defs></defs>
@@ -124,7 +167,7 @@ export const IconSpritesMap = () => {
         <symbol id="certificate" viewBox="0 0 512 512">
             <path d="M504.605 300.855C518.229 313.855 511.855 336.98 493.981 341.23L431.236 357.23L448.985 419.23C453.984 437.105 437.111 453.855 419.237 448.98L357.242 431.23L341.368 493.98C336.994 512.105 313.495 518.105 300.996 504.605L256 458.605L211.004 504.605C198.38 517.98 175.131 512.48 170.632 493.98L154.758 431.23L92.763 448.98C74.889 453.855 58.016 437.105 63.015 419.23L80.764 357.23L18.019 341.23C0.145 336.98 -6.354 313.855 7.395 300.855L53.391 255.855L7.395 210.855C-6.229 197.98 0.145 174.855 18.019 170.605L80.764 154.605L63.015 92.605C58.016 74.73 74.889 57.855 92.763 62.855L154.758 80.605L170.632 17.855C175.006 -0.02 198.38 -6.145 211.004 7.23L256 53.605L300.996 7.23C313.745 -6.27 337.119 0.23 341.368 17.855L357.242 80.605L419.237 62.855C437.111 57.855 453.984 74.73 448.985 92.605L431.236 154.605L493.981 170.605C511.855 174.855 518.354 197.98 504.605 210.855L458.609 255.855L504.605 300.855Z" className="fa-secondary" fill="var(--secondary)" fillOpacity="var(--secondary-opacity)"></path><path d="" className="fa-primary" fill="var(--primary)" fillOpacity="var(--primary-opacity)"></path>
         </symbol>
-        <symbol id="check" viewBox="0 0 512 512">
+        <symbol id="check" viewBox="-100 0 612 512">
             <path d="M464.563 144.563L208.563 400.563C200.75 408.375 190.516 412.281 180.281 412.281S159.813 408.375 152 400.563L24 272.563C8.375 256.938 8.375 231.625 24 216S64.938 200.375 80.562 216L180.281 315.719L408 88C423.625 72.375 448.938 72.375 464.562 88S480.188 128.938 464.563 144.563Z" className="fa-secondary" fill="var(--secondary)" fillOpacity="var(--secondary-opacity)"></path><path d="" className="fa-primary" fill="var(--primary)" fillOpacity="var(--primary-opacity)"></path>
         </symbol>
         <symbol id="check-double" viewBox="0 0 512 512">
@@ -135,6 +178,9 @@ export const IconSpritesMap = () => {
         </symbol>
         <symbol id="chevrons-right" viewBox="0 0 448 512">
             <path d="M256.009 256C256.009 246.047 252.322 236.078 244.916 228.344L68.923 44.344C53.642 28.391 28.332 27.828 12.363 43.094C-3.604 58.359 -4.166 83.688 11.113 99.656L160.669 256L11.113 412.344C-4.135 428.312 -3.666 453.641 12.363 468.906C28.332 484.172 53.642 483.609 68.923 467.656L244.916 283.656C252.322 275.922 256.009 265.953 256.009 256Z" className="fa-secondary" fill="var(--secondary)" fillOpacity="var(--secondary-opacity)"></path><path d="M436.904 228.344L260.912 44.344C245.632 28.391 220.32 27.828 204.353 43.094C188.384 58.359 187.853 83.688 203.103 99.656L352.658 256L203.103 412.344C187.853 428.312 188.353 453.641 204.353 468.906C220.32 484.172 245.632 483.609 260.912 467.656L436.904 283.656C444.31 275.922 447.997 265.953 447.997 256S444.31 236.078 436.904 228.344Z" className="fa-primary" fill="var(--primary)" fillOpacity="var(--primary-opacity)"></path>
+        </symbol>
+        <symbol id="circle" viewBox="0 0 512 512">
+            <path d="M256 64C361.869 64 448 150.131 448 256S361.869 448 256 448S64 361.869 64 256S150.131 64 256 64M256 16C123.451 16 16 123.451 16 256S123.451 496 256 496S496 388.549 496 256S388.549 16 256 16L256 16Z" className="fa-secondary" fill="var(--secondary)" fillOpacity="var(--secondary-opacity)"></path><path d="" className="fa-primary" fill="var(--primary)" fillOpacity="var(--primary-opacity)"></path>
         </symbol>
         <symbol id="credit-card" viewBox="0 0 576 512">
             <path d="M512 32H64C28.652 32 0 60.656 0 96V128H576V96C576 60.656 547.348 32 512 32ZM0 416C0 451.344 28.652 480 64 480H512C547.348 480 576 451.344 576 416V224H0V416ZM192 360C192 355.578 195.582 352 200 352H344C348.418 352 352 355.578 352 360V376C352 380.418 348.418 384 344 384H200C195.582 384 192 380.418 192 376V360ZM64 360C64 355.578 67.582 352 72 352H152C156.418 352 160 355.578 160 360V376C160 380.418 156.418 384 152 384H72C67.582 384 64 380.418 64 376V360Z" className="fa-secondary" fill="var(--secondary)" fillOpacity="var(--secondary-opacity)"></path><path d="M576 224H0V128H576V224Z" className="fa-primary" fill="var(--primary)" fillOpacity="var(--primary-opacity)"></path>

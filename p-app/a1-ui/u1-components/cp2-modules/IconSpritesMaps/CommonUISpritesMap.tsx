@@ -16,6 +16,9 @@ export const CommonUISpritesMap = () => {
         <symbol id="bars" viewBox="0 0 448 512">
             <path d="M448 256V256C448 273.673 433.673 288 416 288H32C14.327 288 0 273.673 0 256V256C0 238.327 14.327 224 32 224H416C433.673 224 448 238.327 448 256Z" className="fa-secondary" fill="var(--secondary)" fillOpacity="var(--secondary-opacity)"></path><path d="M416 384H32C14.327 384 0 398.327 0 416V416C0 433.673 14.327 448 32 448H416C433.673 448 448 433.673 448 416V416C448 398.327 433.673 384 416 384ZM416 64H32C14.327 64 0 78.327 0 96V96C0 113.673 14.327 128 32 128H416C433.673 128 448 113.673 448 96V96C448 78.327 433.673 64 416 64Z" className="fa-primary" fill="var(--primary)" fillOpacity="var(--primary-opacity)"></path>
         </symbol>
+        <symbol id="circle" viewBox="0 0 512 512">
+            <path d="M256 64C361.869 64 448 150.131 448 256S361.869 448 256 448S64 361.869 64 256S150.131 64 256 64M256 16C123.451 16 16 123.451 16 256S123.451 496 256 496S496 388.549 496 256S388.549 16 256 16L256 16Z" className="fa-secondary" fill="var(--secondary)" fillOpacity="var(--secondary-opacity)"></path><path d="" className="fa-primary" fill="var(--primary)" fillOpacity="var(--primary-opacity)"></path>
+        </symbol>
         <symbol id="ellipsis" viewBox="0 0 512 512">
             <path d="M256 192C220.611 192 192 220.625 192 256S220.611 320 256 320S320 291.375 320 256S291.389 192 256 192Z" className="fa-secondary" fill="var(--secondary)" fillOpacity="var(--secondary-opacity)"></path><path d="M64 192C28.611 192 0 220.625 0 256S28.611 320 64 320S128 291.375 128 256S99.389 192 64 192ZM448 192C412.611 192 384 220.625 384 256S412.611 320 448 320S512 291.375 512 256S483.389 192 448 192Z" className="fa-primary" fill="var(--primary)" fillOpacity="var(--primary-opacity)"></path>
         </symbol>
