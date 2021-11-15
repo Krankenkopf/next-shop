@@ -1,38 +1,53 @@
 import React from "react"
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
-import Input from "../../../cp1-elements/el01-Input/Input";
+import { Input } from "../../../cp1-elements/el01-Input/Input";
+import Button from "../../../cp1-elements/el02-Button/Button";
+import { Checkbox } from "../../../cp1-elements/el03-Checkbox/Checkbox";
 
 type LoginFormData = {
-  firstName: string;
-  lastName: string;
+  email: string;
+  password: string;
   iceCreamType: {label: string; value: string }
 }
 
 export const LoginForm = () => {
-  const { control, handleSubmit } = useForm<LoginFormData>();
+  //const { control, handleSubmit } = useForm<LoginFormData>();
+  const { register, control, handleSubmit } = useForm<LoginFormData>({
+    mode: "onBlur"
+  });
 
   const onSubmit: SubmitHandler<LoginFormData> = data => {
     console.log(data)
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Controller
-        name="firstName"
+    <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+     {/*  <Controller
+        name="email"
         control={control}
         defaultValue=""
-        render={({ field }) => <Input {...field} />}
+        render={({ field }) => (
+          <div className="field iconized__LR">
+            <Input {...field} />
+          </div>
+        )}
       />
       <Controller
-        name="iceCreamType"
+        name="password"
         control={control}
-        render={() => <select>
-            <option value="chocolate" label="Chocolate"></option>
-            <option value="strawberry" label="Strawberry"></option>
-            <option value="vanilla" label="Vanilla"></option>
-          </select> }
-      />
-      <input type="submit" />
+        defaultValue=""
+        render={({ field }) => (
+          <div className="field iconized__LR">
+            <Input {...field} />
+          </div>
+        )}
+      /> */}
+      <div className="auth__checkbox">
+        <Checkbox>Remember Me</Checkbox>
+      </div>
+      <div className="login__submit">
+        <Button type={'submit'} variant={'ok'}>Login</Button>
+      </div>
     </form>
   )
 }

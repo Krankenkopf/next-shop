@@ -40,23 +40,34 @@ a {
 	}
 }
 
+.link__decorated {
+	position: relative;
+	display: flex;
+    align-items: center;
+	span {
+		padding-left: 30px;
+	}
+}
+
 .title {
-	//display: flex;
-	//flex-direction: column;
 	color: $primary;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	/* -webkit-text-stroke: 1px #fff;*/
+	margin-bottom: 10px;
+	&.center {
+		text-align: center;
+	}
 }
 
 .text {
+	font-size: 80%;
 	color: $primary;
-	font-size: 20px;
-	line-height: calc(25 / 20 * 100%);
-	text-indent: 40px;
-
+	line-height: 150%;
 	p {
 		padding: 0 0 10px 0;
+	}
+	&.center {
+		text-align: center;
 	}
 
 	:last-child {
@@ -64,26 +75,90 @@ a {
 	}
 
 	@media (max-width: ($md3 + px)) {
-		font-size: 18px;
-		line-height: calc(22 / 18 * 100%);
+		font-size: 70%;
 	}
 	@media (max-width: ($md4 + px)) {
-		font-size: 15px;
-		line-height: calc(20 / 15 * 100%);
+		font-size: 60%;
 	}
 }
 //var (--primary, #000)
 
 .icon {
+	position: relative;
+	margin: auto;
+	height: calc(100% / 1.415); //sqrt(2) =)
+	width: calc(100% / 1.415);
+	z-index: 2;
+	&.full {
+		height: 100%;
+		width: 100%;
+	}
+	&__container {
+		position: absolute;
+		width: 30px;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		.icon.full {
+			transform: scale(1.05);
+		}
+		&._left {
+			left: 0;
+			
+		}
+		&._right {
+			right: 0;
+		}
+	}
+	&__session {
+		--primary: #292825;
+		--secondary: #292825;
+		a:hover & {
+			--primary: #E50010;
+			--secondary: #E50010;
+		}
+	}
+	&-magnifying-glass {
+		position: absolute;
+		top: 0;
+		left: 0;
+		transform: translate(0, 0);
+		height: calc(100% / 1.2);
+		width: calc(100% / 1.2);
+		--primary-opacity: 0.5;
+		--secondary-opacity: 0.7;
+	}
+	&.focused {
+		--primary-opacity: 1;
+		--secondary-opacity: 1;
+	}
+	
+
+
+
+
+
+
+//------------------
 	&__container.test {
+		position: relative;
 		height: 70px;
+		width: 70px;
 		transition: all 1s ease-in-out 10s;
 		&:hover {
 			transition: all 0s ease-in-out;
 			//transform: rotate(90deg);
 		}
 	}
-	&.test svg {
+	&.test {
+		position: initial;
+		
+		transform: translate(0, 0);
+		height: initial;
+		width: initial;
+		z-index: 0;
+		svg {
 		--primary: #ffbb00;
 		--primary-opacity: 0.8;
 		--secondary: #2600ff;
@@ -94,6 +169,7 @@ a {
 		--secondary: #2600ff;
 		--secondary-opacity: 1;
 		}
+	} 
 	}
 	&.test.dimmed {
 		.icon__container.test {
@@ -103,6 +179,7 @@ a {
 	}
 
 }
+
 	
 .preloader {
 	width: 100vw;

@@ -34,7 +34,7 @@ $secondary: #E50010;
 @import "null";
 body {
   color: #000;
-  font-size: calc(14px + 0.5vw);
+  font-size: calc(13px + 0.5vw);
   background-color: rgb(255, 255, 235);
   font-family: 'Roboto', sans-serif;
   overflow-x: hidden;
@@ -103,6 +103,7 @@ main {
 // <PAGE-SPECIFIC STYLES> ============================================================================================
 @import 'home';
 @import 'page';
+@import 'auth';
 // </PAGE-SPECIFIC STYLES> ===========================================================================================
 
 // <THEMES> ==========================================================================================================

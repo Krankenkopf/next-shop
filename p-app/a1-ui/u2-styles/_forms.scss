@@ -26,3 +26,150 @@
     width: 100%
   }
 }
+
+.iconized {
+    &__LR {
+      position: relative;
+      &:not(.field) {
+        padding: 5px 2.4em 0 2.4em;
+      }
+      &.field {
+        input {
+        padding: 0.2em 2em 0.2em 2em;
+      }
+      //label {
+      //  padding: 0 1.8em 0 1.8em;
+      //}
+      }
+    }
+    &__L {
+      &:not(.field) {
+        padding: 5px 0 0 2.4em;
+      }
+      &.field {
+        input {
+          padding: 0.2em 0.8em 0.2em 1.8em;
+        }
+        //label {
+        //  padding: 0 0.8em 0 1.8em;
+        //}
+      } 
+    }
+    &__R {
+      &:not(.field) {
+        padding: 5px 2.4em 0 0;
+      }
+      &.field {
+        input {
+        padding: 0.2em 1.8em 0.2em 0.8em;
+      }
+      //label {
+      //  padding: 0 1.8em 0 0.8em;
+      //}
+      }
+    }
+}
+
+.signup, .login {
+  width: 350px;
+  & header {
+    margin-bottom: 30px;
+    padding: 0;
+  }
+	&__form form {
+			display: flex;
+			flex-direction: column;
+			flex: 1 1 auto;
+    }
+  &__submit {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    margin-bottom: 20px;
+  }
+  &__login {
+    text-align: center;
+  }
+  &__signup {
+    text-align: center;
+  }
+}
+
+form {
+  section {
+    text-align: initial;
+  }
+  .field {
+  display: grid;
+  grid-template-rows: 1em 2em 1em;
+  grid-template-columns: 2em 1fr;
+  grid-template-areas: 
+  "space label"
+  "input input"
+  "error error";
+  //height: 75px;
+  font-size: 100%;
+  margin-bottom: 5px;
+  &:last-child {
+    margin-bottom: 15px;
+  }
+  &__label {
+    height: 1em;
+    grid-area: label;
+    font-size: calc(1em / 1.2);
+    &.filled, &.focused {
+      transform: translate(0, 0);
+    }
+    //font-size: 75%;
+    transform: translate(0, 0);
+  }
+  .icon__container {
+    grid-area: input;
+    height: calc(100% - 2px);
+  }
+  .field__input {
+    grid-area: input;
+    input, input:focus {
+      border: none;
+      height: calc(100% - 2px);
+    }   
+  }
+  .field__dash {
+    grid-area: input;
+    height: 0.5px;
+    margin-top: auto;
+    margin-bottom: 1px;
+    background-color: $primary;
+    &.thick {
+      height: 2px;
+      margin-bottom: 0;
+    }
+  }
+  .field__error {
+  grid-area: error;
+  height: 1em;
+  font-size: calc(1em / 1.2);
+  color: $secondary;
+  font-weight: bold;
+} 
+}
+}
+
+
+
+ul.password-tips {
+    font-size: 80%;
+    margin-bottom: 20px;
+    li {
+      position: relative;
+      display: block;
+      padding: 0 0 0 1.8em;
+      margin-bottom: 2px;
+      .icon__container {
+        top: 0;
+        width: 1.5em;
+        height: 1.2em;
+      }
+    }
+}

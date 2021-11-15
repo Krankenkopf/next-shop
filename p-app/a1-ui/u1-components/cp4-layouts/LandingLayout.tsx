@@ -3,6 +3,10 @@ import Head from "next/head"
 import { useCallback, useState } from "react"
 import { Footer } from "../cp2-modules/Footer/Footer"
 import { Header } from "../cp2-modules/Header/Header"
+import { AuthSpritesMap } from "../cp2-modules/IconSpritesMaps/AuthSpritesMap"
+import { CommerceSpritesMap } from "../cp2-modules/IconSpritesMaps/CommerceSpritesMap"
+import { CommonUISpritesMap } from "../cp2-modules/IconSpritesMaps/CommonUISpritesMap"
+import { FeatureSpritesMap } from "../cp2-modules/IconSpritesMaps/FeatureSpritesMap"
 import { Modals, TModal } from "../cp2-modules/Modal/Modals"
 
 export const LandingLayout = ({ children, title = 'Noname Shop' }: any) => {
@@ -13,8 +17,6 @@ export const LandingLayout = ({ children, title = 'Noname Shop' }: any) => {
         setModal(modalType)
     }, [modal])
     const closeModal = useCallback(() => setModal(null), [])
-    console.log("Layout");
-    console.log(modal);
 
     return (
         <>
@@ -24,12 +26,18 @@ export const LandingLayout = ({ children, title = 'Noname Shop' }: any) => {
                 <meta name="description" content="some description"></meta>
                 <meta charSet="utf-8" />
             </Head>
-                <Header revealModal={revealModal} />
-                <main className="wrapper _container">
-                    {children}
-                </main>
-                <Modals onClose={closeModal} modal={modal} revealModal={revealModal} />
-                <Footer />
+            <CommonUISpritesMap />
+            <AuthSpritesMap />
+            <FeatureSpritesMap />
+            <CommerceSpritesMap />
+            <Header revealModal={revealModal} />
+            <main className="wrapper _container">
+                {children}
+            </main>
+            <Footer />
+            <Modals onClose={closeModal} modal={modal} revealModal={revealModal} />
+            
+            
         </>
     )
 }
