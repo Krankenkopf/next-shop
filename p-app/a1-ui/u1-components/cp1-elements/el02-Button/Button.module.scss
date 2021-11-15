@@ -5,7 +5,7 @@
     vertical-align: middle;
     text-transform: uppercase;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 90%;
     font-weight: 700;
     letter-spacing: 2px;
     position: relative;
@@ -33,7 +33,7 @@
 }
 
 .button:hover {
-    font-size: 19px;
+    font-size: 95%;
     border: 2px solid transparent;
     /* box-shadow: 0 0 0 3px #000; */
 }
@@ -65,12 +65,11 @@
 .button:focus { outline:0; }
 
 
-.cancel:hover {
-    background-color: rgba(255, 0, 0, 0.3);
-}
-
 .ok:hover {
     background-color: rgba(0, 255, 0, 0.3);
+}
+.cancel:hover {
+    background-color: rgba(255, 0, 0, 0.3);
 }
 
 .active {

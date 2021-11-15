@@ -1,33 +1,33 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent} from 'react'
+import React, { ChangeEvent, FocusEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, forwardRef} from 'react'
 import css from './Input.module.scss'
 
+type TDefaultInputProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+/*type TDefaultLabelProps = DetailedHTMLProps<LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>*/
 
-type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
-/*type DefaultLabelPropsType = DetailedHTMLProps<LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>*/
-
-type SuperInputTextPropsType = DefaultInputPropsType  & {
+type TInputTextProps = TDefaultInputProps  & {
     onChangeText?: (value: string) => void
+    onChangeFocus?: (value: boolean) => void
     onEnter?: () => void
+    name?: string
     error?: string
     spanClassName?: string
     placeholder?: string
 }
 
-/*type SuperLabelPropsType = DefaultLabelPropsType & {
-    alt?: string
-    someCustomProp?: string
-}*/
 
-
-const Input: React.FC<SuperInputTextPropsType/* & SuperLabelPropsType*/> = (
+export const Input = forwardRef<HTMLInputElement, TInputTextProps>((
     {
-        type,
-        onChange, onChangeText,
+        type = "text",
+        onChange, onChangeFocus,
+        onFocus, onBlur,
+        onChangeText,
         onKeyPress, onEnter,
+        name,
         error,
-        className, spanClassName,
+        className,
+        placeholder,
         ...restProps
-    }
+    }, ref
 ) => {
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
         onChange && onChange(e)
@@ -38,22 +38,31 @@ const Input: React.FC<SuperInputTextPropsType/* & SuperLabelPropsType*/> = (
         onEnter && e.key === 'Enter' && onEnter()
     }
 
-    const finalSpanClassName = `${css.error} ${spanClassName ? spanClassName : ''}`
-    const finalInputClassName = `${css.input} ${error ? css.errorInput : ''}`
+    const onFocusCallback = (e: FocusEvent<HTMLInputElement>, state: boolean) => {
+        onFocus && onFocus(e)
+        onChangeFocus && onChangeFocus(state)
+    }
+    const onBlurCallback = (e: FocusEvent<HTMLInputElement>, state: boolean) => {
+        onBlur && onBlur(e)
+        onChangeFocus && onChangeFocus(state)
+    }
+    
+    const finalInputClassName = `${css.input} ${error ? css.error : ''}`
 
     return (
         <>
             <input
-                placeholder={'Search products'}
-                type={'text'}
+                ref={ref}
+                placeholder={placeholder}
+                type={type}
+                name={name}
+                onFocus={(e) => onFocusCallback(e, true)}
+                onBlur={(e) => onBlurCallback(e, false)}
                 onChange={onChangeCallback}
                 onKeyPress={onKeyPressCallback}
                 className={`${className} ${finalInputClassName} `} 
                 {...restProps}
             />
-            {error && <div className={finalSpanClassName}>{error}</div>}
         </>
     )
-}
-
-export default Input
+})
