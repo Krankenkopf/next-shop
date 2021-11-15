@@ -1,4 +1,4 @@
-import { FC, useEffect, MouseEvent, useRef } from "react"
+import { FC, useEffect, MouseEvent, useRef, useLayoutEffect } from "react"
 import css from "./Modal.module.scss"
 import Button from "../../cp1-elements/el02-Button/Button"
 import { TModal } from "./Modals"
@@ -8,18 +8,19 @@ type TModalProps = {
     modalType: string
     current: TModal
     scrollLock: boolean
-    onClose: (modalType: string) => void
+    onClose?: (modalType: string) => void
 }
 
 export const Modal: FC<TModalProps> = ({ isOpen, modalType, current, scrollLock, onClose, children }) => {
 
     const handleCloseClick = (e: MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
-        onClose(modalType)
+        onClose && onClose(modalType)
         e.preventDefault()
     }
     const body = useRef(null as unknown as HTMLDivElement)
 
-    useEffect(() => {
+    useLayoutEffect(() => { // this because on closing modal with scrollbar animation begin faster than
+                            // applying overflow hidden => glitch - scrollbar curved.. kurwa! 
         // for all modals in container Modals
         if (body.current) { // opening | closing | idle
             if (scrollLock) { // opening | closing
@@ -57,16 +58,16 @@ export const Modal: FC<TModalProps> = ({ isOpen, modalType, current, scrollLock,
             <div ref={body} onClick={handleCloseClick}
                 className={`${css.modal__body} ${currentStyle}`}>
                 <div className={`${css.modal__paper} ${currentStyle}`} onClick={(e) => e.stopPropagation()}>
-                    <Button
+                    {onClose && <Button
                         mode="icon"
                         variant="cancel"
                         style={{
                             position: "absolute",
-                            top: "5px",
-                            right: "5px",
+                            top: "0",
+                            right: "0",
                             fontSize: "40px"
                         }}
-                        onClick={handleCloseClick}>&times;</Button>
+                        onClick={handleCloseClick}>&times;</Button>}
                     {children}
                 </div>
             </div>

@@ -1,5 +1,5 @@
 $transitionTime: 600ms;
-$softRed: #ffcccc;
+$softRed: #fff1cc;
 .modal {
 	position: fixed;
 	top: 0;
@@ -12,6 +12,7 @@ $softRed: #ffcccc;
 	overflow-x: hidden;
 	background-color: #00000055;
 	transition: opacity $transitionTime ease-out;
+	z-index: 10000;
 	//.modal__revealed
 	&__revealed {
 		visibility: visible;
@@ -64,7 +65,7 @@ $softRed: #ffcccc;
 	&__paper {
 		position: relative;
 		margin: auto;
-		width: 500px;
+		//width: 100%;
 		padding: 50px;
 		background-color: $softRed;	
 	}
