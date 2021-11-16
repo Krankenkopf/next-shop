@@ -6,7 +6,7 @@ type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonE
 type ExtraButtonPropsType = DefaultButtonPropsType & {
     mode?: "text" | "icon"
     style?: CSSProperties
-    variant?: 'ok' | 'cancel' | 'active' | 'inactive' | 'disabled'
+    variant?: "ok" | "ok__alt" | "cancel" | "active" | "inactive" | "disabled"
     backgroundImage?: boolean
 }
 
@@ -21,6 +21,7 @@ const Button: React.FC<ExtraButtonPropsType> = (
         case "active": className = `${css.active} ${className}`; break
         case "inactive": className = `${css.inactive} ${className}`; break
         case "ok": className = `${css.ok} ${className}`; break
+        case "ok__alt": className = `${css.ok__alt} ${className}`; break
         case "cancel": className = `${css.cancel} ${className}`; break
         case "disabled": className = `${css.disabled} ${className}`; break
         default: className = className
