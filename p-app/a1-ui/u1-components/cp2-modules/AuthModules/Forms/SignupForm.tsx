@@ -7,6 +7,9 @@ import { Input } from "../../../cp1-elements/el01-Input/Input";
 import Button from "../../../cp1-elements/el02-Button/Button";
 import { Icon } from "../../../cp1-elements/el10-Icons/Icon";
 import { TModal } from "../../Modal/Modals";
+import { useDispatch } from "react-redux";
+import { setIsSignupPassConfirmed, setSignupUserData, signup } from "../../../../../a2-bll/auth-reducer";
+import { TSignupData } from "../../../../../a3-dal/krank/auth-api";
 
 export type SignupFormData = {
     email: string
@@ -16,7 +19,6 @@ export type SignupFormData = {
 
 type TSignupFormProps = {
     revealModal: (modalType: TModal) => void
-    freezeCurrent: () => void
 }
 
 const ok = "#00bb00"
@@ -43,7 +45,8 @@ const signupSchema = yup.object().shape({
         .notRequired()  
 })
 
-export const SignupForm = ({ revealModal, freezeCurrent }: TSignupFormProps) => {
+export const SignupForm = ({ revealModal}: TSignupFormProps) => {
+    const dispatch = useDispatch()
     const { register, handleSubmit, getValues, formState: { errors, dirtyFields,  }, reset, clearErrors,  } = useForm<SignupFormData>({
         mode: "onChange", // important for dynamical tips
         resolver: yupResolver(signupSchema, {abortEarly: false}),
@@ -60,20 +63,23 @@ export const SignupForm = ({ revealModal, freezeCurrent }: TSignupFormProps) => 
     const [passConfirmed, setPassConfirmed] = useState("");
     const [passOptionals, setPassOptionals] = useState<Array<string> | null>(null)
     const [passConfirmationMessage, setPassConfirmationMessage] = useState("");
-    
-    const showPassConfirmationAlert = () => {
-        freezeCurrent()
-        revealModal("signupPassUnconfirmed")
-    }
-    
-    
+          
     const [passwordShown, setPasswordShown] = useState(false)
     const togglePasswordVisibility = () => {
         setPasswordShown(!passwordShown)
     }
 
     const onSubmit: SubmitHandler<SignupFormData> = data => {
-        console.log(data)
+        const signupData: TSignupData = {
+            email: data.email,
+            password: data.password,
+        }
+        const isPassConfirmed = data.password === data.passConfirmed                                                                     // Order is important!
+        dispatch(setIsSignupPassConfirmed(data.password === data.passConfirmed)) // 1
+        dispatch(setSignupUserData(signupData))                                  // 2
+        if (isPassConfirmed) {
+            dispatch(signup())
+        }
     }
     const changeFocusHandler = (name: keyof SignupFormData, focus: boolean) => {
         // for first field changing errors won't show
@@ -94,10 +100,6 @@ export const SignupForm = ({ revealModal, freezeCurrent }: TSignupFormProps) => 
     }
 
     useEffect(() => {
-        console.log(errors);
-    }, [errors])
-
-    useEffect(() => {
         const optionals: Array<string> = [];
         !/[a-z]/.test(password) && optionals.push("lowercase");
         !/[A-Z]/.test(password) && optionals.push("uppercase");
@@ -116,11 +118,7 @@ export const SignupForm = ({ revealModal, freezeCurrent }: TSignupFormProps) => 
                 setPassConfirmationMessage("Password not confirmed")
             }
         }
-    }, [password, passConfirmed])
-
-    console.log(passOptionals);
-    console.log(passConfirmationMessage && passConfirmationMessage);
-    
+    }, [password, passConfirmed])    
     
     return (
         <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
@@ -141,7 +139,7 @@ export const SignupForm = ({ revealModal, freezeCurrent }: TSignupFormProps) => 
                 {errors.email && helperState.email && <Icon name="exclamation" primaryColor={error} secondaryColor={error} />}
                 {(!errors.email && dirtyFields.email) && <Icon name="check" side="right" size="full" primaryColor={ok} secondaryColor={ok}/>}
                 <div className="field__input">
-                    <Input {...register("email", {value: "aaa@ff."})}
+                    <Input {...register("email", {value: "test@test.com"})}
                         onChangeFocus={(state) => { changeFocusHandler("email", state) }}
                         name="email"
                        />
@@ -181,7 +179,7 @@ export const SignupForm = ({ revealModal, freezeCurrent }: TSignupFormProps) => 
                     : <Icon name="eye-slash" onClick={togglePasswordVisibility} side="right" size="full" primaryColor={initial} secondaryColor={initial} primaryOpacity="0.5" secondaryOpacity="0.5"/>}
                 
                 <div className="field__input">
-                    <Input {...register("password", { required: false })}
+                    <Input {...register("password", { value: "test1" })}
                         type={passwordShown ? "text" : "password"}
                         name="password"
                         onChangeText={(value) => setPassword(value)}
@@ -263,9 +261,7 @@ export const SignupForm = ({ revealModal, freezeCurrent }: TSignupFormProps) => 
                 </div>
             </section>
             <div className="signup__submit">
-                {!passConfirmationMessage && dirtyFields.passConfirmed
-                    ? <Button type={'submit'} variant={'ok'}>Sign up</Button>
-                    : <Button onClick={showPassConfirmationAlert} variant={'active'}>Sign up</Button>}
+                    <Button type={'submit'} variant={'ok'}>Sign up</Button>
             </div>
         </form>
     )

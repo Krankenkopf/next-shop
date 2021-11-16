@@ -26,7 +26,7 @@ export const ProductLayout = ({ children, title = 'Noname Shop' }: any) => {
                 <Sidebar />
                 {children}
             </main>
-            <Modals onClose={() => setModal(null)} modal={modal}/>
+            <Modals onClose={() => setModal(null)} modal={modal} revealModal={revealModal} />
             <Footer />
         </>
     )

@@ -73,7 +73,7 @@
 .signup, .login {
   width: 350px;
   & header {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     padding: 0;
   }
 	&__form form {
@@ -172,4 +172,26 @@ ul.password-tips {
         height: 1.2em;
       }
     }
+}
+
+.info {
+  width: 450px;
+  & header {
+    margin-bottom: 25px;
+    padding: 0;
+  }
+  &__signup {
+    height: 50px;
+		display: flex;
+    &__container {
+      width: 50%;
+      display: flex;
+      align-items: center;
+		  justify-content: center;
+      button {
+        height: 40px;
+      }
+    }
+    
+  }
 }
