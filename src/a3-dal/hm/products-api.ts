@@ -1,4 +1,4 @@
-import { TProduct } from "../../a0-common/c1-types/TProductsResponse"
+import { TProduct } from "../../a0-common/c1-types/t3-response/TProductsResponse"
 import { HMAPI } from "../api"
 
 

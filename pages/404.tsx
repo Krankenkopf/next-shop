@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Router, { useRouter } from "next/router"
-import { ProductLayout } from "../p-app/a1-ui/u1-components/cp4-layouts/ProductLayout"
+import { ProductLayout } from "../src/a1-ui/u1-components/cp4-layouts/ProductLayout"
 
 export default function NotFound({ history, props }: any) {
     const router = useRouter()

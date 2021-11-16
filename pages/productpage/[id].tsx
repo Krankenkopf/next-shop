@@ -3,10 +3,10 @@ import { AppContext } from "next/app";
 import { useRouter } from "next/dist/client/router"
 import Router from "next/router";
 import { FC } from "react";
-import { TProduct, TProductsResponse } from "../../p-app/a0-common/c1-types/t3-response/TProductsResponse";
-import { jsonParser } from "../../p-app/a0-common/c4-utils/jsonParser";
-import { ProductDetail } from "../../p-app/a1-ui/u1-components/cp2-modules/ProductDetail/ProductDetail";
-import { ProductLayout } from "../../p-app/a1-ui/u1-components/cp4-layouts/ProductLayout";
+import { TProduct, TProductsResponse } from "../../src/a0-common/c1-types/t3-response/TProductsResponse";
+import { jsonParser } from "../../src/a0-common/c4-utils/jsonParser";
+import { ProductDetail } from "../../src/a1-ui/u1-components/cp2-modules/ProductDetail/ProductDetail";
+import { ProductLayout } from "../../src/a1-ui/u1-components/cp4-layouts/ProductLayout";
 
 type TProductPage = {
     history: Array<string>

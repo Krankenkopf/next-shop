@@ -1,10 +1,10 @@
 import { AxiosResponse } from "axios"
 import Router from "next/router"
 import { useEffect, useState } from "react"
-import { TProduct, TProductsResponse } from "../../p-app/a0-common/c1-types/t3-response/TProductsResponse"
-import { ProductItem } from "../../p-app/a1-ui/u1-components/cp2-modules/ProductItem/ProductItem"
-import { ProductLayout } from "../../p-app/a1-ui/u1-components/cp4-layouts/ProductLayout"
-import { CountryCodes, LanguageCodes, ProductsAPI, TGetProductsListRequestRequiredData } from "../../p-app/a3-dal/hm/products-api"
+import { TProduct, TProductsResponse } from "../../src/a0-common/c1-types/t3-response/TProductsResponse"
+import { ProductItem } from "../../src/a1-ui/u1-components/cp2-modules/ProductItem/ProductItem"
+import { ProductLayout } from "../../src/a1-ui/u1-components/cp4-layouts/ProductLayout"
+import { CountryCodes, LanguageCodes, ProductsAPI, TGetProductsListRequestRequiredData } from "../../src/a3-dal/hm/products-api"
 
 
 export default function Men({ products }: TProductsResponse) {

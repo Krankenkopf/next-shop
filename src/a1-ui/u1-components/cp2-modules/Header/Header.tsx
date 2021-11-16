@@ -1,6 +1,7 @@
 import Link from "next/link"
 import React, { FC } from "react"
-import Input from "../../cp1-elements/el01-Input/Input"
+import { Icon } from "../../cp1-elements/el10-Icons/Icon"
+import { Search } from "../AuthModules/Search"
 import { TModal } from "../Modal/Modals"
 
 type THeaderProps = {
@@ -11,7 +12,7 @@ export const Header: FC<THeaderProps> = React.memo(({revealModal}) => {
     const menuServicesTitles = ["Customer Service", "Ahrlist Discount", "Find a store"]
     const menuServices = menuServicesTitles.map((item) => {
         return (<li key={item} style={{ display: "inline-block" }}>
-            <Link href="/"><a>{item}</a></Link>
+            <Link href="/"><a><span>{item}</span></a></Link>
         </li>)
     })
     const headerLinkNames = ["ladies", "divided", "men", "babies", "kids", "household", "sale"]
@@ -49,23 +50,38 @@ export const Header: FC<THeaderProps> = React.memo(({revealModal}) => {
                     <ul>
                         <li style={{ display: "inline-block" }}>
                             <a onClick={() => revealModal("signup")}>
-                                Sign Up
+                                <div className="link__decorated">
+                                    <Icon name="user" className="icon__session"/>
+                                    <span>Sign Up</span>
+                                </div>
+                                
                             </a>
                         </li>
                         <li style={{ display: "inline-block" }}>
-                            <a onClick={() => revealModal("login")}>Favorites</a>
+                            <a onClick={() => revealModal("login")}>
+                                <div className="link__decorated">
+                                    <Icon name="heart" className="icon__session"/>
+                                    <span>Favorites</span>
+                                </div>
+                                
+                            </a>
                         </li>
                         <li style={{ display: "inline-block" }}>
-                            <Link href="/"><a>Cart</a></Link>
+                            <Link href="/">
+                                <a>
+                                    <div className="link__decorated">
+                                        <Icon name="cart-shopping-fast" className="icon__session"/>
+                                        <span>Cart</span>
+                                    </div>
+                                </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
                 <div className="header-menu-primary">
                     {headerLinks}
                 </div>
-                <div className="header-search">
-                    <Input onChangeText={() => {}}/>
-                </div>
+                <Search />
             </nav>
         </header>
     )

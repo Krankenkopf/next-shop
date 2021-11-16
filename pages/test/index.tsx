@@ -1,18 +1,19 @@
 import Head from "next/head"
 import React, { useEffect, useRef, useState } from "react"
-import { ArrowNavSpritesMap } from "../../p-app/a1-ui/u1-components/cp2-modules/IconSpritesMaps/ArrowNavSpritesMap"
-import { AuthSpritesMap } from "../../p-app/a1-ui/u1-components/cp2-modules/IconSpritesMaps/AuthSpritesMap"
-import { CommerceSpritesMap } from "../../p-app/a1-ui/u1-components/cp2-modules/IconSpritesMaps/CommerceSpritesMap"
-import { CommonUISpritesMap } from "../../p-app/a1-ui/u1-components/cp2-modules/IconSpritesMaps/CommonUISpritesMap"
-import { CRUDSpritesMap } from "../../p-app/a1-ui/u1-components/cp2-modules/IconSpritesMaps/CRUDSpritesMap"
-import { CurrencySpritesMap } from "../../p-app/a1-ui/u1-components/cp2-modules/IconSpritesMaps/CurrencySpritesMap"
-import { FeatureSpritesMap } from "../../p-app/a1-ui/u1-components/cp2-modules/IconSpritesMaps/FeatureSpritesMap"
-import { FilterSpritesMap } from "../../p-app/a1-ui/u1-components/cp2-modules/IconSpritesMaps/FilterSpritesMap"
-import { IconSpritesMap } from "../../p-app/a1-ui/u1-components/cp2-modules/IconSpritesMaps/IconSpritesMap"
-import { LayoutSpritesMap } from "../../p-app/a1-ui/u1-components/cp2-modules/IconSpritesMaps/LayoutSpritesMap"
-import { LocalizationSpritesMap } from "../../p-app/a1-ui/u1-components/cp2-modules/IconSpritesMaps/LocalizationSpritesMap"
-import { MiscSpritesMap } from "../../p-app/a1-ui/u1-components/cp2-modules/IconSpritesMaps/MiscSpritesMap"
-import { LandingLayout } from "../../p-app/a1-ui/u1-components/cp4-layouts/LandingLayout"
+import { LoginForm } from "../../src/a1-ui/u1-components/cp2-modules/AuthModules/Forms/LoginForm"
+import { ArrowNavSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/ArrowNavSpritesMap"
+import { AuthSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/AuthSpritesMap"
+import { CommerceSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/CommerceSpritesMap"
+import { CommonUISpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/CommonUISpritesMap"
+import { CRUDSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/CRUDSpritesMap"
+import { CurrencySpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/CurrencySpritesMap"
+import { FeatureSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/FeatureSpritesMap"
+import { FilterSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/FilterSpritesMap"
+import { IconSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/IconSpritesMap"
+import { LayoutSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/LayoutSpritesMap"
+import { LocalizationSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/LocalizationSpritesMap"
+import { MiscSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/MiscSpritesMap"
+import { LandingLayout } from "../../src/a1-ui/u1-components/cp4-layouts/LandingLayout"
 
 export default function Test() {
     const [icons, setIcons] = useState<Array<JSX.Element>>([])
@@ -39,7 +40,7 @@ export default function Test() {
                 icons.push(
                     <div key={`${i.id}`} className="icon test" style={{ display: "inline-block", verticalAlign: "top", width: "70px", margin: "10px" }}>
                         <div className="icon__container test">
-                            <svg className="icon__svg test" style={{ width: "50px", height: "50px", margin: "0 10px" }}
+                            <svg className="icon__svg test" onClick={() => console.log("click")} style={{ width: "50px", height: "50px", margin: "0 10px" }}
                                 name={`${i.id}`}>
                                 <use id={`${i.id}`} xlinkHref={`#${i.id}`}></use>
                             </svg>
@@ -86,6 +87,7 @@ export default function Test() {
         if (nested && icons.length === 0) {
             const toJSX = (iconSprite: HTMLElement) => {
                 let icons: Array<JSX.Element> = []
+                let names: Array<string> = []
                 let svgElements = iconSprite.querySelectorAll("symbol")
                 console.log(`${iconSprite.id} icons: ${svgElements.length}`);
                 let alreadyNested = document.getElementsByTagName("use")
@@ -93,6 +95,7 @@ export default function Test() {
                 
                 svgElements.forEach(i => {
                     let nestedFlag = false
+                    
                     for (let j = 0; j < alreadyNested.length; j++) {
                         if (i.id === alreadyNested[j].id) {
                             console.log(`${i.id} ${alreadyNested[j].id}`);
@@ -103,6 +106,7 @@ export default function Test() {
                     if (nestedFlag) {
                         className = `${className} dimmed`
                     }
+                    names.push(i.id)
                     icons.push(
                         <div key={`${i.id}`} className={className} style={{ display: "inline-block", verticalAlign: "top", width: "70px", margin: "10px" }}>
                             <div className="icon__container test">
@@ -117,6 +121,8 @@ export default function Test() {
                         </div>
                     )
                 })
+                console.log(names.slice(50, names.length));
+                
                 return icons
             }
             let mainMap = document.getElementById("main-sprite")

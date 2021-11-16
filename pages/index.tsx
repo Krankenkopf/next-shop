@@ -1,8 +1,8 @@
 import Link from "next/link"
 import React, { MouseEventHandler, useState } from "react";
-import Button from "../p-app/a1-ui/u1-components/cp1-elements/el02-Button/Button";
-import { Timer } from "../p-app/a1-ui/u1-components/cp1-elements/el20-Timer/Timer";
-import { LandingLayout } from "../p-app/a1-ui/u1-components/cp4-layouts/LandingLayout";
+import Button from "../src/a1-ui/u1-components/cp1-elements/el02-Button/Button";
+import { Timer } from "../src/a1-ui/u1-components/cp1-elements/el20-Timer/Timer";
+import { LandingLayout } from "../src/a1-ui/u1-components/cp4-layouts/LandingLayout";
 import campaign01 from "../public/images/campaign01.jpg"
 import campaign02 from "../public/images/campaign02.jpg"
 import campaign03 from "../public/images/campaign03.jpg"
