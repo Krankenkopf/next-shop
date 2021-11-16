@@ -5,13 +5,15 @@ import { TModal } from "./Modals"
 
 type TModalProps = {
     isOpen: boolean
-    modalType: string
+    modalType: TModal
     current: TModal
     scrollLock: boolean
-    onClose?: (modalType: string) => void
+    isFreezed?: boolean
+    layout?: number
+    onClose?: (modalType: TModal) => void
 }
 
-export const Modal: FC<TModalProps> = ({ isOpen, modalType, current, scrollLock, onClose, children }) => {
+export const Modal: FC<TModalProps> = ({ isOpen, modalType, current, scrollLock, layout, onClose, children }) => {
 
     const handleCloseClick = (e: MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
         onClose && onClose(modalType)
@@ -49,15 +51,17 @@ export const Modal: FC<TModalProps> = ({ isOpen, modalType, current, scrollLock,
         }       // logic is render-dependant. changing window size not lead to recalc styles        
     }, [scrollLock]) // if need such functionality - use and implement (in any way i don't understand) windowSize hook
                     
-    let currentStyle = `${(current === modalType || isOpen) && css._current}`
-    currentStyle = `${currentStyle} ${(current === modalType && !isOpen) && css._closing}`
+    let currentStyle = `${(current === modalType || isOpen) && css._current}` // idle view
+    currentStyle = `${currentStyle} ${(current === modalType && !isOpen) && css._closing}` //closing transition
     currentStyle = `${currentStyle} ${scrollLock && css._scrollLock}`
+
+    let paperStyle = `${css.modal__paper} ${layout === 2 && css._upper}`
 
     return (
         <div className={css.modal__area}>
             <div ref={body} onClick={handleCloseClick}
                 className={`${css.modal__body} ${currentStyle}`}>
-                <div className={`${css.modal__paper} ${currentStyle}`} onClick={(e) => e.stopPropagation()}>
+                <div className={`${paperStyle} ${currentStyle}`} onClick={(e) => e.stopPropagation()}>
                     {onClose && <Button
                         mode="icon"
                         variant="cancel"

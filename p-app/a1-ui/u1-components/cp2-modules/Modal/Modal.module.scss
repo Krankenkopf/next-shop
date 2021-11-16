@@ -1,5 +1,6 @@
 $transitionTime: 600ms;
-$softRed: #fff1cc;
+$primary: #292825;
+$softRed: #ffccfc;
 .modal {
 	position: fixed;
 	top: 0;
@@ -68,6 +69,10 @@ $softRed: #fff1cc;
 		//width: 100%;
 		padding: 50px;
 		background-color: $softRed;	
+		box-shadow: 0 0 100px 1px #595855;
+		&._upper {
+			box-shadow: 0 0 20px 2px $primary;
+		}
 	}
 }
 

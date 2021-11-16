@@ -5,6 +5,9 @@ import { Signup } from "../AuthModules/Signup";
 import css from "./Modal.module.scss"
 import { Modal } from "./Modal"
 import { SignupPassUnconfirmed } from "../AuthModules/SignupPassUnconfirmed";
+import { TAuthState } from "../../../../a2-bll/auth-reducer";
+import { TStore } from "../../../../a2-bll/store";
+import { useSelector } from "react-redux";
 
 export type TModal = "signup" | "signupPassUnconfirmed" | "login" | "cart" | null
 
@@ -15,13 +18,13 @@ type TModalsProps = {
 }
 
 export const Modals: FC<TModalsProps> = ({ modal, revealModal, onClose }) => {
-
+    //==========================================================
     const [isBrowser, setIsBrowser] = useState(false);
-
     useEffect(() => {
         setIsBrowser(true);
     }, []);
-
+    //==========================================================
+    const { isRegistered, isLoggedIn } = useSelector<TStore, TAuthState>((state) => state.auth)
     const [modalsState, setModalsState] = useState({
         signup: false,
         signupPassUnconfirmed: false,
@@ -30,7 +33,7 @@ export const Modals: FC<TModalsProps> = ({ modal, revealModal, onClose }) => {
     })
     const [closingModal, setClosingModal] = useState(false)
     const [current, setCurrent] = useState<TModal>(null);
-    const [freezed, setFreezed] = useState(false);
+    const [freezed, setFreezed] = useState<TModal>(null);
     
     const [scrollLock, setScrollLock] = useState(false);
     const transitionTime = 600
@@ -40,44 +43,54 @@ export const Modals: FC<TModalsProps> = ({ modal, revealModal, onClose }) => {
             const lockPadding = window.innerWidth - document.body.offsetWidth
             document.body.style.overflowY = "hidden"
             document.body.style.paddingRight = lockPadding + "px"
-            setModalsState((prev) => ({ ...prev, [modal]: !prev[modal] }))
+            setModalsState((prev) => ({ ...prev, [modal]: true }))
             setCurrent(modal)
             setScrollLock(true)
             setTimeout(() => {
                 setScrollLock(false)
             }, transitionTime)
         } else if (modal && current && modal !== current && !freezed) { //need to close previous and open current
-            setModalsState((prev) => ({ ...prev, [modal]: !prev[modal], [current]: !prev[current] }))
+            setModalsState((prev) => ({ ...prev, [modal]: true, [current]: false }))
             setScrollLock(true)
             setTimeout(() => {
                 setCurrent(modal)
                 setScrollLock(false)
             }, transitionTime)
-        } else if (modal && current && modal !== current && freezed) { // no need to close previous and open current
-            setModalsState((prev) => ({ ...prev, [modal]: !prev[modal] }))
-            setScrollLock(true)
+        } else if (modal && current && modal !== current && freezed) { // no need to close previous and open current           
+            setModalsState((prev) => ({ ...prev, [modal]: true }))
+            setScrollLock(true)           
             setTimeout(() => {
                 setCurrent(modal)
-                setScrollLock(false)
+                //setScrollLock(false) // it's considered that upper modal will be not scrollable 
             }, transitionTime)
         }
     }, [modal])
-
-    const closeModal = useCallback((modalType: string) => {
-        if (modal) {
-            setModalsState((prev) => ({ ...prev, [modal]: !prev[modal] }))
-            setClosingModal(true)
-            setScrollLock(true)
-            setTimeout(() => {
-                document.body.style.overflowY = "inherit"
-                document.body.style.paddingRight = 0 + "px"
-                setCurrent(null)
-                setClosingModal(false)
-                setScrollLock(false)
-            }, transitionTime)
-            onClose()
+    
+    const closeModal = useCallback((modalToClose: TModal) => {
+        if (modal && modalToClose) {
+            setModalsState((prev) => ({ ...prev, [modalToClose]: false }))
+            //setScrollLock(true)
+            if (freezed) {  // now is two modals in view
+                revealModal(freezed) // set global toggler to lower modal
+                setTimeout(() => {
+                    setFreezed(null)  // lower modal unfreezed...
+                    setCurrent(freezed)
+                    setScrollLock(false) // not tested if it neccesary
+                }, transitionTime)
+            } else {
+                setScrollLock(true)
+                setClosingModal(true) // closing modals component
+                setTimeout(() => {
+                    document.body.style.overflowY = "inherit"
+                    document.body.style.paddingRight = 0 + "px"
+                    setCurrent(null)
+                    setClosingModal(false)
+                    setScrollLock(false)
+                }, transitionTime)
+                onClose()
+            }
         }
-    }, [modal])
+    }, [modal, freezed])
 
     const className = `${css.modal} ${current
         ? closingModal
@@ -92,8 +105,11 @@ export const Modals: FC<TModalsProps> = ({ modal, revealModal, onClose }) => {
                     scrollLock={scrollLock}
                     current={current}
                     isOpen={modalsState.signup}
+                    isFreezed={freezed === "signup"}
                     onClose={closeModal}>
-                    <Signup revealModal={revealModal} freezeCurrent={() => setFreezed(true)}/>
+                    <Signup revealModal={revealModal}
+                        freezePrevious={(modal) => setFreezed(modal)}
+                        closeModal={closeModal} />
                 </Modal>
                <Modal modalType={"login"}
                     scrollLock={scrollLock}
@@ -105,9 +121,12 @@ export const Modals: FC<TModalsProps> = ({ modal, revealModal, onClose }) => {
                 <Modal modalType={"signupPassUnconfirmed"}
                     scrollLock={scrollLock}
                     current={current}
+                    layout={2}
                     isOpen={modalsState.signupPassUnconfirmed}
                     onClose={closeModal}>
-                    <SignupPassUnconfirmed revealModal={revealModal} freezeCurrent={() => setFreezed(false)}/>
+                    <SignupPassUnconfirmed
+                        revealModal={revealModal}
+                        closeModal={closeModal} />
                 </Modal>
             </div>
         )
