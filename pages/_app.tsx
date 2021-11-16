@@ -1,57 +1,24 @@
-import App from 'next/app'
 import "../p-app/a1-ui/u2-styles/style.scss"
-import type { AppProps , AppContext } from 'next/app'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Provider } from 'react-redux'
+import type { AppProps } from 'next/app'
+import {store} from '../p-app/a2-bll/store'
+import { useRouter } from "next/router";
 
-type THistoryState = {
-    history: Array<string>
+export default function App({ Component, pageProps }: AppProps) {
+  const [history, setHistory] = useState<Array<string>>([]);
+  const router = useRouter()
+  const { asPath } = router;
+  useEffect(() => {
+    if (history[history.length - 1] !== asPath) {
+      setHistory((prev) => ([...prev, asPath] ));
+    }
+  }, [asPath])
+  
+  return (
+    <Provider store={store}>
+      <Component history={history} {...pageProps} />
+    </Provider>
+  )
 }
-
-export default class MyApp extends App {
-
-    // Only uncomment this method if you have blocking data requirements for
-// every single page in your application. This disables the ability to
-// perform automatic static optimization, causing every page in your app to
-// be server-side rendered.
-//
-// MyApp.getInitialProps = async (appContext: AppContext) => {
-//   // calls page's `getInitialProps` and fills `appProps.pageProps`
-//   const appProps = await App.getInitialProps(appContext);
-
-//   return { ...appProps }
-// }
-  
-    state: THistoryState = {
-      history: [] // keep history items in state
-    };
-  
-    componentDidMount() {
-      const { asPath } = this.props.router;
-  
-      // lets add initial route to `history`
-      this.setState((prevState: THistoryState) => ({ history: [...prevState.history, asPath] }));
-    }
-  
-    componentDidUpdate() {
-      const { history } = this.state;
-      const { asPath } = this.props.router;
-  
-      // if current route (`asPath`) does not equal
-      // the latest item in the history,
-      // it is changed so lets save it
-      if (history[history.length - 1] !== asPath) {
-        this.setState((prevState: THistoryState) => ({ history: [...prevState.history, asPath] }));
-      }
-    }
-  
-    render() {
-      const { Component, pageProps } = this.props;
-  
-      return (
-          <Component history={this.state.history} {...pageProps} />
-      );
-    }
-  }
-  
-
 

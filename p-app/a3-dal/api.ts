@@ -11,8 +11,29 @@ export const HMAPI = axios.create(
     }
 )
 
+export const krankAPI = axios.create(
+    {
+        baseURL: "https://localhost:5000/api/",
+        withCredentials: true,
+        headers: {
+            "API-KEY": 'krankenkopf',
+            "Authorization": "Bearer "
+        },
+    }
+)
+
+krankAPI.interceptors.request.use((config) => {
+    config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`
+    return config
+})
+
 export const mockAPI = axios.create(
     {
         baseURL: 'http://localhost:4200/'
     }
 )
+
+export type TResponse<TData = {}> = {
+    data: TData
+    info: Array<string>
+}
