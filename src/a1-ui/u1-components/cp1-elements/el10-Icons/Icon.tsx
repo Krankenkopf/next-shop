@@ -5,9 +5,11 @@ type TDefaulSVGProps = DetailedHTMLProps<SVGAttributes<SVGSVGElement>, SVGSVGEle
 
 type TIconProps = TDefaulSVGProps & {
     name: TIconName
-    className?: string
-    side?: "top" | "right" | "bottom" | "left"
+    className?: string // for colors
+    containerClassName?: string // for transitions, rotating etc
+    side?: "right" | "left"
     size?: "normal" | "full" //normal is full divided by sqrt(2) for proper rotating anims and/or nesting
+    active?: boolean // for icon button variant
     primaryColor?: string
     secondaryColor?: string
     primaryOpacity?: string
@@ -18,8 +20,10 @@ type TIconProps = TDefaulSVGProps & {
 export const Icon: FC<TIconProps> = ({
     name,
     className,
+    containerClassName,
     side = "left",
     size = "normal",
+    active = true,
     primaryColor,
     secondaryColor,
     primaryOpacity,
@@ -27,16 +31,15 @@ export const Icon: FC<TIconProps> = ({
     onClick
 }) => {
     const getContainerStyle = useCallback(() => {
+        let style = `icon-container ${containerClassName ? containerClassName : ""}`
         switch (side) {
-            case "top": return "icon__container _top"
-            case "right": return "icon__container _right"
-            case "bottom": return "icon__container _bottom"
-            case "left": return "icon__container _left"
+            case "right": return `${style} _right`
+            case "left": return `${style} _left`
         }
     }, [side])
 
     const onClickHandler = (e: MouseEvent<SVGSVGElement>) => {
-        onClick && onClick(e)
+        active && onClick && onClick(e)
     }
 
     const ref = useRef(null as unknown as SVGSVGElement)
@@ -51,7 +54,7 @@ export const Icon: FC<TIconProps> = ({
         }
     }, [primaryColor, secondaryColor, primaryOpacity, secondaryOpacity,])
     return (
-        <div className={getContainerStyle()}>
+        <div className={`${getContainerStyle()}`}>
             <svg ref={ref} onClick={onClickHandler} className={`icon icon-${name} ${className} ${size}`}>
                 <use id={`${name}`} xlinkHref={`#${name}`}></use>
             </svg>

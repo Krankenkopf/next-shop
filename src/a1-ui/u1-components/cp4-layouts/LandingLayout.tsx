@@ -3,6 +3,7 @@ import Head from "next/head"
 import { useCallback, useState } from "react"
 import { Footer } from "../cp2-modules/Footer/Footer"
 import { Header } from "../cp2-modules/Header/Header"
+import { ArrowNavSpritesMap } from "../cp2-modules/IconSpritesMaps/ArrowNavSpritesMap"
 import { AuthSpritesMap } from "../cp2-modules/IconSpritesMaps/AuthSpritesMap"
 import { CommerceSpritesMap } from "../cp2-modules/IconSpritesMaps/CommerceSpritesMap"
 import { CommonUISpritesMap } from "../cp2-modules/IconSpritesMaps/CommonUISpritesMap"
@@ -26,6 +27,7 @@ export const LandingLayout = ({ children, title = 'Noname Shop' }: any) => {
                 <meta name="description" content="some description"></meta>
                 <meta charSet="utf-8" />
             </Head>
+            <ArrowNavSpritesMap />
             <CommonUISpritesMap />
             <AuthSpritesMap />
             <FeatureSpritesMap />
