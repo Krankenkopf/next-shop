@@ -1,8 +1,8 @@
 import Link from "next/link"
 import React, { FC } from "react"
-import { Icon } from "../../cp1-elements/el10-Icons/Icon"
-import { Search } from "../AuthModules/Search"
+import { Search } from "./Search"
 import { TModal } from "../Modal/Modals"
+import { SessionMenu } from "./Menu/SessionMenu"
 
 type THeaderProps = {
     revealModal: (modalType: TModal) => void
@@ -29,13 +29,11 @@ export const Header: FC<THeaderProps> = React.memo(({revealModal}) => {
         </h4>
     })
     return (
-        <header>
+        <header id="header">
             <nav>
-                <div className="header-menu-services">
-                    <ul>
+                    <ul className="header-menu-services">
                         {menuServices}
                     </ul>
-                </div>
                 <div className="header-logo">
                     <Link href="/">
                         <div id="logo">
@@ -46,38 +44,7 @@ export const Header: FC<THeaderProps> = React.memo(({revealModal}) => {
                         </div>
                     </Link>
                 </div>
-                <div className="header-menu-session">
-                    <ul>
-                        <li style={{ display: "inline-block" }}>
-                            <a onClick={() => revealModal("signup")}>
-                                <div className="link__decorated">
-                                    <Icon name="user" className="icon__session"/>
-                                    <span>Sign Up</span>
-                                </div>
-                                
-                            </a>
-                        </li>
-                        <li style={{ display: "inline-block" }}>
-                            <a onClick={() => revealModal("login")}>
-                                <div className="link__decorated">
-                                    <Icon name="heart" className="icon__session"/>
-                                    <span>Favorites</span>
-                                </div>
-                                
-                            </a>
-                        </li>
-                        <li style={{ display: "inline-block" }}>
-                            <Link href="/">
-                                <a>
-                                    <div className="link__decorated">
-                                        <Icon name="cart-shopping-fast" className="icon__session"/>
-                                        <span>Cart</span>
-                                    </div>
-                                </a>
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
+                <SessionMenu revealModal={revealModal} />
                 <div className="header-menu-primary">
                     {headerLinks}
                 </div>

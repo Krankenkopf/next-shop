@@ -1,0 +1,96 @@
+.minicart {
+    position: relative;
+    min-width: 350px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    &__carousel {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        margin-bottom: 10px;
+        .carousel__controls {
+            position: relative;
+            margin: 0 auto auto;
+            height: 30px;
+            width: 30px;
+        }
+        .carousel__view {
+            overflow: hidden;
+        }   
+        
+    }
+    // .minicart__items
+    &__items {
+        max-height: 300px;
+        display: flex;
+        flex-direction: column;
+        //flex-wrap: nowrap;
+        
+        transition: all 0.5s ease-out;
+        ul {
+			display: flex;
+            flex-direction: column;
+			flex-wrap: nowrap;
+		}
+    }
+    // .minicart__item
+    &__item {
+        height: 100px;
+        display: flex;
+        font-size: 80%;
+        text-align: left;
+        &__imgContainer {
+            height: 100%;
+            width: 100px;
+            display: flex;
+            img {
+                width: 88px;
+                margin: auto;
+            }
+        }
+        // .minicart__item__desc
+        &__desc {
+            padding: 5px;
+            table {
+                font-size: 90%;
+                display: grid;
+                grid-template-columns: auto auto;
+                * {
+                    margin-right: 2em;
+                }
+            }
+        }
+        
+    }
+    &__total {
+        & > * {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 80%;
+        }
+        footer {
+            position: relative;
+            padding-top: 5px;
+        }
+        footer::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            top: -2px;
+            height: 2px;
+            background-color: #292825;
+        }
+    }
+    &__actions {
+        a {
+            width: 100%;
+            font-variant-caps: initial !important;
+        }
+        button {
+            width: 100%;
+        }
+    }
+}
