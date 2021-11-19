@@ -81,12 +81,8 @@ header#header {
   }
 }
 
-.drop-menu {
-  position: absolute;
-  right: 0;
-  background-color: $softRed;
-  z-index: 10;
-  .session {
+
+  .session-auth {
     position: relative;
     min-width: 250px;
     padding: 15px;
@@ -95,14 +91,19 @@ header#header {
     button {
       margin: 0 auto 10px;
     }
+    ul.logged-in {
+      li {
+        text-align: left;
+      }
+    }
     li {
       text-align: center;
       margin-bottom: 10px;
       &:last-child {
       margin-bottom: 0;
+      }
     }
-    }
-  }
 }
+
 
 
