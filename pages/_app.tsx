@@ -1,11 +1,16 @@
 import "../src/a1-ui/u2-styles/style.scss"
 import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux'
-import type { AppProps } from 'next/app'
-import {store} from '../src/a2-bll/store'
+import type { AppContext, AppInitialProps, AppProps } from 'next/app'
+import {wrapper} from '../src/a2-bll/store'
 import { useRouter } from "next/router";
+import { SpritesMap } from "../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/SpritesMap";
+import { GetServerSideProps } from "next";
+import { TCategoriesResponse } from "../src/a0-common/c1-types/t3-response/TCategoriesResponse";
+import { setCategories } from "../src/a2-bll/categories-reducer";
 
-export default function App({ Component, pageProps }: AppProps) {
+
+const App = ({ Component, pageProps }: AppProps) => {
   const [history, setHistory] = useState<Array<string>>([]);
   const router = useRouter()
   const { asPath } = router;
@@ -15,10 +20,29 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, [asPath])
   
-  return (
-    <Provider store={store}>
-      <Component history={history} {...pageProps} />
-    </Provider>
-  )
+  return <>
+    <SpritesMap />
+    <Component history={history} {...pageProps} />
+  </>
 }
+
+App.getInitialProps = wrapper.getInitialAppProps(store => async ({ Component, ctx }) => {
+  const response = await fetch("http://localhost:4200/categories")
+  const categories = await response.json() as TCategoriesResponse
+  store.dispatch(setCategories(categories))
+  console.log(categories);
+  
+  return {
+    pageProps: {
+      categories
+      // Call page-level getInitialProps
+      // DON'T FORGET TO PROVIDE STORE TO PAGE
+      //...(Component.getInitialProps ? await Component.getInitialProps({ ...ctx, store }) : {}),
+      // Some custom thing for all pages
+      //pathname: ctx.pathname,
+    },
+  }
+})
+export default wrapper.withRedux(App)
+
 

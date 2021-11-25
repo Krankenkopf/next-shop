@@ -4,10 +4,17 @@ import { Sidebar } from "../cp2-modules/Sidebar/Sidebar"
 import { Header } from "../cp2-modules/Header/Header"
 import { Footer } from "../cp2-modules/Footer/Footer"
 import { Modals, TModal } from "../cp2-modules/Modal/Modals"
-import { useCallback, useState } from "react"
-import { useEffect } from "hoist-non-react-statics/node_modules/@types/react"
+import { FC, useCallback, useState } from "react"
+import { TCategory } from "../../../a0-common/c1-types/t1-instance"
 
-export const ProductLayout = ({ children, title = 'Noname Shop' }: any) => {
+type TProductLayoutProps = {
+    title: string
+    category?: TCategory
+    rootCategoryName?: string
+}
+
+export const ProductLayout: FC<TProductLayoutProps> =
+    ({ children, title = 'Noname Shop', category, rootCategoryName }) => {
     const router = useRouter()
     
     const [modal, setModal] = useState<TModal>(null);
@@ -23,7 +30,7 @@ export const ProductLayout = ({ children, title = 'Noname Shop' }: any) => {
             </Head>
             <Header revealModal={revealModal}/>
             <main>
-                <Sidebar />
+                <Sidebar rootCategoryName={rootCategoryName} category={category}/>
                 {children}
             </main>
             <Modals onClose={() => setModal(null)} modal={modal} revealModal={revealModal} />

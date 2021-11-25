@@ -9,3 +9,16 @@ export const toLiLinkA = (src: Array<any>, className: string) => {
         )
     })    
 }
+
+export const _toLiLinkA = (src: Array<any>, parentPath: string, className: string) => {
+    return src.map((item) => {
+        const href = `${parentPath}/${item.CategoryValue}`
+        return (
+            <li key={item.CategoryValue} className={className}>
+                <a href={href} title={item.CatName}>
+                    {item.CatName}
+                </a>
+            </li>
+        )
+    })
+}

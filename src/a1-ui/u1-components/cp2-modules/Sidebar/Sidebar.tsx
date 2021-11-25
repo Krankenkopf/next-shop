@@ -1,8 +1,14 @@
-import React from "react"
-import { toLiLinkA } from "../../../../a0-common/c4-utils/uimapper"
+import React, { FC } from "react"
+import { TCategory } from "../../../../a0-common/c1-types/t1-instance"
+import { toLiLinkA, _toLiLinkA } from "../../../../a0-common/c4-utils/uimapper"
 import css from "./Sidebar.module.scss"
 
-export const Sidebar = () => {
+type TSidebarProps = {
+    category?: TCategory
+    rootCategoryName?: string
+}
+
+export const Sidebar: FC<TSidebarProps> = ({ category, rootCategoryName }) => {
     const srcs = React.useMemo(() => {
         return {
             newArrivals: [
@@ -72,59 +78,80 @@ export const Sidebar = () => {
                 { title: "Loungewear", href: "/" },
             ]
         }
-    }, [])   
-     
+    }, [])
+    let mappedCategories: JSX.Element[] | undefined
+    if (category && category.CategoriesArray) {
+        mappedCategories = category.CategoriesArray.map((category, i, arr) => {
+            let root = `/${rootCategoryName}/${category.CategoryValue}`
+            return (
+                <li>
+                    <h4>{category.CatName}</h4>
+                    <ul>
+                        {category.CategoriesArray && _toLiLinkA(category.CategoriesArray, root, css.link)}
+                    </ul>
+                </li>
+            )
+        })
+    }
+
     return (
         <div className={css.sidebar}>
             <ul>
-                <li>
-                    <h4>New Arrivals</h4>
-                    <ul>
-                        {toLiLinkA(srcs.newArrivals, css.link)}
-                    </ul>
-                </li>
-                <li>
-                    <h4>Trending Now</h4>
-                    <ul>
-                        {toLiLinkA(srcs.trendingNow, css.link)}
-                    </ul>
-                </li>
-                <li>
-                    <h4>Offers</h4>
-                    <ul>
-                        {toLiLinkA(srcs.offers, css.link)}
-                    </ul>
-                </li>
-                <li>
-                    <h4>Shop by Product</h4>
-                    <ul>
-                        {toLiLinkA(srcs.shopByProduct, css.link)}
-                    </ul>
-                </li>
-                <li>
-                    <h4>Gift Cards</h4>
-                    <ul>
-                        {toLiLinkA(srcs.giftCards, css.link)}
-                    </ul>
-                </li>   
-                <li>
-                    <h4>Sustainability</h4>
-                    <ul>
-                        {toLiLinkA(srcs.sustainability, css.link)}
-                    </ul>
-                </li>
-                <li>
-                    <h4>Magazine</h4>
-                    <ul>
-                        {toLiLinkA(srcs.magasine, css.link)}
-                    </ul>
-                </li>
-                <li>
-                    <h4>Shop by Occasion</h4>
-                    <ul>
-                        {toLiLinkA(srcs.shopByOccasion, css.link)}
-                    </ul>
-                </li>              
+                {category
+                    ? <>
+                        {mappedCategories}
+                    </>
+                    : <>
+                        <li>
+                            <h4>New Arrivals</h4>
+                            <ul>
+                                {toLiLinkA(srcs.newArrivals, css.link)}
+                            </ul>
+                        </li>
+                        <li>
+                            <h4>Trending Now</h4>
+                            <ul>
+                                {toLiLinkA(srcs.trendingNow, css.link)}
+                            </ul>
+                        </li>
+                        <li>
+                            <h4>Offers</h4>
+                            <ul>
+                                {toLiLinkA(srcs.offers, css.link)}
+                            </ul>
+                        </li>
+                        <li>
+                            <h4>Shop by Product</h4>
+                            <ul>
+                                {toLiLinkA(srcs.shopByProduct, css.link)}
+                            </ul>
+                        </li>
+                        <li>
+                            <h4>Gift Cards</h4>
+                            <ul>
+                                {toLiLinkA(srcs.giftCards, css.link)}
+                            </ul>
+                        </li>
+                        <li>
+                            <h4>Sustainability</h4>
+                            <ul>
+                                {toLiLinkA(srcs.sustainability, css.link)}
+                            </ul>
+                        </li>
+                        <li>
+                            <h4>Magazine</h4>
+                            <ul>
+                                {toLiLinkA(srcs.magasine, css.link)}
+                            </ul>
+                        </li>
+                        <li>
+                            <h4>Shop by Occasion</h4>
+                            <ul>
+                                {toLiLinkA(srcs.shopByOccasion, css.link)}
+                            </ul>
+                        </li>
+                    </>
+                }
             </ul>
         </div>
     )
