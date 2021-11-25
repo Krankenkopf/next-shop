@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+
+import React, { FC, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Button from "../../cp1-elements/el02-Button/Button";
 import { TModal } from "../Modal/Modals";
@@ -9,7 +10,10 @@ type TLoginProps = {
     revealModal: (modalType: TModal) => void
 }
 
-export const Login = (props: TLoginProps) => {
+export const Login: FC<TLoginProps> = ({ revealModal }) => {
+    const onButtonSignupClick = useCallback(() => {
+        revealModal("signup")
+    }, [])
     return (
         <div className="login">
             <header>
@@ -17,11 +21,11 @@ export const Login = (props: TLoginProps) => {
                 <p className="text center">Become a Member — you'll enjoy exclusive deals, offers, invites and rewards.</p>
             </header>
             <div className="login__form">
-                <LoginForm />
+                <LoginForm revealModal={revealModal}/>
             </div>
             <div className="login__signup">
-                <Button onClick={() => props.revealModal("signup")}
-                    variant={'ok'}>
+                <Button onClick={onButtonSignupClick}
+                    variant={'ok__alt'}>
                     Become a Member
                 </Button>
             </div>
