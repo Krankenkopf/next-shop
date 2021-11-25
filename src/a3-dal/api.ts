@@ -1,8 +1,11 @@
 import axios from 'axios';
 
+const HMAPI_URL = "https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/"
+export const krankAPI_URL = "http://localhost:5000/api/"
+
 export const HMAPI = axios.create(
     {
-        baseURL: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/',
+        baseURL: HMAPI_URL,
         //withCredentials: true,
         headers: {
             'x-rapidapi-host': 'apidojo-hm-hennes-mauritz-v1.p.rapidapi.com',
@@ -13,7 +16,7 @@ export const HMAPI = axios.create(
 
 export const krankAPI = axios.create(
     {
-        baseURL: "https://localhost:5000/api/",
+        baseURL: krankAPI_URL,
         withCredentials: true,
         headers: {
             "API-KEY": 'krankenkopf',
@@ -22,10 +25,7 @@ export const krankAPI = axios.create(
     }
 )
 
-krankAPI.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`
-    return config
-})
+
 
 export const mockAPI = axios.create(
     {
@@ -35,5 +35,6 @@ export const mockAPI = axios.create(
 
 export type TResponse<TData = {}> = {
     data: TData
+    auth: {accessToken: string, refreshToken: string}
     info: Array<string>
 }
