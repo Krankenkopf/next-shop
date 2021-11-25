@@ -1,11 +1,13 @@
+import { Nullable } from "../a0-common/c1-types/t1-instance"
+
 const initialState = {
     status: "idle" as TRequestStatus,
-    error: null as string | null,
+    error: null as Nullable<string>,
     isInitialized: false,
     needUpdate: true
 }
 
-export const appReducer = (state: AppStateType = initialState, action: TAppActions): AppStateType => {
+export const appReducer = (state: TAppState = initialState, action: TAppActions): TAppState => {
     switch (action.type) {
         case appActionVariables.SET_STATUS:
             return {...state, status: action.status}
@@ -28,7 +30,7 @@ export const setNeedUpdate = (status: boolean) => ({type: appActionVariables.SET
 
 // types
 export type TRequestStatus = "idle" | "loading" | "succeeded" | "failed"
-export type AppStateType = typeof initialState
+export type TAppState = typeof initialState
 export type TAppActions =
     ReturnType<typeof setAppStatus>
     | ReturnType<typeof setError>
