@@ -88,11 +88,19 @@
     padding-top: 10px;
     margin-bottom: 20px;
   }
-  &__login {
+  .auth__checkbox {
+    margin-bottom: 10px;
+  }
+  .signup__login {
     text-align: center;
   }
-  &__signup {
-    text-align: center;
+  .login__forgot {
+    text-align: right;
+  }
+  .login__signup {
+    height: 40px;
+    display: flex;
+    justify-content: center;
   }
 }
 
@@ -124,7 +132,7 @@ form {
     //font-size: 75%;
     transform: translate(0, 0);
   }
-  .icon__container {
+  .icon-container {
     grid-area: input;
     height: calc(100% - 2px);
   }

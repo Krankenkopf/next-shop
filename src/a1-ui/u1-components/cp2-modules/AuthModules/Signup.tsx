@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { TAuthState } from "../../../../a2-bll/auth-reducer";
-import { TStore } from "../../../../a2-bll/store";
-import { TModal } from "../Modal/Modals";
+import { TState } from "../../../../a2-bll/store";
+import { TModal, TRANSITION_TIME } from "../Modal/Modals";
 import { SignupForm } from "./Forms/SignupForm";
 
 
@@ -13,19 +13,20 @@ type TSignupProps = {
 }
 
 export const Signup = ({revealModal, freezePrevious, closeModal}: TSignupProps) => {
-    const { signupUserData, isSignupPassConfirmed, isRegistered } = useSelector<TStore, TAuthState>((state) => state.auth)
-
-    
+    const { signupUserData, isSignupPassConfirmed, isLoggedIn } = useSelector<TState, TAuthState>((state) => state.auth)
+  
     useEffect(() => {
-        if (!isSignupPassConfirmed && signupUserData) {
-            console.log("freezePrevious(signup)  revealModal(signupPassUnconfirmed)");
+        if (!isSignupPassConfirmed && signupUserData && !isLoggedIn) {
+            // when user setted signupData to state
             freezePrevious("signup")
             revealModal("signupPassUnconfirmed")
         }
-        if (isRegistered) {
-            closeModal("signup")
+        if (isLoggedIn) {
+            console.log(signupUserData, isSignupPassConfirmed, isLoggedIn)
+            closeModal("signup")  
         }
-    }, [signupUserData, isSignupPassConfirmed, isRegistered])
+
+    }, [signupUserData, isSignupPassConfirmed, isLoggedIn])
     return (
         <div className="signup">
             <header>

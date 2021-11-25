@@ -1,48 +1,156 @@
-import React from "react"
-import { useForm, Controller, SubmitHandler } from "react-hook-form"
+import React, { useState } from "react"
+import { useForm, SubmitHandler } from "react-hook-form"
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
 import { Input } from "../../../cp1-elements/el01-Input/Input";
 import Button from "../../../cp1-elements/el02-Button/Button";
+import { Icon } from "../../../cp1-elements/el10-Icons/Icon";
+import { TModal } from "../../Modal/Modals";
+import { useDispatch } from "react-redux";
+import { login, setLoginUserData} from "../../../../../a2-bll/auth-reducer";
+import { TLoginData } from "../../../../../a3-dal/krank/auth-api";
 import { Checkbox } from "../../../cp1-elements/el03-Checkbox/Checkbox";
 
-type LoginFormData = {
-  email: string;
-  password: string;
-  iceCreamType: {label: string; value: string }
+export type LoginFormData = {
+  email: string
+  password: string
+  rememberMe?: boolean
 }
 
-export const LoginForm = () => {
-  //const { control, handleSubmit } = useForm<LoginFormData>();
-  const { register, control, handleSubmit } = useForm<LoginFormData>({
-    mode: "onBlur"
+type TLoginFormProps = {
+  revealModal: (modalType: TModal) => void
+}
+
+const ok = "#00bb00"
+const error = "#ff0000"
+const initial = "#292825"
+
+
+const signupSchema = yup.object().shape({
+  email: yup
+    .string()
+    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Invalid email address')
+    .required("Email is required"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(4, `Password must be at least 4 symbols`),
+})
+
+export const LoginForm = ({revealModal}: TLoginFormProps) => {
+  const dispatch = useDispatch()
+  const {
+    register, handleSubmit, getValues,
+    formState: { errors, dirtyFields, },
+    reset, clearErrors,
+  } = useForm<LoginFormData>({
+    mode: "onChange", // important for dynamical tips
+    resolver: yupResolver(signupSchema, { abortEarly: false }),
+    criteriaMode: "all", // important for dynamical tips
   });
+  const initialHelperState = {
+    email: true,
+    password: true,
+  }
+  const [helperState, setHelperState] = useState(initialHelperState) // errors blocked in
+  const [dashed, setDashed] = useState<keyof LoginFormData | null>(null)
+
+
+  const [passwordShown, setPasswordShown] = useState(false)
+  const togglePasswordVisibility = () => {
+    setPasswordShown(!passwordShown)
+  }
 
   const onSubmit: SubmitHandler<LoginFormData> = data => {
-    console.log(data)
-  };
+    const loginData: TLoginData = {
+      email: data.email,
+      password: data.password,
+    }
+    dispatch(setLoginUserData(loginData))
+    dispatch(login())
+  }
+  const changeFocusHandler = (name: keyof LoginFormData, focus: boolean) => {
+    // for first field changing errors won't show
+    !dirtyFields[name] && setHelperState((prev) => ({ ...prev, [name]: !focus }))
+    // since field touched after first blur, all errors will calculated onChange and always show
+    dirtyFields[name] && setHelperState(initialHelperState)
+    // thick/thin ...might be color customized
+    setDashed(focus ? name : null)
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-     {/*  <Controller
-        name="email"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <div className="field iconized__LR">
-            <Input {...field} />
-          </div>
-        )}
-      />
-      <Controller
-        name="password"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <div className="field iconized__LR">
-            <Input {...field} />
-          </div>
-        )}
-      /> */}
-      <div className="auth__checkbox">
+      <section className="field iconized__LR">
+        <label className="field__label">Email</label>
+        {/* true || false || true - mounted */}
+        {/* true || true || true - focused */}
+        {/* false || true || false -errors changed */}
+        {/* false || false || false - errors blurred */}
+        {/* true || false || false - changed no errors */}
+        {(!errors.email || !helperState.email || !dirtyFields.email)
+          ? (!errors.email && dirtyFields.email)
+            ? <Icon name="envelope" primaryOpacity="1" secondaryOpacity="1" primaryColor={ok} secondaryColor={ok} />
+            : <Icon name="envelope" primaryOpacity="1" secondaryOpacity="1" primaryColor={initial} secondaryColor={initial} />
+          : null}
+        {errors.email && helperState.email && <Icon name="envelope" primaryOpacity="0.5" secondaryOpacity="0.5" />}
+        {errors.email && helperState.email && <Icon name="circle" size="full" primaryColor={error} secondaryColor={error} />}
+        {errors.email && helperState.email && <Icon name="exclamation" primaryColor={error} secondaryColor={error} />}
+        {(!errors.email && dirtyFields.email) && <Icon name="check" side="right" size="full" primaryColor={ok} secondaryColor={ok} />}
+        <div className="field__input">
+          <Input {...register("email", { value: "test@test.com" })}
+            onChangeFocus={(state) => { changeFocusHandler("email", state) }}
+            name="email"
+          />
+        </div>
+        <div className={`field__dash ${dashed === "email" && "thick"}`}></div>
+        <div className="field__error">
+          {helperState.email
+            && dirtyFields.email
+            && errors.email
+            && errors.email.message}
+        </div>
+      </section>
+      <section className="field iconized__LR">
+        <label className="field__label">Password</label>
+        {/* true || false || true - mounted */}
+        {/* true || true || true - focused */}
+        {/* false || true || false -errors changed */}
+        {/* false || false || false - errors blurred */}
+        {/* true || false || false - changed no errors */}
+        {(!errors.password || !helperState.password || !dirtyFields.password)
+          ? (!errors.password && dirtyFields.password)
+            ? <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={ok} secondaryColor={ok} />
+            : <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={initial} secondaryColor={initial} />
+          : null}
+
+        {errors.password && helperState.password && <Icon name="key" primaryOpacity="0.5" secondaryOpacity="0.5" />}
+        {errors.password && helperState.password && <Icon name="circle" size="full" primaryColor={error} secondaryColor={error} />}
+        {errors.password && helperState.password && <Icon name="exclamation" primaryColor={error} secondaryColor={error} />}
+
+        {passwordShown
+          ? <Icon name="eye" onClick={togglePasswordVisibility} side="right" size="full" primaryColor={initial} secondaryColor={initial} primaryOpacity="1" secondaryOpacity="1" />
+          : <Icon name="eye-slash" onClick={togglePasswordVisibility} side="right" size="full" primaryColor={initial} secondaryColor={initial} primaryOpacity="0.5" secondaryOpacity="0.5" />}
+
+        <div className="field__input">
+          <Input {...register("password", { value: "test1" })}
+            type={passwordShown ? "text" : "password"}
+            name="password"
+            onChangeFocus={(state) => { changeFocusHandler("password", state) }} />
+        </div>
+        <div className={`field__dash ${dashed === "password" && "thick"}`}></div>
+        <div className="field__error">
+          {helperState.password
+            && dirtyFields.password
+            && errors.password
+            // order of OR statement is important! other errors used for dynamic tips
+            && (errors.password?.types?.required || errors.password?.types?.min)}
+        </div>
+      </section>
+      <div className="login__forgot">
+        <a onClick={() => revealModal("passRecovery")}><em>Forgot Password?</em></a>
+      </div>
+     <div className="auth__checkbox">
         <Checkbox>Remember Me</Checkbox>
       </div>
       <div className="login__submit">
@@ -51,3 +159,5 @@ export const LoginForm = () => {
     </form>
   )
 }
+
+

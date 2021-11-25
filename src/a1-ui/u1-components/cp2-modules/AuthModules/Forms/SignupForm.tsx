@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react"
-import { useForm, Controller, SubmitHandler, Resolver } from "react-hook-form"
+import React, { useEffect, useState } from "react"
+import { useForm, SubmitHandler } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
@@ -36,10 +36,6 @@ const signupSchema = yup.object().shape({
         .string()
         .required("Password is required")
         .min(4, `Password must be at least 4 symbols`),
-        //.matches(RegExp('(.*[a-z].*)'), 'lowercase')
-        //.matches(RegExp('(.*[A-Z].*)'), 'uppercase')
-        //.matches(RegExp('(.*\\d.*)'), 'number')
-        //.matches(/[ !"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/, 'special'),
     passConfirmed: yup
         .string()
         .notRequired()  
@@ -160,12 +156,12 @@ export const SignupForm = ({ revealModal}: TSignupFormProps) => {
                 {/* false || false || false - errors blurred */}
                 {/* true || false || false - changed no errors */}
                 {(!errors.password || !helperState.password || !dirtyFields.password)
-                    ? (!(errors.password?.types?.required || errors.password?.types?.min) && dirtyFields.password)
+                    ? (!errors.password && dirtyFields.password)
                         ? (errors.password || passOptionals)
                             ? <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={optional} secondaryColor={optional} />
                             : <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={ok} secondaryColor={ok} />
                         : <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={initial} secondaryColor={initial}/>
-                    : (errors.password?.types?.required || errors.password?.types?.min)
+                    : (errors.password)
                         ? null
                         : <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={optional} secondaryColor={optional} />}
                 
