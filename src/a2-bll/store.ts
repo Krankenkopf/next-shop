@@ -1,15 +1,13 @@
+import { cartReducer, TCartActions, TCartState } from './cart-reducer'
+import { regionsReducer, TRegionsActions, TRegionsState } from './regions-reducer'
 import { AnyAction, applyMiddleware, combineReducers, compose, createStore, Store } from "redux";
 import { createWrapper, Context, HYDRATE } from 'next-redux-wrapper';
 import thunkMiddleware, {ThunkAction} from "redux-thunk";
 import {appReducer, TAppActions, TAppState} from "./app-reducer";
 import {authReducer, TAuthActions, TAuthState} from "./auth-reducer";
 import { categoriesReducer, TCategoriesActions, TCategoriesState } from "./categories-reducer";
-
-export type TState = {
-    app: TAppState,
-    auth: TAuthState,
-    categories: TCategoriesState,
-};
+import { navigationReducer, TNavigationActions, TNavigationState } from "./navigation-reducer";
+import { filtersReducer, TFiltersActions, TFiltersState } from "./filters-reducer";
 
 const composeEnhancers =
     typeof window === 'object' && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -18,7 +16,7 @@ const composeEnhancers =
 
 const enhancer = composeEnhancers(applyMiddleware(thunkMiddleware),
     // other store enhancers if any
-);
+)
 
 const rootReducer = (state: TState | undefined, action: AnyAction): TState => {
     switch (action.type) {
@@ -27,7 +25,7 @@ const rootReducer = (state: TState | undefined, action: AnyAction): TState => {
                 ...state, // use previous state
                 ...action.payload, // apply delta from hydration
             }
-            //if (state.categories) nextState.categories = state.categories // preserve count value on client side navigation
+            //if (state.categories) nextState.categories = state.categories // preserve value on client side navigation
             return nextState
 
         default: {
@@ -35,36 +33,37 @@ const rootReducer = (state: TState | undefined, action: AnyAction): TState => {
                 app: appReducer,
                 auth: authReducer,
                 categories: categoriesReducer,
-            });
+                navigation: navigationReducer,
+                filters: filtersReducer,
+                regions: regionsReducer,
+                cart: cartReducer,
+            })
             return combinedReducer(state, action);
         }
     }
-};
-export type RootState = ReturnType<typeof rootReducer>;
+}
 
-/* const reducer = (state: TState, action: AnyAction) => {
-    if (action.type === HYDRATE) {
-        const nextState = {
-            ...state, // use previous state
-            ...action.payload, // apply delta from hydration
-        }
-        //if (state.categories) nextState.categories = state.categories // preserve count value on client side navigation
-        return nextState
-    } else {
-        return rootReducer(state, action)
-    }
-} */
+const initStore = () => createStore(rootReducer, enhancer)
+
+export const wrapper = createWrapper<Store<TState>>(initStore, { debug: false });
 
 // types
 export type AppDispatch = typeof initStore
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, TState, unknown, TActions>
-export type TActions =
-    TAuthActions
-    | TAppActions
-    | TCategoriesActions
-
-const initStore = () => {
-    return createStore(rootReducer, enhancer)
+export type RootState = ReturnType<typeof rootReducer>
+export type TState = {
+    app: TAppState,
+    auth: TAuthState,
+    categories: TCategoriesState
+    navigation: TNavigationState
+    filters: TFiltersState
+    regions: TRegionsState
+    cart: TCartState
 }
+export type TActions = TAppActions
+    | TAuthActions      | TCategoriesActions    | TNavigationActions
+    | TFiltersActions   | TRegionsActions       | TCartActions
+    
+    
 
-export const wrapper = createWrapper<Store<TState>>(initStore, { debug: true });
+
