@@ -2,7 +2,7 @@ import { TCategoriesResponse} from './../a0-common/c1-types/t3-response/TCategor
 import { Nullable, TRootCategory } from './../a0-common/c1-types/t1-instance/index'
 
 
-const initialState = {
+const initialState = { // keys must be equal to pages url
     ladies: null as Nullable<TRootCategory<"ladies", ["ladies_all"]>>,
     divided: null as Nullable<TRootCategory<"divided", ["ladies_divided"]>>,
     men: null as Nullable<TRootCategory<"men", ["men_all"]>>,

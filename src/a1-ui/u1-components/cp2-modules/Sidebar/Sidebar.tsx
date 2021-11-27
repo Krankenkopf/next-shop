@@ -79,18 +79,18 @@ export const Sidebar: FC<TSidebarProps> = ({ category, rootCategoryName }) => {
             ]
         }
     }, [])
-    let mappedCategories: JSX.Element[] | undefined
+    let mappedCategories: Array<JSX.Element | null> | undefined
     if (category && category.CategoriesArray) {
         mappedCategories = category.CategoriesArray.map((category, i, arr) => {
             let root = `/${rootCategoryName}/${category.CategoryValue}`
-            return (
-                <li>
+            return category.CategoriesArray
+                ? <li key={category.CategoryValue}>
                     <h4>{category.CatName}</h4>
                     <ul>
-                        {category.CategoriesArray && _toLiLinkA(category.CategoriesArray, root, css.link)}
+                        {_toLiLinkA(category.CategoriesArray, root, css.link)}
                     </ul>
                 </li>
-            )
+                : null /* if cat has no array, its title will not displayed*/
         })
     }
 
