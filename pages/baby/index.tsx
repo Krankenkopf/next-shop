@@ -5,15 +5,15 @@ import { useAppSelector } from "../../src/a0-common/c3-hooks"
 import { ProductLayout } from "../../src/a1-ui/u1-components/cp4-layouts/ProductLayout"
 import { selectPageCategory, selectPageMeta } from "../../src/a2-bll/selectors"
 
-export default function Divided() {
-    const category = useAppSelector<TCategory>(state => selectPageCategory(state, "divided"))
-    const pageMeta = useAppSelector<TPageMeta>(state => selectPageMeta(state, "divided"))
+export default function Baby() {
+    const category = useAppSelector<TCategory>(state => selectPageCategory(state, "baby"))
+    const pageMeta = useAppSelector<TPageMeta>(state => selectPageMeta(state, "baby"))
     return (
         <ProductLayout title={pageMeta.title}
             category={category}
             rootCategoryName={pageMeta.path}>
             <Head>
-                <title>Divided | Noname Shop</title>
+                <title>Babies | Noname Shop</title>
             </Head>
             <main>
                 

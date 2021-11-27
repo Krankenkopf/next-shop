@@ -10,8 +10,8 @@ type TMiniCartProps = {
 }
 
 export const MiniCart = () => {
-    const items = [10, 20, 30, 90]
-    const mappedItems = items.map((el) => {
+    const items: Array<any> = []
+    const mappedItems = items.length && items.map((el) => {
         return (
             <li key={el} className={css.minicart__item}>
                 <figure className={css.minicart__item__imgContainer}>
@@ -36,11 +36,13 @@ export const MiniCart = () => {
     const setStageHandler = (e: React.MouseEvent<SVGSVGElement>, direction: number) => {
         setStage((prev) => prev + direction)
     }
-    const orderValue = items.reduce((acc, i) => acc + i)
+    const orderValue = items.length && items.reduce((acc, i) => acc + i)
     const deliveryCost = 0
     return (
         <div className={css.minicart}>
-            <div className={css.minicart__carousel}>
+            {items.length
+                ? <>
+                     <div className={css.minicart__carousel}>
                 {items.length > 3 && <div className={css.carousel__controls}>
                     <Icon name="chevron-right"
                         className={`${stage === 0 ? "inactive" : ""}`}
@@ -95,6 +97,11 @@ export const MiniCart = () => {
                     </Link>
                 </div>
             </div>
+                </>
+                : <div className={css.minicart__info__empty}>
+                    <strong>Your cart is empty</strong> 
+                </div>}
+           
         </div>
     )
 }

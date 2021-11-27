@@ -1,3 +1,6 @@
+import Link from "next/link"
+import React from "react"
+
 export const toLiLinkA = (src: Array<any>, className: string) => {
     return src.map((item) => {
         return (
@@ -15,9 +18,11 @@ export const _toLiLinkA = (src: Array<any>, parentPath: string, className: strin
         const href = `${parentPath}/${item.CategoryValue}`
         return (
             <li key={item.CategoryValue} className={className}>
-                <a href={href} title={item.CatName}>
-                    {item.CatName}
-                </a>
+                <Link href={href}>
+                    <a title={item.CatName}>
+                        {item.CatName}
+                    </a>
+                </Link>  
             </li>
         )
     })

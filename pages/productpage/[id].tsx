@@ -19,14 +19,14 @@ export default function ProductPage({ history, product }: TProductPage)  {
     console.log(jsonParser());
     
     const backHadler = () => {
-        if (!history || !history.length || history.length === 1) { //fix that!
+        if (!history || !history.length || history.length === 1) { // TODO: fix that!
             router.push('/');
         } else {
             router.push(history[history.length - 2]);
         }
     }
     return (
-        <ProductLayout>
+        <ProductLayout title={product.name}>
             <h1>{`Product ${router.query.id}`}</h1>
             <button onClick={backHadler}>Go back</button>
             <ProductDetail code={product.articles[0].code}
