@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import { FC } from "react"
-import { SellingAttribute } from "../../../../a0-common/c1-types/t3-response/TProductsResponse"
+import { SellingAttribute } from "../../../../a0-common/c1-types/t1-instance/TProduct"
 import css from "./ProductItem.module.scss"
 
 type TProductItems = {
@@ -19,7 +19,7 @@ export const ProductItem: FC<TProductItems> = (props) => {
     const revealItem = () => {
         router.push('/productpage/[id]', `/productpage/${code}`)
     }
-    const colorVariants = rgbColors.map((color: string, i: number) => {
+    const colorVariants = rgbColors && rgbColors.map((color: string, i: number) => {
         return (
             <li key={color+i} className={css.colorVariant} >
                 <a href="/ru_ru/productpage.1017075001.html"

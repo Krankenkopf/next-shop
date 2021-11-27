@@ -1,11 +1,9 @@
 import "../src/a1-ui/u2-styles/style.scss"
 import React, { useEffect, useState } from 'react';
-import { Provider } from 'react-redux'
-import type { AppContext, AppInitialProps, AppProps } from 'next/app'
+import type { AppProps } from 'next/app'
 import {wrapper} from '../src/a2-bll/store'
 import { useRouter } from "next/router";
 import { SpritesMap } from "../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/SpritesMap";
-import { GetServerSideProps } from "next";
 import { TCategoriesResponse } from "../src/a0-common/c1-types/t3-response/TCategoriesResponse";
 import { setCategories } from "../src/a2-bll/categories-reducer";
 
@@ -30,7 +28,6 @@ App.getInitialProps = wrapper.getInitialAppProps(store => async ({ Component, ct
   const response = await fetch("http://localhost:4200/categories")
   const categories = await response.json() as TCategoriesResponse
   store.dispatch(setCategories(categories))
-  console.log(categories);
   
   return {
     pageProps: {

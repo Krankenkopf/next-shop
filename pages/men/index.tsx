@@ -1,19 +1,19 @@
-import { AxiosResponse } from "axios"
 import { GetServerSideProps } from "next"
 import Router from "next/router"
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
 import { Nullable, TCategory, TPageMeta } from "../../src/a0-common/c1-types/t1-instance"
-import { TProduct, TProductsResponse } from "../../src/a0-common/c1-types/t3-response/TProductsResponse"
+import { CountryCodes, LanguageCodes } from "../../src/a0-common/c1-types/t1-instance/regions"
+import { TProduct } from "../../src/a0-common/c1-types/t1-instance/TProduct"
+import { TGetProductsListRequestRequiredData } from "../../src/a0-common/c1-types/t2-request"
+
 import { useAppSelector } from "../../src/a0-common/c3-hooks"
 import { ProductItem } from "../../src/a1-ui/u1-components/cp2-modules/ProductItem/ProductItem"
 import { ProductLayout } from "../../src/a1-ui/u1-components/cp4-layouts/ProductLayout"
-import { TCategoriesState } from "../../src/a2-bll/categories-reducer"
 import { selectPageCategory, selectPageMeta } from "../../src/a2-bll/selectors"
-import { TState } from "../../src/a2-bll/store"
-import { CountryCodes, LanguageCodes, ProductsAPI, TGetProductsListRequestRequiredData } from "../../src/a3-dal/hm/products-api"
 
-type TMenSSProps = TProductsResponse
+type TMenSSProps = {
+    products: Nullable<Array<TProduct>>
+}
 type TMenProps = {
     history: Array<string>
 }
@@ -92,7 +92,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req }) => 
         const response = await fetch("http://localhost:4200/results")
         //const response = await ProductsAPI.getList(requiredParams, {})
         //const products = response.data.results
-        const products = await response.json()
+        const products = await response.json() as Nullable<Array<TProduct>>
         return { props: {products} }
     } catch (e) {
         console.log(e);
