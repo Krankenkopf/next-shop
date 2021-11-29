@@ -7,7 +7,7 @@ import { TProduct } from "../../src/a0-common/c1-types/t1-instance/TProduct"
 import { TGetProductsListRequestRequiredData } from "../../src/a0-common/c1-types/t2-request"
 
 import { useAppSelector } from "../../src/a0-common/c3-hooks"
-import { ProductItem } from "../../src/a1-ui/u1-components/cp2-modules/ProductItem/ProductItem"
+import { ProductItem } from "../../src/a1-ui/u1-components/cp2-modules/ProductModules/ProductItem/ProductItem"
 import { ProductLayout } from "../../src/a1-ui/u1-components/cp4-layouts/ProductLayout"
 import { selectPageCategory, selectPageMeta } from "../../src/a2-bll/selectors"
 

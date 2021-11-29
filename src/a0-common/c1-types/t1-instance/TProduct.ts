@@ -1,3 +1,5 @@
+import { Concept, TColor } from "./TProductDetail"
+
 export type TProduct = {
     code: string;
     name: string;
@@ -50,7 +52,7 @@ export interface Article {
     ecoTaxValue: number;
     redirectToPdp: boolean;
     comingSoon: boolean;
-    color: Color;
+    color: TColor;
     rgbColor: string;
     genArticle?: string;
     environmentalMarkers?: string[];
@@ -70,13 +72,6 @@ export interface Media {
 
 type ImageSrc = {
     url: string
-}
-
-export interface Color {
-    code: string;
-    text: string;
-    filterName: string;
-    hybrisCode: string;
 }
 
 export interface Marker {
@@ -106,10 +101,6 @@ export enum PriceType {
 
 export enum CategoryName {
     Men = "Men",
-}
-
-export enum Concept {
-    HMMan = "H&M MAN",
 }
 
 export interface VariantSize {

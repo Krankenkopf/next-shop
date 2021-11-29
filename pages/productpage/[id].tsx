@@ -4,7 +4,7 @@ import { useRouter } from "next/dist/client/router"
 import Router from "next/router";
 import { TProduct } from "../../src/a0-common/c1-types/t1-instance/TProduct";
 import { jsonParser } from "../../src/a0-common/c4-utils/jsonParser";
-import { ProductDetail } from "../../src/a1-ui/u1-components/cp2-modules/ProductDetail/ProductDetail";
+import { ProductDetail } from "../../src/a1-ui/u1-components/cp2-modules/ProductModules/ProductDetail/ProductDetail";
 import { ProductLayout } from "../../src/a1-ui/u1-components/cp4-layouts/ProductLayout";
 
 type TProductPage = {
