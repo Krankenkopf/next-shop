@@ -8,8 +8,7 @@ import Button from "../../../cp1-elements/el02-Button/Button";
 import { Icon } from "../../../cp1-elements/el10-Icons/Icon";
 import { TModal } from "../../Modal/Modals";
 import { useDispatch } from "react-redux";
-import { login, setLoginUserData } from "../../../../../a2-bll/auth-reducer";
-import { TLoginData } from "../../../../../a3-dal/krank/auth-api";
+import { IconColor } from "../../../../../a0-common/c1-types/t1-instance";
 
 export type EmailFormData = {
     email: string
@@ -19,11 +18,6 @@ type TPassRecoveryFormProps = {
     revealModal: (modalType: TModal) => void
     closeModal: (modalType: TModal) => void
 }
-
-const ok = "#00bb00"
-const error = "#ff0000"
-const initial = "#292825"
-
 
 const passRecoverySchema = yup.object().shape({
     email: yup
@@ -79,13 +73,13 @@ export const PassRecoveryForm: FC<TPassRecoveryFormProps> = ({revealModal, close
                 {/* true || false || false - changed no errors */}
                 {(!errors.email || !helperState.email || !dirtyFields.email)
                     ? (!errors.email && dirtyFields.email)
-                        ? <Icon name="envelope" primaryOpacity="1" secondaryOpacity="1" primaryColor={ok} secondaryColor={ok} />
-                        : <Icon name="envelope" primaryOpacity="1" secondaryOpacity="1" primaryColor={initial} secondaryColor={initial} />
+                        ? <Icon name="envelope" primaryOpacity="1" secondaryOpacity="1" primaryColor={IconColor.OK} secondaryColor={IconColor.OK} />
+                        : <Icon name="envelope" primaryOpacity="1" secondaryOpacity="1" primaryColor={IconColor.INITIAL} secondaryColor={IconColor.INITIAL} />
                     : null}
                 {errors.email && helperState.email && <Icon name="envelope" primaryOpacity="0.5" secondaryOpacity="0.5" />}
-                {errors.email && helperState.email && <Icon name="circle" size="full" primaryColor={error} secondaryColor={error} />}
-                {errors.email && helperState.email && <Icon name="exclamation" primaryColor={error} secondaryColor={error} />}
-                {(!errors.email && dirtyFields.email) && <Icon name="check" side="right" size="full" primaryColor={ok} secondaryColor={ok} />}
+                {errors.email && helperState.email && <Icon name="circle" size="full" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />}
+                {errors.email && helperState.email && <Icon name="exclamation" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />}
+                {(!errors.email && dirtyFields.email) && <Icon name="check" side="right" size="full" primaryColor={IconColor.OK} secondaryColor={IconColor.OK} />}
                 <div className="field__input">
                     <Input {...register("email", { value: "test@test.com" })}
                         onChangeFocus={(state) => { changeFocusHandler("email", state) }}

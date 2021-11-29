@@ -22,3 +22,11 @@ export type TRootCategory<V extends TRootCategoryValue, C extends TRootCategoryT
 export type TRootCategoryValue = "ladies" | "divided" | "men" | "baby" | "kids" | "home" | "sale"
 type TRootCategoryTagCodes = [] | [
     "ladies_all" | "ladies_divided" | "men_all" | "kids_newbornbaby_viewall" | "kids_all" | "home_all"]
+
+export enum IconColor {
+    OK = "#00bb00",
+    ERROR = "#ff0000",
+    INITIAL = "#292825",
+    OPTIONAL = "#5555ff",
+    INFO = "#1111ff"
+}

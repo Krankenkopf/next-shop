@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { login, setLoginUserData} from "../../../../../a2-bll/auth-reducer";
 import { TLoginData } from "../../../../../a3-dal/krank/auth-api";
 import { Checkbox } from "../../../cp1-elements/el03-Checkbox/Checkbox";
+import { IconColor } from "../../../../../a0-common/c1-types/t1-instance";
 
 export type LoginFormData = {
   email: string
@@ -21,11 +22,6 @@ export type LoginFormData = {
 type TLoginFormProps = {
   revealModal: (modalType: TModal) => void
 }
-
-const ok = "#00bb00"
-const error = "#ff0000"
-const initial = "#292825"
-
 
 const signupSchema = yup.object().shape({
   email: yup
@@ -90,13 +86,13 @@ export const LoginForm = ({revealModal}: TLoginFormProps) => {
         {/* true || false || false - changed no errors */}
         {(!errors.email || !helperState.email || !dirtyFields.email)
           ? (!errors.email && dirtyFields.email)
-            ? <Icon name="envelope" primaryOpacity="1" secondaryOpacity="1" primaryColor={ok} secondaryColor={ok} />
-            : <Icon name="envelope" primaryOpacity="1" secondaryOpacity="1" primaryColor={initial} secondaryColor={initial} />
+            ? <Icon name="envelope" primaryOpacity="1" secondaryOpacity="1" primaryColor={IconColor.OK} secondaryColor={IconColor.OK} />
+            : <Icon name="envelope" primaryOpacity="1" secondaryOpacity="1" primaryColor={IconColor.INITIAL} secondaryColor={IconColor.INITIAL} />
           : null}
         {errors.email && helperState.email && <Icon name="envelope" primaryOpacity="0.5" secondaryOpacity="0.5" />}
-        {errors.email && helperState.email && <Icon name="circle" size="full" primaryColor={error} secondaryColor={error} />}
-        {errors.email && helperState.email && <Icon name="exclamation" primaryColor={error} secondaryColor={error} />}
-        {(!errors.email && dirtyFields.email) && <Icon name="check" side="right" size="full" primaryColor={ok} secondaryColor={ok} />}
+        {errors.email && helperState.email && <Icon name="circle" size="full" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />}
+        {errors.email && helperState.email && <Icon name="exclamation" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />}
+        {(!errors.email && dirtyFields.email) && <Icon name="check" side="right" size="full" primaryColor={IconColor.OK} secondaryColor={IconColor.OK} />}
         <div className="field__input">
           <Input {...register("email", { value: "test@test.com" })}
             onChangeFocus={(state) => { changeFocusHandler("email", state) }}
@@ -120,17 +116,17 @@ export const LoginForm = ({revealModal}: TLoginFormProps) => {
         {/* true || false || false - changed no errors */}
         {(!errors.password || !helperState.password || !dirtyFields.password)
           ? (!errors.password && dirtyFields.password)
-            ? <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={ok} secondaryColor={ok} />
-            : <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={initial} secondaryColor={initial} />
+            ? <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={IconColor.OK} secondaryColor={IconColor.OK} />
+            : <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={IconColor.INITIAL} secondaryColor={IconColor.INITIAL} />
           : null}
 
         {errors.password && helperState.password && <Icon name="key" primaryOpacity="0.5" secondaryOpacity="0.5" />}
-        {errors.password && helperState.password && <Icon name="circle" size="full" primaryColor={error} secondaryColor={error} />}
-        {errors.password && helperState.password && <Icon name="exclamation" primaryColor={error} secondaryColor={error} />}
+        {errors.password && helperState.password && <Icon name="circle" size="full" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />}
+        {errors.password && helperState.password && <Icon name="exclamation" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />}
 
         {passwordShown
-          ? <Icon name="eye" onClick={togglePasswordVisibility} side="right" size="full" primaryColor={initial} secondaryColor={initial} primaryOpacity="1" secondaryOpacity="1" />
-          : <Icon name="eye-slash" onClick={togglePasswordVisibility} side="right" size="full" primaryColor={initial} secondaryColor={initial} primaryOpacity="0.5" secondaryOpacity="0.5" />}
+          ? <Icon name="eye" onClick={togglePasswordVisibility} side="right" size="full" primaryColor={IconColor.INITIAL} secondaryColor={IconColor.INITIAL} primaryOpacity="1" secondaryOpacity="1" />
+          : <Icon name="eye-slash" onClick={togglePasswordVisibility} side="right" size="full" primaryColor={IconColor.INITIAL} secondaryColor={IconColor.INITIAL} primaryOpacity="0.5" secondaryOpacity="0.5" />}
 
         <div className="field__input">
           <Input {...register("password", { value: "test1" })}

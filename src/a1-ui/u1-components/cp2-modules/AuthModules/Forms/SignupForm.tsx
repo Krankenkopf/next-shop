@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-
 import { Input } from "../../../cp1-elements/el01-Input/Input";
 import Button from "../../../cp1-elements/el02-Button/Button";
 import { Icon } from "../../../cp1-elements/el10-Icons/Icon";
@@ -10,6 +9,7 @@ import { TModal } from "../../Modal/Modals";
 import { useDispatch } from "react-redux";
 import { setIsSignupPassConfirmed, setSignupUserData, signup } from "../../../../../a2-bll/auth-reducer";
 import { TSignupData } from "../../../../../a3-dal/krank/auth-api";
+import { IconColor } from "../../../../../a0-common/c1-types/t1-instance";
 
 export type SignupFormData = {
     email: string
@@ -20,12 +20,6 @@ export type SignupFormData = {
 type TSignupFormProps = {
     revealModal: (modalType: TModal) => void
 }
-
-const ok = "#00bb00"
-const error = "#ff0000"
-const initial = "#292825"
-const optional = "#5555ff"
-
 
 const signupSchema = yup.object().shape({
     email: yup
@@ -70,10 +64,10 @@ export const SignupForm = ({ revealModal}: TSignupFormProps) => {
             email: data.email,
             password: data.password,
         }
-        const isPassConfirmed = data.password === data.passConfirmed                                                                     // Order is important!
+        const isPassConfirmed = data.password === data.passConfirmed //BUG not nullified when exit                                                                   // Order is important!
         dispatch(setIsSignupPassConfirmed(data.password === data.passConfirmed)) // 1
         dispatch(setSignupUserData(signupData))                                  // 2
-        if (isPassConfirmed) {
+        if (isPassConfirmed) {                                              // FIXME !!!
             dispatch(signup())
         }
     }
@@ -127,13 +121,13 @@ export const SignupForm = ({ revealModal}: TSignupFormProps) => {
                 {/* true || false || false - changed no errors */}
                 {(!errors.email || !helperState.email || !dirtyFields.email)
                     ? (!errors.email && dirtyFields.email)
-                        ? <Icon name="envelope" primaryOpacity="1" secondaryOpacity="1" primaryColor={ok} secondaryColor={ok} />
-                        : <Icon name="envelope" primaryOpacity="1" secondaryOpacity="1" primaryColor={initial} secondaryColor={initial}/>
+                        ? <Icon name="envelope" primaryOpacity="1" secondaryOpacity="1" primaryColor={IconColor.OK} secondaryColor={IconColor.OK} />
+                        : <Icon name="envelope" primaryOpacity="1" secondaryOpacity="1" primaryColor={IconColor.INITIAL} secondaryColor={IconColor.INITIAL}/>
                     : null}
                 {errors.email && helperState.email && <Icon name="envelope" primaryOpacity="0.5" secondaryOpacity="0.5" />}
-                {errors.email && helperState.email && <Icon name="circle" size="full" primaryColor={error} secondaryColor={error} />}
-                {errors.email && helperState.email && <Icon name="exclamation" primaryColor={error} secondaryColor={error} />}
-                {(!errors.email && dirtyFields.email) && <Icon name="check" side="right" size="full" primaryColor={ok} secondaryColor={ok}/>}
+                {errors.email && helperState.email && <Icon name="circle" size="full" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />}
+                {errors.email && helperState.email && <Icon name="exclamation" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />}
+                {(!errors.email && dirtyFields.email) && <Icon name="check" side="right" size="full" primaryColor={IconColor.OK} secondaryColor={IconColor.OK}/>}
                 <div className="field__input">
                     <Input {...register("email", {value: "test@test.com"})}
                         onChangeFocus={(state) => { changeFocusHandler("email", state) }}
@@ -158,21 +152,21 @@ export const SignupForm = ({ revealModal}: TSignupFormProps) => {
                 {(!errors.password || !helperState.password || !dirtyFields.password)
                     ? (!errors.password && dirtyFields.password)
                         ? (errors.password || passOptionals)
-                            ? <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={optional} secondaryColor={optional} />
-                            : <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={ok} secondaryColor={ok} />
-                        : <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={initial} secondaryColor={initial}/>
+                            ? <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={IconColor.OPTIONAL} secondaryColor={IconColor.OPTIONAL} />
+                            : <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={IconColor.OK} secondaryColor={IconColor.OK} />
+                        : <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={IconColor.INITIAL} secondaryColor={IconColor.INITIAL}/>
                     : (errors.password)
                         ? null
-                        : <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={optional} secondaryColor={optional} />}
+                        : <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={IconColor.OPTIONAL} secondaryColor={IconColor.OPTIONAL} />}
                 
                 
                 {errors.password && helperState.password && <Icon name="key" primaryOpacity="0.5" secondaryOpacity="0.5" />}
-                {errors.password && helperState.password && <Icon name="circle" size="full" primaryColor={error} secondaryColor={error} />}
-                {errors.password && helperState.password && <Icon name="exclamation" primaryColor={error} secondaryColor={error} />}
+                {errors.password && helperState.password && <Icon name="circle" size="full" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />}
+                {errors.password && helperState.password && <Icon name="exclamation" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />}
                 
                 {passwordShown
-                    ? <Icon name="eye" onClick={togglePasswordVisibility} side="right" size="full" primaryColor={initial} secondaryColor={initial} primaryOpacity="1" secondaryOpacity="1"/>
-                    : <Icon name="eye-slash" onClick={togglePasswordVisibility} side="right" size="full" primaryColor={initial} secondaryColor={initial} primaryOpacity="0.5" secondaryOpacity="0.5"/>}
+                    ? <Icon name="eye" onClick={togglePasswordVisibility} side="right" size="full" primaryColor={IconColor.INITIAL} secondaryColor={IconColor.INITIAL} primaryOpacity="1" secondaryOpacity="1"/>
+                    : <Icon name="eye-slash" onClick={togglePasswordVisibility} side="right" size="full" primaryColor={IconColor.INITIAL} secondaryColor={IconColor.INITIAL} primaryOpacity="0.5" secondaryOpacity="0.5"/>}
                 
                 <div className="field__input">
                     <Input {...register("password", { value: "test1" })}
@@ -193,38 +187,38 @@ export const SignupForm = ({ revealModal}: TSignupFormProps) => {
             <ul className="password-tips">
                 <li>
                     {errors.password || !dirtyFields.password
-                        ? <Icon name="xmark" size="full" primaryColor={error} secondaryColor={error} />
-                        : <Icon name="check" size="full" primaryColor={ok} secondaryColor={ok}/>}
+                        ? <Icon name="xmark" size="full" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />
+                        : <Icon name="check" size="full" primaryColor={IconColor.OK} secondaryColor={IconColor.OK}/>}
                     Minimum 8 characters
                 </li>
                 <li>
                     {passOptionals || !dirtyFields.password
-                        ? <Icon name="xmark" size="full" primaryColor={optional} secondaryColor={optional} />
-                        : <Icon name="check" size="full" primaryColor={ok} secondaryColor={ok} />}
+                        ? <Icon name="xmark" size="full" primaryColor={IconColor.OPTIONAL} secondaryColor={IconColor.OPTIONAL} />
+                        : <Icon name="check" size="full" primaryColor={IconColor.OK} secondaryColor={IconColor.OK} />}
                     <em>Optional (if you want a really strong pass)</em>
                 </li>
                 <li>
                     {checkPassComplexity("number")
-                        ? <Icon name="xmark" size="full" primaryColor={optional} secondaryColor={optional} />
-                        : <Icon name="check" size="full" primaryColor={ok} secondaryColor={ok} />}
+                        ? <Icon name="xmark" size="full" primaryColor={IconColor.OPTIONAL} secondaryColor={IconColor.OPTIONAL} />
+                        : <Icon name="check" size="full" primaryColor={IconColor.OK} secondaryColor={IconColor.OK} />}
                     <em>At least one number</em>
                 </li>
                 <li>
                     {checkPassComplexity("uppercase")
-                        ? <Icon name="xmark" size="full" primaryColor={optional} secondaryColor={optional} />
-                        : <Icon name="check" size="full" primaryColor={ok} secondaryColor={ok} />}
+                        ? <Icon name="xmark" size="full" primaryColor={IconColor.OPTIONAL} secondaryColor={IconColor.OPTIONAL} />
+                        : <Icon name="check" size="full" primaryColor={IconColor.OK} secondaryColor={IconColor.OK} />}
                     <em>At least one uppercase</em>
                 </li>
                 <li>
                     {checkPassComplexity("lowercase")
-                        ? <Icon name="xmark" size="full" primaryColor={optional} secondaryColor={optional} />
-                        : <Icon name="check" size="full" primaryColor={ok} secondaryColor={ok} />}
+                        ? <Icon name="xmark" size="full" primaryColor={IconColor.OPTIONAL} secondaryColor={IconColor.OPTIONAL} />
+                        : <Icon name="check" size="full" primaryColor={IconColor.OK} secondaryColor={IconColor.OK} />}
                     <em>At least one lowercase</em>
                 </li>
                 <li>
                     {checkPassComplexity("special")
-                        ? <Icon name="xmark" size="full" primaryColor={optional} secondaryColor={optional} />
-                        : <Icon name="check" size="full" primaryColor={ok} secondaryColor={ok} />}
+                        ? <Icon name="xmark" size="full" primaryColor={IconColor.OPTIONAL} secondaryColor={IconColor.OPTIONAL} />
+                        : <Icon name="check" size="full" primaryColor={IconColor.OK} secondaryColor={IconColor.OK} />}
                     <em>{`Contains one of`}&nbsp;&nbsp;</em>
                     {`!"#$%&'()*+,-.:`}&nbsp;{`;<=>?@[]^_~{|}`}`/\
                     <em>&nbsp;{`symbols`}</em>
@@ -234,13 +228,13 @@ export const SignupForm = ({ revealModal}: TSignupFormProps) => {
                 <label className="field__label">Confirm password</label>
                 {(!passConfirmationMessage || !helperState.passConfirmed || !dirtyFields.passConfirmed)
                     ? (!passConfirmationMessage && dirtyFields.passConfirmed)
-                        ? <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={ok} secondaryColor={ok} />
-                        : <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={initial} secondaryColor={initial} />
+                        ? <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={IconColor.OK} secondaryColor={IconColor.OK} />
+                        : <Icon name="key" primaryOpacity="1" secondaryOpacity="1" primaryColor={IconColor.INITIAL} secondaryColor={IconColor.INITIAL} />
                     : null}
                 {passConfirmationMessage && helperState.passConfirmed && <Icon name="key" primaryOpacity="0.5" secondaryOpacity="0.5" />}
-                {passConfirmationMessage && helperState.passConfirmed && <Icon name="circle" size="full" primaryColor={error} secondaryColor={error} />}
-                {passConfirmationMessage && helperState.passConfirmed && <Icon name="exclamation" primaryColor={error} secondaryColor={error} />}
-                {(!passConfirmationMessage && dirtyFields.passConfirmed) && <Icon name="check" side="right" size="full" primaryColor={ok} secondaryColor={ok} />}
+                {passConfirmationMessage && helperState.passConfirmed && <Icon name="circle" size="full" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />}
+                {passConfirmationMessage && helperState.passConfirmed && <Icon name="exclamation" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />}
+                {(!passConfirmationMessage && dirtyFields.passConfirmed) && <Icon name="check" side="right" size="full" primaryColor={IconColor.OK} secondaryColor={IconColor.OK} />}
                 <div className="field__input">
                     <Input {...register("passConfirmed", { required: false })}
                         type="password"
