@@ -56,9 +56,9 @@ main {
   width: 100%;
   min-height: 100%;
   // height: fit-content;
-  // display: flex;
+  display: flex;
   // align-items: center;
-  // flex-direction: column;
+  flex-direction: column;
   
   &._loaded {
     animation: none;

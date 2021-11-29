@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import { FC } from "react"
-import { SellingAttribute } from "../../../../a0-common/c1-types/t1-instance/TProduct"
+import { SellingAttribute } from "../../../../../a0-common/c1-types/t1-instance/TProduct"
 import css from "./ProductItem.module.scss"
 
 type TProductItems = {
