@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { me } from "../../../a2-bll/auth-reducer"
 import { TState } from "../../../a2-bll/store"
+import { Preloader } from "../cp1-elements/el11-Preloader/Preloader"
 import { Footer } from "../cp2-modules/Footer/Footer"
 import { Header } from "../cp2-modules/Header/Header"
 import { Modals, TModal } from "../cp2-modules/Modal/Modals"
@@ -26,13 +27,6 @@ export const LandingLayout = ({ children, title = 'Noname Shop' }: any) => {
     }, [modal])
     const closeModal = useCallback(() => setModal(null), [])
 
-    if (!isInitialized) {
-        return <div
-            style={{ position: 'fixed', top: '50%', textAlign: 'center', width: '100%' }}>
-            !!!!!!!!!
-        </div>
-    }
-
     return (
         <>
             <Head>
@@ -47,6 +41,17 @@ export const LandingLayout = ({ children, title = 'Noname Shop' }: any) => {
                 {children}
             </main>
             <Footer />
+            <div style={{
+                position: 'fixed',
+                visibility: isInitialized ? "hidden" : "visible",
+                top: '0',
+                textAlign: 'center',
+                width: '100%',
+                height: "100vh",
+                backgroundColor: "#dddfffef", zIndex: 20
+            }}>
+                <Preloader isVisible={!isInitialized}/>
+            </div>
             <Modals onClose={closeModal} modal={modal} revealModal={revealModal} />
             
             

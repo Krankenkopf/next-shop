@@ -1,16 +1,18 @@
 .sidebar {
     display: inline-block;
     vertical-align: top;
-    width: 300px;
+    width: 250px;
     //background-color: #ffdddd;
     padding: 0 20px 40px;
     h4 {
+    font-size: 100%;
     margin-bottom: 15px;
     }
 }
 
 .link {
     margin-bottom: 8px;
+    font-size: 90%;
     &:last-child {
         margin-bottom: 25px;
     }

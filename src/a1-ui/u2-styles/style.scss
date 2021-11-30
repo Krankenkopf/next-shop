@@ -36,7 +36,7 @@ $secondary: #E50010;
 body {
   color: #000;
   font-size: calc(13px + 0.5vw);
-  background-color: rgb(255, 255, 235);
+  background-color: #ffffeb;
   font-family: 'Roboto', sans-serif;
   overflow-x: hidden;
   overflow-y: inherit;
@@ -59,7 +59,9 @@ main {
   display: flex;
   // align-items: center;
   flex-direction: column;
-  
+  &.wrapper__products {
+    flex-direction: row;
+  }
   &._loaded {
     animation: none;
   }
