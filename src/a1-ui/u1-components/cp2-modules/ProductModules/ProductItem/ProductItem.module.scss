@@ -1,17 +1,205 @@
-.productItem {
-    margin: 0 4px 4px 0;
+.card__cell {
+    width: calc(100% / 3 - 0.01px);
     display: inline-block;
-    width: calc(100% / 3 - 4px - 4px - 0.01px);
     vertical-align: top;
-    article {
-        margin-bottom: 20px;
+   //margin-bottom: 4px;
+}
+.card {
+    position: relative;
+    padding: 0 15px 0;
+    margin-bottom: 30px;
+    &:hover {
+        z-index: 2;
     }
+    
+    .card__item {
+        position: relative;
+        
+        font-size: 70%;
+        //padding-bottom: 20px;
+        z-index: 1;
+    }
+    .card__controls {
+        position: absolute;
+        display: flex;
+        justify-content: space-between;
+        top: 100%;
+        top: 100%;
+        right: 0;
+        left: 0;
+        padding: 10px 15px 15px;
+        margin-top: -1px;
+        box-shadow: 0 0 15px 1px #595855;
+        height: 64px;
+        z-index: -1;
+        background-color: #ffffeb;
+        &::before {
+            position: absolute;
+            top: -34px;
+            right: 0;
+            left: 0;
+            height: 34px;
+            background-color: #ffffeb;
+            content: "";
+        }
+        .card__button, .card__button__favorites {
+            position: relative;
+            display: flex;
+            align-items: center;
+            font-size: 70%;
+            height: 44px;
+            opacity: 0;
+            transition: all 0.2s ease-out;
+        }
+        .card__button {
+            transform: translateY(10px);
+        }
+        .card__button__favorites {
+            transform: translateY(-20px);
+        }
+        .card__button__favorites {
+            .favoritesActive {
+                cursor: pointer;
+                --primary: #e50010;
+                --secondary: #e50010;
+                --primary-opacity: 0.8;
+		        --secondary-opacity: 0.8;
+                &__container {
+                    width: 30px;
+                    margin-right: 3px;
+                }
+                
+            }
+            &:hover .favorites, &:hover .favoritesActive {
+                --primary: #e50010;
+                --secondary: #e50010;
+                --primary-opacity: 1;
+		        --secondary-opacity: 1;
+            }
+            .favorites {
+                cursor: pointer;
+                --primary: #292825;
+                --secondary: #292825;
+                --primary-opacity: 0.6;
+		        --secondary-opacity: 0.6;
+                &__container {
+                    width: 36px;
+                }
+            }
+            .favoritesClicked {
+                cursor: pointer;
+                --primary: #e50010;
+                --secondary: #e50010;
+                --primary-opacity: 1;
+		        --secondary-opacity: 1;
+                &__container {
+                    pointer-events: none;
+                    width: 36px;
+                    opacity: 0;
+                    transform: scale(2);
+                    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+                }
+            }
+        }
+        
+    }
+    .card__overlay {
+        position: absolute;
+        z-index: -1;
+        top: -15px;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        margin-top: 0;
+        overflow: hidden;
+        width: 0;
+        height: 0;
+        opacity: 0;
+        box-shadow: 0 0 15px 1px #595855;
+        transition: all .3s ease;
+    }
+    &:hover .card__overlay {
+        overflow: visible;
+        width: auto;
+        height: auto;
+        opacity: 1;
+    }
+    &:hover .card__button, &:hover .card__button__favorites {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    .imgContainer {
+        position: relative;
+        width: 100%;
+        padding-bottom: 150%;
+        img {
+        position: absolute;
+        width: 100%;
+        transition: opacity 0.2s ease;
+        z-index: -1;
+        }
+        .img:hover {
+            opacity: 0;  
+        }
+        .imgAlt {
+            opacity: 0;
+            &:hover {
+            opacity: 1;
+            }
+        }
+        .imgBlankcover {
+            position: absolute;
+            width: 100%;
+            padding-bottom: 150%;
+            background-color: #ecfaf5;
+            border-radius: 5%;
+            z-index: -1;
+        }
+    }
+    
+    
+}
+
+.productDesc {
+    margin-top: 0;
+    padding-top: 5px;
+    &>* {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        //text-transform: none;
+        white-space: nowrap;
+    }
+    .marketingMarker {
+            color: #000b;
+        &+h4 {
+            padding-top: 0;
+        }
+    }
+    h4 {
+        padding-top: 1em;
+        margin-bottom: 4px;
+        z-index: 2;
+    }
+    .priceContainer {
+        margin-bottom: 4px;
+        .whiteprice {
+            font-size: 110%;
+        }
+        .redprice {
+            font-size: 130%;
+            margin-right: 5px;
+            color: #f11;
+        }
+        
+        
+    }
+    
 }
 
 .colorVariant {
     display: inline-block;
-    width: calc(100%/6 - 12px - 0.01px);
-    margin-right: 2px;
+    width: calc(100%/6 - 1.5% - 0.01px);
+    margin-right: 1.5%;
     &:before {
         content: "";
         float: left;
@@ -30,7 +218,7 @@
         clear: both;
     }
     div {
-        margin: -125% 0 -125%;
+        margin: -150% 0 -150%;
         width: 400%;
         padding-bottom: 400%;
         border: 2px solid #202020;
