@@ -12,7 +12,7 @@ export type TGetProductsListRequestOptionalData = {
     categories?: Array<string>
     //Look for the value in "facets" object with "code": "sizes", pass this param multiple times to filter by multiple sizes
     sizes?: Array<string>
-    sortBy?: "ascPrice" | "descPrice" | "stock" | "newProduct" //default is stock
+    sortBy?: TSortValue //default is stock
     //Look for the value in "facets" object with "code": "contexts", pass this param multiple times to filter by multiple contexts
     contexts?: Array<string>
     //Look for the value in "facets" object with "code": "concepts", pass this param multiple times to filter by multiple concepts
@@ -28,5 +28,8 @@ export type TGetProductsListRequestOptionalData = {
     //Look for the value in "facets" object with "code": "functions", pass this param multiple times to filter by multiple functions
     functions?: Array<string>
     //Look for the value in "facets" object with "code": "colorWithNames", pass this param multiple times to filter by multiple colors
-    colorWithNames?: Array<string> 
+    colorWithNames?: Array<string>
+    sale?: "true" | "false" //????
 }
+
+export type TSortValue = "ascPrice" | "descPrice" | "stock" | "newProduct"

@@ -18,7 +18,7 @@ export const _toLiLinkA = (src: Array<any>, parentPath: string, className: strin
         const href = `${parentPath}/${item.CategoryValue}`
         return (
             <li key={item.CategoryValue} className={className}>
-                <Link href={href}>
+                <Link href={href} scroll={false}>
                     <a title={item.CatName}>
                         {item.CatName}
                     </a>

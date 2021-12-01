@@ -1,5 +1,5 @@
 import {Dispatch} from "redux"
-import { setAppStatus, setError, TAppActions } from "../../a2-bll/app-reducer";
+import { setAppStatus, setError, TAppActions } from "../../../a2-bll/app-reducer";
 
 
 export const handleServerNetworkError = (e: any, dispatch: ErrorUtilsDispatchType) => {

@@ -6,7 +6,7 @@ import { CountryCodes, LanguageCodes } from "../../src/a0-common/c1-types/t1-ins
 import { TProduct } from "../../src/a0-common/c1-types/t1-instance/TProduct"
 import { TGetProductsListRequestRequiredData, TGetProductsListRequestOptionalData } from "../../src/a0-common/c1-types/t2-request"
 import { useAppSelector } from "../../src/a0-common/c3-hooks"
-import { getRequestedCategory } from "../../src/a0-common/c4-utils"
+import { getRequestedCategory } from "../../src/a0-common/c4-utils/state"
 import { Timer } from "../../src/a1-ui/u1-components/cp1-elements/el20-Timer/Timer"
 import { ProductsContent } from "../../src/a1-ui/u1-components/cp2-modules/ProductModules/ProductsContent/ProductsContent"
 import { ProductLayout } from "../../src/a1-ui/u1-components/cp4-layouts/ProductLayout"

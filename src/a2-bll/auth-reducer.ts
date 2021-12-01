@@ -2,7 +2,7 @@
 import {AppThunk} from './store';
 import {setAppStatus, setInitialized} from "./app-reducer";
 import { authAPI, TLoginData, TSignupData } from '../a3-dal/krank/auth-api';
-import { handleServerNetworkError } from '../a0-common/c4-utils/errorHandler';
+import { handleServerNetworkError } from '../a0-common/c4-utils/state/errorHandler';
 import { Nullable } from '../a0-common/c1-types/t1-instance';
 import { batch } from 'react-redux';
 

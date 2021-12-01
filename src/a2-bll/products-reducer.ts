@@ -1,10 +1,11 @@
-import { getRequestedCategory } from './../a0-common/c4-utils/index'
+import { setCategory } from './navigation-reducer'
+import { configureOptionalParams, getRequestedCategory } from '../a0-common/c4-utils/state/index'
 import { TProduct } from './../a0-common/c1-types/t1-instance/TProduct'
-import { Nullable, TCategory } from './../a0-common/c1-types/t1-instance/index'
+import { Nullable } from './../a0-common/c1-types/t1-instance/index'
 import { AppThunk } from './store'
 import { setAppStatus, setError } from './app-reducer'
 import { TGetProductsListRequestOptionalData, TGetProductsListRequestRequiredData } from '../a0-common/c1-types/t2-request'
-import { handleServerNetworkError } from '../a0-common/c4-utils/errorHandler'
+import { handleServerNetworkError } from '../a0-common/c4-utils/state/errorHandler'
 import { ProductsAPI } from '../a3-dal/hm/products-api'
 
 const initialState = {
@@ -49,14 +50,27 @@ export const getProducts = (path: string, queryCategories: Array<string>): AppTh
             currentpage: state.navigation.currentPage,
             pagesize: state.navigation.pageSize,
         }
-        const optionalParams: TGetProductsListRequestOptionalData = {
-            categories: targetedCategory?.tagCodes
+        const initialOptionalParams: TGetProductsListRequestOptionalData = {
+            categories: targetedCategory?.tagCodes,
+            //sizes: state.filters.current.sizes,
+            //sortBy: state.filters.current.sortBy,
+            //contexts: state.filters.current.contexts,
+            //concepts: state.filters.current.concepts,
+            //collection: state.filters.current.collection,
+            //qualities: state.filters.current.qualities,
+            //fits: state.filters.current.fits,
+            //descriptiveLengths: state.filters.current.descriptiveLengths,
+            //functions: state.filters.current.functions,
+            //colorWithNames: state.filters.current.colorWithNames,
         }
+        const optionalParams = configureOptionalParams(initialOptionalParams, state.filters) 
+        
         const response = await fetch("http://localhost:4200/results")
         const products = await response.json() as Nullable<Array<TProduct>>
         //const response = await ProductsAPI.getList(requiredParams, optionalParams)
         //const products = response.data.results
-        //products && dispatch(setProducts(products))
+        products && dispatch(setProducts(products))
+        targetedCategory && dispatch(setCategory(targetedCategory))
         dispatch(setError(""))
         dispatch(setAppStatus("succeeded"))
     } catch (e) {
