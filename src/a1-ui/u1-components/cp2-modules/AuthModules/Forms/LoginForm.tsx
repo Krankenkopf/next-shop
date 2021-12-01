@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import { login, setLoginUserData} from "../../../../../a2-bll/auth-reducer";
 import { TLoginData } from "../../../../../a3-dal/krank/auth-api";
 import { Checkbox } from "../../../cp1-elements/el03-Checkbox/Checkbox";
-import { IconColor } from "../../../../../a0-common/c1-types/t1-instance";
+import { IconColor } from "../../../../../a0-common/c2-constants";
 
 export type LoginFormData = {
   email: string

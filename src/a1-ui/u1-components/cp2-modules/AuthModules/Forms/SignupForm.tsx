@@ -9,7 +9,7 @@ import { TModal } from "../../Modal/Modals";
 import { useDispatch } from "react-redux";
 import { setIsSignupPassConfirmed, setSignupUserData, signup } from "../../../../../a2-bll/auth-reducer";
 import { TSignupData } from "../../../../../a3-dal/krank/auth-api";
-import { IconColor } from "../../../../../a0-common/c1-types/t1-instance";
+import { IconColor } from "../../../../../a0-common/c2-constants";
 
 export type SignupFormData = {
     email: string

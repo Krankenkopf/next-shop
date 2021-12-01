@@ -1,5 +1,5 @@
 import React from 'react'
-import { IconColor } from '../../../../a0-common/c1-types/t1-instance';
+import { IconColor } from '../../../../a0-common/c2-constants';
 import { Icon } from '../el10-Icons/Icon';
 import css from "./Preloader.module.scss"
 

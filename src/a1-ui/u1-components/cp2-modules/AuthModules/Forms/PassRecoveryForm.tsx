@@ -8,7 +8,7 @@ import Button from "../../../cp1-elements/el02-Button/Button";
 import { Icon } from "../../../cp1-elements/el10-Icons/Icon";
 import { TModal } from "../../Modal/Modals";
 import { useDispatch } from "react-redux";
-import { IconColor } from "../../../../../a0-common/c1-types/t1-instance";
+import { IconColor } from "../../../../../a0-common/c2-constants";
 
 export type EmailFormData = {
     email: string

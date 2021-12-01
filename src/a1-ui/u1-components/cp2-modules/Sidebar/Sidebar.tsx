@@ -1,6 +1,6 @@
 import React, { FC } from "react"
 import { TCategory } from "../../../../a0-common/c1-types/t1-instance"
-import { toLiLinkA, _toLiLinkA } from "../../../../a0-common/c4-utils/uimapper"
+import { toLiLinkA, _toLiLinkA } from "../../../../a0-common/c4-utils/ui"
 import css from "./Sidebar.module.scss"
 
 type TSidebarProps = {

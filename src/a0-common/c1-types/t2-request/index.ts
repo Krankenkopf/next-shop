@@ -1,4 +1,4 @@
-import { CountryCodes, LanguageCodes } from "../t1-instance/regions"
+import { CountryCodes, LanguageCodes } from "../../c2-constants"
 
 export type TGetProductsListRequestRequiredData = {
     country: CountryCodes,

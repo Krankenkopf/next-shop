@@ -20,7 +20,7 @@ export type TPagination = {
 }
 
 export type TFacet = {
-    code: "concepts" | "sizes" | "contexts" | "collection" | "qualities" | "fits" | "descriptiveLengths" | "functions" | "colorWithNames"
+    code: "concepts" | "sizes" | "contexts" | "collection" | "qualities" | "fits"  | "functions" | "colorWithNames"
     priority: number
     category: boolean
     multiSelect: boolean
