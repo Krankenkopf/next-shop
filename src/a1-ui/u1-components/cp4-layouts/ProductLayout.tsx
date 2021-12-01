@@ -29,7 +29,7 @@ export const ProductLayout: FC<TProductLayoutProps> =
                 <meta charSet="utf-8" />
             </Head>
             <Header revealModal={revealModal}/>
-            <main>
+            <main className="wrapper__products">
                 <Sidebar rootCategoryName={rootCategoryName} category={category}/>
                 {children}
             </main>

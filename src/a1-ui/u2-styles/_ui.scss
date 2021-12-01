@@ -40,10 +40,17 @@ a {
 	}
 }
 
-.link__decorated {
+.span__decorated {
 	position: relative;
 	display: flex;
     align-items: center;
+	&.right {
+		span {
+			height: 1rem;
+			padding-right: 30px;
+			padding-left: 0;
+		}
+	}
 	span {
 		padding-left: 30px;
 	}

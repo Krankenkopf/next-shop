@@ -200,6 +200,9 @@
     display: inline-block;
     width: calc(100%/6 - 1.5% - 0.01px);
     margin-right: 1.5%;
+        &:first-child {
+            margin-left: 2px;
+        }
     &:before {
         content: "";
         float: left;
@@ -218,11 +221,13 @@
         clear: both;
     }
     div {
-        margin: -150% 0 -150%;
-        width: 400%;
-        padding-bottom: 400%;
+        margin: -145% 0;
+        width: 395%;
+        padding-bottom: 395%;
         border: 2px solid #202020;
         border-radius: 50%;
+        box-shadow: 0 0 15px 3px #595855;
         transform: scale(0.25, 0.25) translateX(-150%);
+        
     }
 }

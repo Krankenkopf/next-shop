@@ -24,7 +24,7 @@ export const SessionMenu: FC<TSessionMenuProps> = ({ revealModal }) => {
         ? {
             toggle: <Link href="/account">
                 <a>
-                    <div className="link__decorated">
+                    <div className="span__decorated">
                         <Icon name="user-check" className="icon__session" />
                         <span>My Account</span>
                     </div>
@@ -48,7 +48,7 @@ export const SessionMenu: FC<TSessionMenuProps> = ({ revealModal }) => {
         }
         : {
             toggle: <a onClick={() => revealModal("login")}>
-                <div className="link__decorated">
+                <div className="span__decorated">
                     <Icon name="user" className="icon__session" />
                     <span>Sign In</span>
                 </div>
@@ -74,7 +74,7 @@ export const SessionMenu: FC<TSessionMenuProps> = ({ revealModal }) => {
     const minicartMenu = {
         toggle: <Link href="/cart">
             <a>
-                <div className="link__decorated">
+                <div className="span__decorated">
                     {isLoggedIn
                         ? <Icon name="cart-shopping" className="icon__session" />
                         : <Icon name="cart-shopping-fast" className="icon__session" />}
@@ -92,8 +92,8 @@ export const SessionMenu: FC<TSessionMenuProps> = ({ revealModal }) => {
             <li style={{ display: "inline-block" }}>
                 <Link href="/favorites">
                     <a>
-                        <div className="link__decorated" >
-                            <Icon name="heart" className="icon__session" />
+                        <div className="span__decorated" >
+                            <Icon name="heart-solid" className="icon__session" />
                             <span>Favorites</span>
                         </div>
                     </a>

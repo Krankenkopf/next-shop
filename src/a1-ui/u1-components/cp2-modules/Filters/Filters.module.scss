@@ -1,0 +1,65 @@
+.sortfilterviewControls {
+    padding-left: 15px;
+    margin-bottom: 35px;
+    form {
+        display: flex;
+        justify-content: space-between;
+        section {
+            margin-bottom: 0;
+            margin-right: 10px;
+            &:last-child {
+                    margin-right: 0;
+                }
+            .block {
+                margin: auto 10px auto 0;
+                .textBlock {
+                    display: flex;
+                }
+                &:last-child {
+                    margin: auto 0;
+                }
+            }
+        }
+        & > * {
+            display: flex;
+        }
+    }
+    span {
+        font-size: 75%;
+    }
+    fieldset {
+        border: none;
+        margin: 0;
+        padding: 0;
+    }
+    .sortfilters {
+        .sort {
+
+        }
+        .filters {
+            display: flex;
+            @media (max-width: 1170px) {
+                display: none;
+            }
+        }
+        .allFilters {
+
+        }  
+    }
+    .view {
+        display: flex;
+        fieldset > * {
+            display: flex;
+            }       
+        }
+    section {
+        display: flex;
+        width: auto;
+    }
+    
+    legend {
+        position: absolute;
+        left: -5000px;
+    }
+}
+
