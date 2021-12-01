@@ -1,3 +1,4 @@
+import { sortReducer, TSortActions, TSortState } from './sort-reducer'
 import { TProductsActions, TProductsState, productsReducer } from './products-reducer'
 import { cartReducer, TCartActions, TCartState } from './cart-reducer'
 import { regionsReducer, TRegionsActions, TRegionsState } from './regions-reducer'
@@ -27,8 +28,8 @@ const rootReducer = (state: TState | undefined, action: AnyAction): TState => {
                 ...state, // use previous state
                 ...action.payload, // apply delta from hydration
             }
-            if (state?.products.products) nextState.products.products = state.products.products // preserve value on client side navigation
-            if (state?.navigation.category) nextState.navigation.category = state.navigation.category // preserve value on client side navigation
+            //if (state?.products.products) nextState.products.products = state.products.products // preserve value on client side navigation
+            //if (state?.navigation.category) nextState.navigation.category = state.navigation.category // preserve value on client side navigation
             return nextState
 
         default: {
@@ -42,7 +43,7 @@ const rootReducer = (state: TState | undefined, action: AnyAction): TState => {
                 products: productsReducer,
                 product: productReducer,
                 regions: regionsReducer,
-                
+                sort: sortReducer,              
             })
             return combinedReducer(state, action);
         }
@@ -67,12 +68,13 @@ export type TState = {
     products: TProductsState
     product: TProductState
     regions: TRegionsState
+    sort: TSortState
 }
 export type TActions = TAppActions
     | TAuthActions | TCartActions | TCategoriesActions
     | TFiltersActions | TNavigationActions
     | TProductsActions | TProductActions
-    | TRegionsActions 
+    | TRegionsActions  | TSortActions
    
     
     

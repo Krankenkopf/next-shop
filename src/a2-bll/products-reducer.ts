@@ -1,5 +1,8 @@
-import { setCategory } from './navigation-reducer'
-import { configureOptionalParams, getRequestedCategory } from '../a0-common/c4-utils/state/index'
+import { TGetProductsListRequestOptionalCategories, TGetProductsListRequestOptionalFilters, TGetProductsListRequestOptionalSortBy } from './../a0-common/c1-types/t2-request/index'
+import { batch } from 'react-redux'
+import { TAnyFacet, TPagination } from './../a0-common/c1-types/t3-response/TProductsResponse'
+import { setCategory, setCurrentPage, setPageSize, setTotalNumbers } from './navigation-reducer'
+import { extendWithNonNullables, getRequestedCategory, extractRelevantFacets } from '../a0-common/c4-utils/state/index'
 import { TProduct } from './../a0-common/c1-types/t1-instance/TProduct'
 import { Nullable } from './../a0-common/c1-types/t1-instance/index'
 import { AppThunk } from './store'
@@ -7,6 +10,8 @@ import { setAppStatus, setError } from './app-reducer'
 import { TGetProductsListRequestOptionalData, TGetProductsListRequestRequiredData } from '../a0-common/c1-types/t2-request'
 import { handleServerNetworkError } from '../a0-common/c4-utils/state/errorHandler'
 import { ProductsAPI } from '../a3-dal/hm/products-api'
+import { setFacets } from './filters-reducer'
+import { setSortBy } from './sort-reducer'
 
 const initialState = {
     products: null as Nullable<Array<TProduct>>
@@ -50,28 +55,38 @@ export const getProducts = (path: string, queryCategories: Array<string>): AppTh
             currentpage: state.navigation.currentPage,
             pagesize: state.navigation.pageSize,
         }
-        const initialOptionalParams: TGetProductsListRequestOptionalData = {
+        const optionalCategories: TGetProductsListRequestOptionalCategories = {
             categories: targetedCategory?.tagCodes,
-            //sizes: state.filters.current.sizes,
-            //sortBy: state.filters.current.sortBy,
-            //contexts: state.filters.current.contexts,
-            //concepts: state.filters.current.concepts,
-            //collection: state.filters.current.collection,
-            //qualities: state.filters.current.qualities,
-            //fits: state.filters.current.fits,
-            //descriptiveLengths: state.filters.current.descriptiveLengths,
-            //functions: state.filters.current.functions,
-            //colorWithNames: state.filters.current.colorWithNames,
         }
-        const optionalParams = configureOptionalParams(initialOptionalParams, state.filters) 
+        const optionalSortBy: TGetProductsListRequestOptionalSortBy = {
+            sortBy: state.sort.sortBy
+        }
+        const optionalFilters = extendWithNonNullables({}, state.filters.current as TGetProductsListRequestOptionalFilters)
+        const optionalParams: TGetProductsListRequestOptionalData = { ...optionalCategories, ...optionalSortBy, ...optionalFilters }
         
-        const response = await fetch("http://localhost:4200/results")
-        const products = await response.json() as Nullable<Array<TProduct>>
+        const results = await fetch("http://localhost:4200/results")
+        const products = await results.json() as Array<TProduct>
+        const pagination = await fetch("http://localhost:4200/pagination")
+        const { currentPage, pageSize,
+            numberOfPages, totalNumberOfResults,
+            totalNumberOfResultsUnfiltered, sort } = await pagination.json() as TPagination
+        const facets = await fetch("http://localhost:4200/facets")
+        const anyFacets = await facets.json() as Array<TAnyFacet>
+        const relevantFacets = extractRelevantFacets(anyFacets, state.filters.facets)    
         //const response = await ProductsAPI.getList(requiredParams, optionalParams)
         //const products = response.data.results
-        products && dispatch(setProducts(products))
-        targetedCategory && dispatch(setCategory(targetedCategory))
-        dispatch(setError(""))
+        batch(() => {
+            dispatch(setProducts(products))
+            //navigation
+            targetedCategory && dispatch(setCategory(targetedCategory))
+            dispatch(setCurrentPage(currentPage))
+            dispatch(setPageSize(pageSize))
+            dispatch(setTotalNumbers(numberOfPages, totalNumberOfResults, totalNumberOfResultsUnfiltered))
+            //sort&filters
+            dispatch(setSortBy(sort))
+            dispatch(setFacets(relevantFacets))
+        })
+        dispatch(setError(null))
         dispatch(setAppStatus("succeeded"))
     } catch (e) {
         handleServerNetworkError(e, dispatch)

@@ -1,31 +1,52 @@
-import { Nullable } from "../a0-common/c1-types/t1-instance"
+import { TFacet } from './../a0-common/c1-types/t3-response/TProductsResponse'
+import { Nullable } from './../a0-common/c1-types/t1-instance/index'
 import { TSortValue } from "../a0-common/c1-types/t2-request"
+
+export type TFilters = {
+    sizes: Nullable<Array<string>>
+    contexts: Nullable<Array<string>>
+    concepts: Nullable<Array<string>>
+    collection: Nullable<Array<string>>
+    qualities: Nullable<Array<string>>
+    fits: Nullable<Array<string>>
+    functions: Nullable<Array<string>>
+    colorWithNames: Nullable<Array<string>>
+}
+
+export type TFacets = {
+    sizes: Nullable<TFacet>
+    contexts: Nullable<TFacet>
+    concepts: Nullable<TFacet>
+    collection: Nullable<TFacet>
+    qualities: Nullable<TFacet>
+    fits: Nullable<TFacet>
+    functions: Nullable<TFacet>
+    colorWithNames: Nullable<TFacet>
+}
 
 const initialState = {
     current: {
-        sizes: null as Nullable<Array<string>>,
-        sortBy: "stock" as TSortValue,
-        contexts: null as Nullable<Array<string>>,
-        concepts: null as Nullable<Array<string>>,
-        collection: null as Nullable<Array<string>>,
-        qualities: null as Nullable<Array<string>>,
-        fits: null as Nullable<Array<string>>,
-        descriptiveLengths: null as Nullable<Array<string>>,
-        functions: null as Nullable<Array<string>>,
-        colorWithNames: null as Nullable<Array<string>>,
-    },
+        sizes: null,
+        contexts: null,
+        concepts: null,
+        collection: null,
+        qualities: null,
+        fits: null,
+        //descriptiveLengths: null,
+        functions: null,
+        colorWithNames: null,
+    } as TFilters,
     facets: {
-        sizes: null as Nullable<Array<string>>,
-        sortBy: "stock" as TSortValue,
-        contexts: null as Nullable<Array<string>>,
-        concepts: null as Nullable<Array<string>>,
-        collection: null as Nullable<Array<string>>,
-        qualities: null as Nullable<Array<string>>,
-        fits: null as Nullable<Array<string>>,
-        descriptiveLengths: null as Nullable<Array<string>>,
-        functions: null as Nullable<Array<string>>,
-        colorWithNames: null as Nullable<Array<string>>,
-    }
+        sizes: null,
+        contexts: null,
+        concepts: null,
+        collection: null,
+        qualities: null,
+        fits: null,
+        //descriptiveLengths: null, obsolete
+        functions: null,
+        colorWithNames: null,
+    } as TFacets
 
 }
 
@@ -38,7 +59,6 @@ export const filtersReducer =
                     ...action.payload
                 }
             case filtersActionVariables.SET_FILTER:
-            case filtersActionVariables.SET_SORTBY:
                 return {
                     ...state,
                     ...action.payload.current
@@ -50,32 +70,26 @@ export const filtersReducer =
 export const setFacets = (facets: typeof initialState.facets) => (
     {
         type: filtersActionVariables.SET_FACETS,
-        payload: {facets}
+        payload: { facets }
     } as const)
 
-export type TSortByKey = "sortBy"
-export type TFilterKey = keyof Omit<typeof initialState.current, "sortBy">
-type TFilter = { [key in TFilterKey]?: Nullable<Array<string>> } //хуяссе я умею =)))
-type TSortBy = {[key in TSortByKey]?: TSortValue}
+export type TFilterKey = keyof typeof initialState.current
+type TFilter = { [key in TFilterKey]?: Nullable<Array<string>> }
+
 export const setFilter = (filter: TFilter) => (
     {
         type: filtersActionVariables.SET_FILTER,
-        payload: { current: {filter} }
+        payload: { current: { filter } }
     } as const)
-export const setSortBy = (sortBy: TSortValue) => (
-    {
-        type: filtersActionVariables.SET_SORTBY,
-        payload: { current: { sortBy } }
-    } as const)
+
 
 // types
 export type TFiltersState = typeof initialState
 export type TFiltersActions =
-    ReturnType<typeof setFilter> | ReturnType<typeof setFacets> | ReturnType<typeof setSortBy>
+    ReturnType<typeof setFilter> | ReturnType<typeof setFacets>
 
 // variables
 const filtersActionVariables = {
     SET_FACETS: "FILTERS/SET-FACETS" as const,
     SET_FILTER: "FILTERS/SET-FILTER" as const,
-    SET_SORTBY: "FILTERS/SET-SORTBY" as const,
 }
