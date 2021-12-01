@@ -7,6 +7,7 @@ import { TRequestStatus } from "../../../../../a2-bll/app-reducer"
 import { TNavigationState } from "../../../../../a2-bll/navigation-reducer"
 import { clearProducts, getProducts } from "../../../../../a2-bll/products-reducer"
 import { Preloader } from "../../../cp1-elements/el11-Preloader/Preloader"
+import { Filters } from "../../Filters/Filters"
 import { ProductsList } from "../ProductsList/ProductsList"
 
 type TProductsContentProps = {
@@ -34,9 +35,11 @@ export const ProductsContent: FC<TProductsContentProps> = ({ productsSS }) => {
     //useEffect(() => , [])
 
     return <>
-        <header style={{paddingLeft: "15px", marginBottom: "20px"}}>
+        <header style={{paddingLeft: "15px", marginBottom: "25px"}}>
             <h3>{category?.CatName}</h3>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque voluptate, veritatis exercitationem ipsam atque quos ut molestias id possimus dolores dicta nemo! Nemo, asperiores cumque. Optio quibusdam molestias reprehenderit explicabo?</p>
         </header>
+        <Filters />
         <div className="products-list__container">
             {products && <ProductsList products={products} />}
             <Preloader isVisible={status === "loading"} />

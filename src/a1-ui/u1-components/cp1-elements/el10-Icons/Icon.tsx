@@ -5,6 +5,7 @@ type TDefaulSVGProps = DetailedHTMLProps<SVGAttributes<SVGSVGElement>, SVGSVGEle
 
 type TIconProps = TDefaulSVGProps & {
     name: TIconName
+    value?: string,
     className?: string // for colors
     containerClassName?: string // for transitions, rotating etc
     side?: "right" | "left"
@@ -36,7 +37,7 @@ export const Icon: FC<TIconProps> = ({
             case "right": return `${style} _right`
             case "left": return `${style} _left`
         }
-    }, [side])
+    }, [side, containerClassName])
 
     const onClickHandler = (e: MouseEvent<SVGSVGElement>) => {
         active && onClick && onClick(e)
