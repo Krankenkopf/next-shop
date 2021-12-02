@@ -19,6 +19,9 @@ export const CommonUISpritesMap = () => {
         <symbol id="circle" viewBox="0 0 512 512">
             <path d="M256 64C361.869 64 448 150.131 448 256S361.869 448 256 448S64 361.869 64 256S150.131 64 256 64M256 16C123.451 16 16 123.451 16 256S123.451 496 256 496S496 388.549 496 256S388.549 16 256 16L256 16Z" className="fa-secondary" fill="var(--secondary)" fillOpacity="var(--secondary-opacity)"></path><path d="" className="fa-primary" fill="var(--primary)" fillOpacity="var(--primary-opacity)"></path>
         </symbol>
+        <symbol id="circle-solid" viewBox="0 0 512 512">
+            <path d="M496 256C496 388.548 388.548 496 256 496S16 388.548 16 256S123.452 16 256 16S496 123.452 496 256Z" className="fa-secondary" fill="var(--secondary)" fillOpacity="var(--secondary-opacity)"></path><path d="" className="fa-primary" fill="var(--primary)" fillOpacity="var(--primary-opacity)"></path>
+        </symbol>
         <symbol id="ellipsis" viewBox="0 0 512 512">
             <path d="M256 192C220.611 192 192 220.625 192 256S220.611 320 256 320S320 291.375 320 256S291.389 192 256 192Z" className="fa-secondary" fill="var(--secondary)" fillOpacity="var(--secondary-opacity)"></path><path d="M64 192C28.611 192 0 220.625 0 256S28.611 320 64 320S128 291.375 128 256S99.389 192 64 192ZM448 192C412.611 192 384 220.625 384 256S412.611 320 448 320S512 291.375 512 256S483.389 192 448 192Z" className="fa-primary" fill="var(--primary)" fillOpacity="var(--primary-opacity)"></path>
         </symbol>
