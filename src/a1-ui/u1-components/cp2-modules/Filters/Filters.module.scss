@@ -31,22 +31,26 @@
         border: none;
         margin: 0;
         padding: 0;
+        cursor: pointer;
     }
     .sortfilters {
         .sort {
-
+            position: relative;
         }
         .filters {
+            position: relative;
             display: flex;
             @media (max-width: 1170px) {
                 display: none;
             }
         }
         .allFilters {
-
-        }  
+            position: relative;
+        }
+        
     }
     .view {
+        position: relative;
         display: flex;
         fieldset > * {
             display: flex;
@@ -61,5 +65,73 @@
         position: absolute;
         left: -5000px;
     }
+}
+
+.dropdown__container {
+    position: relative;
+    .dropdown__menu {
+        position: absolute;
+        left: 0;
+        top: 150%;
+        //width: 200%;
+        //padding: 20px 20px;
+        box-shadow: 0 0 15px 1px #595855;
+        background-color: beige;
+        z-index: 3;
+        
+    }
+}
+
+.radioSplash {
+    --primary: #292825;
+    --secondary: #292825;
+    --primary-opacity: 0.6;
+	--secondary-opacity: 0.6;
+    transform: scale(1) !important;
+    &__container {
+        
+        width: 10px;
+        opacity: 0;
+        animation: splash 0.6s ease-out 1;
+    }
+}
+
+.filter__btn {
+    transform: rotate(90deg) translateX(-7%);
+        .sortfilters fieldset:hover & {
+            animation: floatY 1s linear 10;
+        }
+}
+
+@keyframes floatY {
+	0% {
+		transform: rotate(90deg) translateX(-7%);
+	}
+	25% {
+		transform: rotate(90deg) translateX(-2%);
+	}
+	50% {
+		transform: rotate(90deg) translateX(-7%);
+	}
+    75% {
+		transform: rotate(90deg) translateX(-12%);
+	}
+	100% {
+		transform: rotate(90deg) translateX(-7%);
+	}
+}
+
+@keyframes splash {
+	0% {
+        opacity: 1;
+		transform: scale(0.5) translateX(-0.5px);
+	}
+    50% {
+        opacity: 0.6;
+	}
+	100% {
+		opacity: 0;
+		transform: scale(4) translateX(0);
+	}
 }
 

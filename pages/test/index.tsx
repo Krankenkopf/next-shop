@@ -81,7 +81,7 @@ export default function Test() {
         miscIconsMap && setMiscIcons(toJSX(miscIconsMap))
     }, []
     )
-    
+
     useEffect(() => {
         let nested = document.querySelector("use")
         if (nested && icons.length === 0) {
@@ -92,10 +92,10 @@ export default function Test() {
                 console.log(`${iconSprite.id} icons: ${svgElements.length}`);
                 let alreadyNested = document.getElementsByTagName("use")
                 console.log(alreadyNested);
-                
+
                 svgElements.forEach(i => {
                     let nestedFlag = false
-                    
+
                     for (let j = 0; j < alreadyNested.length; j++) {
                         if (i.id === alreadyNested[j].id) {
                             console.log(`${i.id} ${alreadyNested[j].id}`);
@@ -122,7 +122,7 @@ export default function Test() {
                     )
                 })
                 console.log(names.slice(50, names.length));
-                
+
                 return icons
             }
             let mainMap = document.getElementById("main-sprite")
@@ -148,30 +148,54 @@ export default function Test() {
             <MiscSpritesMap />
             <main>
                 <h2 style={{ textAlign: "center" }}>All</h2>
-                {icons}
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    {icons}
+                </div>
                 <hr />
                 <h2 style={{ textAlign: "center" }}>Navigation Arrows</h2>
-                {navIcons}
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    {navIcons}
+                </div>
                 <h2 style={{ textAlign: "center" }}>Authentication Icons</h2>
-                {authIcons}
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    {authIcons}
+                </div>
                 <h2 style={{ textAlign: "center" }}>Commerce Icons</h2>
-                {commerceIcons}
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    {commerceIcons}
+                </div>
                 <h2 style={{ textAlign: "center" }}>Common UI Icons</h2>
-                {uiIcons}
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    {uiIcons}
+                </div>
                 <h2 style={{ textAlign: "center" }}>Data Manipulations Icons</h2>
-                {crudIcons}
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    {crudIcons}
+                </div>
                 <h2 style={{ textAlign: "center" }}>Currency Icons</h2>
-                {currencyIcons}
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    {currencyIcons}
+                </div>
                 <h2 style={{ textAlign: "center" }}>Feature Icons</h2>
-                {featureIcons}
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    {featureIcons}
+                </div>
                 <h2 style={{ textAlign: "center" }}>Filter Icons</h2>
-                {filterIcons}
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    {filterIcons}
+                </div>
                 <h2 style={{ textAlign: "center" }}>Layout Toggle Icons</h2>
-                {layoutIcons}
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    {layoutIcons}
+                </div>
                 <h2 style={{ textAlign: "center" }}>Languages and Regions Icons</h2>
-                {localizationIcons}
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    {localizationIcons}
+                </div>
                 <h2 style={{ textAlign: "center" }}>Miscellaneous Icons</h2>
-                {miscIcons} 
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    {miscIcons}
+                </div>
             </main>
         </LandingLayout>
     )

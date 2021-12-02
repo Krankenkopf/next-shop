@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../../../../a0-common/c3-hook
 import { TRequestStatus } from "../../../../../a2-bll/app-reducer"
 import { TNavigationState } from "../../../../../a2-bll/navigation-reducer"
 import { clearProducts, getProducts } from "../../../../../a2-bll/products-reducer"
+import { Paginator } from "../../../cp1-elements/el08-Paginator/Paginator"
 import { Preloader } from "../../../cp1-elements/el11-Preloader/Preloader"
 import { Filters } from "../../Filters/Filters"
 import { ProductsList } from "../ProductsList/ProductsList"
@@ -42,6 +43,12 @@ export const ProductsContent: FC<TProductsContentProps> = ({ productsSS }) => {
         <Filters />
         <div className="products-list__container">
             {products && <ProductsList products={products} />}
+            {products && <div className="products-list__paginator">
+            <Paginator currentPage={currentPage+1}
+                itemsPerPage={pageSize}
+                itemsTotalCount={totalNumberOfResults}
+                setCurrentPage={() => { }} />
+            </div>}
             <Preloader isVisible={status === "loading"} />
         </div>
     </>
