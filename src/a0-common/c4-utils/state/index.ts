@@ -35,6 +35,9 @@ export const extendWithNonNullables = <T, F>(initial: T, base: F) => {
     const defined = {} as F
     getKeys(base).forEach((key) => {
         if (base[key]) {
+            if (Array.isArray(base[key])) {
+                if (!(base[key] as unknown as Array<any>).length) return // no assigning when value is []
+            }
             defined[key] = base[key]
         }
     })

@@ -3,14 +3,14 @@ import { Nullable } from './../a0-common/c1-types/t1-instance/index'
 import { TSortValue } from "../a0-common/c1-types/t2-request"
 
 export type TFilters = {
-    sizes: Nullable<Array<string>>
-    contexts: Nullable<Array<string>>
-    concepts: Nullable<Array<string>>
-    collection: Nullable<Array<string>>
-    qualities: Nullable<Array<string>>
-    fits: Nullable<Array<string>>
-    functions: Nullable<Array<string>>
-    colorWithNames: Nullable<Array<string>>
+    sizes: Array<string>
+    contexts: Array<string>
+    concepts: Array<string>
+    collection: Array<string>
+    qualities: Array<string>
+    fits: Array<string>
+    functions: Array<string>
+    colorWithNames: Array<string>
 }
 
 export type TFacets = {
@@ -26,15 +26,15 @@ export type TFacets = {
 
 const initialState = {
     current: {
-        sizes: null,
-        contexts: null,
-        concepts: null,
-        collection: null,
-        qualities: null,
-        fits: null,
-        //descriptiveLengths: null,
-        functions: null,
-        colorWithNames: null,
+        sizes: [],
+        contexts: [],
+        concepts: [],
+        collection: [],
+        qualities: [],
+        fits: [],
+        //descriptiveLengths: [],
+        functions: [],
+        colorWithNames: [],
     } as TFilters,
     facets: {
         sizes: null,
