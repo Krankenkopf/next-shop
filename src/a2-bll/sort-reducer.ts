@@ -2,7 +2,7 @@ import { TSortValue } from "../a0-common/c1-types/t2-request"
 
 const initialState = {
     sortBy: "stock" as TSortValue,
-    sortValues: ["ascPrice", "descPrice", "newProduct", "stock"] as Array<TSortValue>
+    sortValues: ["stock", "newProduct", "ascPrice", "descPrice",] as Array<TSortValue>
 }
 
 export const sortReducer =

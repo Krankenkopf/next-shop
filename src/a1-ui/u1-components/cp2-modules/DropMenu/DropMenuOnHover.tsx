@@ -6,7 +6,7 @@ type TDropMenuProps = {
     menu: ReactNode
 }
 
-export const DropMenu: FC<TDropMenuProps> = ({toggle, menu}) => {
+export const DropMenuOnHover: FC<TDropMenuProps> = ({toggle, menu}) => {
     const [menuVisibility, setMenuVisibility] = useState(false);
     const [menuClosing, setMenuClosing] = useState(false);
     const [timer, setTimer] = useState<NodeJS.Timeout>();
@@ -36,7 +36,7 @@ export const DropMenu: FC<TDropMenuProps> = ({toggle, menu}) => {
              onMouseLeave={(e) => toggleMenu(e, false)}>
             {toggle}
             {menuVisibility
-                ? <div className={`${css.dropmenu} ${menuClosing ? css.closing : ""}`}>{ menu }</div>
+                ? <div className={`${css.dropmenuHover} ${menuClosing ? css.closing : ""}`}>{ menu }</div>
                 : null}
         </div>
     )

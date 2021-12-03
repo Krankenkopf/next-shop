@@ -67,20 +67,7 @@
     }
 }
 
-.dropdown__container {
-    position: relative;
-    .dropdown__menu {
-        position: absolute;
-        left: 0;
-        top: 150%;
-        //width: 200%;
-        //padding: 20px 20px;
-        box-shadow: 0 0 15px 1px #595855;
-        background-color: beige;
-        z-index: 3;
-        
-    }
-}
+
 
 .radioSplash {
     --primary: #292825;
@@ -97,27 +84,30 @@
 }
 
 .filter__btn {
-    transform: rotate(90deg) translateX(-7%);
-        .sortfilters fieldset:hover & {
-            animation: floatY 1s linear 10;
-        }
+    transform: translateY(-7%);
+    .sortfilters fieldset:hover & {
+        animation: floatY 1s linear 10;
+    }
+    &._close {
+        top: 7%;
+    }
 }
 
 @keyframes floatY {
 	0% {
-		transform: rotate(90deg) translateX(-7%);
+		transform: translateY(-7%);
 	}
 	25% {
-		transform: rotate(90deg) translateX(-2%);
+		transform: translateY(-2%);
 	}
 	50% {
-		transform: rotate(90deg) translateX(-7%);
+		transform: translateY(-7%);
 	}
     75% {
-		transform: rotate(90deg) translateX(-12%);
+		transform: translateY(-12%);
 	}
 	100% {
-		transform: rotate(90deg) translateX(-7%);
+		transform: translateY(-7%);
 	}
 }
 

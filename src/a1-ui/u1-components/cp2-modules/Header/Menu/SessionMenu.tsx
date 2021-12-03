@@ -5,7 +5,7 @@ import { logout, TAuthState } from "../../../../../a2-bll/auth-reducer"
 import { TState } from "../../../../../a2-bll/store"
 import Button from "../../../cp1-elements/el02-Button/Button"
 import { Icon } from "../../../cp1-elements/el10-Icons/Icon"
-import { DropMenu } from "../../DropMenu/DropMenu"
+import { DropMenuOnHover } from "../../DropMenu/DropMenuOnHover"
 
 import { TModal } from "../../Modal/Modals"
 import { MiniCart } from "../MiniCart/MiniCart"
@@ -87,7 +87,7 @@ export const SessionMenu: FC<TSessionMenuProps> = ({ revealModal }) => {
     return (
         <ul className="header-menu-session">
             <li style={{ display: "inline-block" }}>
-                <DropMenu toggle={authMenu.toggle} menu={authMenu.menu} />
+                <DropMenuOnHover toggle={authMenu.toggle} menu={authMenu.menu} />
             </li>
             <li style={{ display: "inline-block" }}>
                 <Link href="/favorites">
@@ -100,7 +100,7 @@ export const SessionMenu: FC<TSessionMenuProps> = ({ revealModal }) => {
                 </Link>
             </li>
             <li style={{ display: "inline-block" }}>
-                <DropMenu toggle={minicartMenu.toggle} menu={minicartMenu.menu} />
+                <DropMenuOnHover toggle={minicartMenu.toggle} menu={minicartMenu.menu} />
             </li>
         </ul>
     )
