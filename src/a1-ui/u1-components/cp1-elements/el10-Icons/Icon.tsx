@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef, MouseEvent, SVGAttributes, DetailedHTMLProps } from "react"
+import React, { FC, useCallback, useEffect, useRef, MouseEvent, SVGAttributes, DetailedHTMLProps, CSSProperties } from "react"
 import { TIconName } from "../../cp2-modules/IconSpritesMaps/IconSpritesMap"
 
 type TDefaulSVGProps = DetailedHTMLProps<SVGAttributes<SVGSVGElement>, SVGSVGElement>
@@ -10,6 +10,7 @@ type TIconProps = TDefaulSVGProps & {
     containerClassName?: string // for transitions, rotating etc
     side?: "right" | "left"
     size?: "normal" | "full" //normal is full divided by sqrt(2) for proper rotating anims and/or nesting
+    rotate?: 1 | 2 | 3 | 4 // 0 90 180 270 deg
     active?: boolean // for icon button variant
     primaryColor?: string
     secondaryColor?: string
@@ -24,6 +25,7 @@ export const Icon: FC<TIconProps> = ({
     containerClassName,
     side = "left",
     size = "normal",
+    rotate = 1,
     active = true,
     primaryColor,
     secondaryColor,
@@ -54,11 +56,24 @@ export const Icon: FC<TIconProps> = ({
             ref && ref.current.style.setProperty('--secondary-opacity', secondaryOpacity)
         }
     }, [primaryColor, secondaryColor, primaryOpacity, secondaryOpacity,])
+
+    const rotated = useCallback((): CSSProperties => {
+        switch (rotate) {
+            case 1: return {}
+            case 2: return { transform: `rotate(90deg)` }
+            case 3: return { transform: `rotate(180deg)` }
+            case 4: return { transform: `rotate(270deg)` }
+        }
+    }, [rotate])
+
     return (
         <div className={`${getContainerStyle()}`}>
-            <svg ref={ref} onClick={onClickHandler} className={`icon icon-${name} ${className} ${size}`}>
+            <div style={rotated()} className="icon__rotate">
+                <svg ref={ref} onClick={onClickHandler} className={`icon icon-${name} ${className} ${size}`}>
                 <use id={`${name}`} xlinkHref={`#${name}`}></use>
             </svg>
+            </div>
+            
         </div>
     )
 }
