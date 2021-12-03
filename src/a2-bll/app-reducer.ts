@@ -23,7 +23,7 @@ export const appReducer = (state: TAppState = initialState, action: TAppActions)
 
 // actions
 export const setAppStatus = (status: TRequestStatus) => ({type: appActionVariables.SET_STATUS, status} as const)
-export const setError = (error: string) => ({type: appActionVariables.SER_ERROR, error} as const)
+export const setError = (error: Nullable<string>) => ({type: appActionVariables.SER_ERROR, error} as const)
 export const setInitialized = () => ({type: appActionVariables.SET_INITIALIZED} as const)
 export const setNeedUpdate = (status: boolean) => ({type: appActionVariables.SET_NEED_UPDATE, payload: {needUpdate: status}}) as const
 // thunks

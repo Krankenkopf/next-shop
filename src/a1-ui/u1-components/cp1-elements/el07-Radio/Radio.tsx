@@ -8,7 +8,6 @@ type TRadioProps<T> = TDefaultRadioProps & {
     titles?: Array<string>
     onChangeOption?: (option: T) => void
 }
-
 export const Radio: React.FC<TRadioProps<TSortValue>> = (
     { type, name, titles, options, value, onChange, onChangeOption, children, ...restProps }) => {
 
@@ -19,7 +18,7 @@ export const Radio: React.FC<TRadioProps<TSortValue>> = (
 
     const mappedOptions = options
         ? options.map((option, i) => (
-            <>
+            <div key={option}>
                 <input
                     id={option}
                     type={'radio'}
@@ -30,13 +29,13 @@ export const Radio: React.FC<TRadioProps<TSortValue>> = (
                     className={css.radio__input}
                     {...restProps}
                 />
-                <label key={option} htmlFor={option}>
+                <label  htmlFor={option}>
                     <div className={css.radio}>
                         {option === value && children}
                     </div>
                     {titles ? titles[i] : option}
                 </label>
-            </>
+            </div>
         )) : []
 
     return (

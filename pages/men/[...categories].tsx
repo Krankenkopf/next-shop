@@ -4,35 +4,32 @@ import React, { useEffect, useState } from "react"
 import { Nullable, TCategory, TPageMeta } from "../../src/a0-common/c1-types/t1-instance"
 import { TProduct } from "../../src/a0-common/c1-types/t1-instance/TProduct"
 import { TGetProductsListRequestRequiredData, TGetProductsListRequestOptionalData } from "../../src/a0-common/c1-types/t2-request"
-import { TAnyFacet, TPagination } from "../../src/a0-common/c1-types/t3-response/TProductsResponse"
 import { useAppSelector } from "../../src/a0-common/c3-hooks"
-import { extractRelevantFacets, getRequestedCategory } from "../../src/a0-common/c4-utils/state"
+import { getRequestedCategory } from "../../src/a0-common/c4-utils/state"
 import { Timer } from "../../src/a1-ui/u1-components/cp1-elements/el20-Timer/Timer"
 import { ProductsContent } from "../../src/a1-ui/u1-components/cp2-modules/ProductModules/ProductsContent/ProductsContent"
 import { ProductLayout } from "../../src/a1-ui/u1-components/cp4-layouts/ProductLayout"
-import { setFacets } from "../../src/a2-bll/filters-reducer"
-import { setCategory, setCurrentPage, setPageSize, setTotalNumbers } from "../../src/a2-bll/navigation-reducer"
+import { setCategory } from "../../src/a2-bll/navigation-reducer"
 import { setProducts } from "../../src/a2-bll/products-reducer"
 import { selectPageCategory, selectPageMeta } from "../../src/a2-bll/selectors"
-import { setSortBy } from "../../src/a2-bll/sort-reducer"
 import { wrapper } from "../../src/a2-bll/store"
 import { ProductsAPI } from "../../src/a3-dal/hm/products-api"
 
-type TLadiesCategorySSProps = {
+type TMenCategorySSProps = {
     categorySS?: TCategory
     productsSS: Nullable<Array<TProduct>>
 }
-type TLadiesCategoryProps = {
+type TMenCategoryProps = {
     history: Array<string>
 }
 
-export default function LadiesCategory({categorySS, productsSS, history}: TLadiesCategorySSProps & TLadiesCategoryProps) {
-    
-    
-    const rootCategory = useAppSelector<TCategory>(state => selectPageCategory(state, "ladies"))
-    const pageMeta = useAppSelector<TPageMeta>(state => selectPageMeta(state, "ladies"))
-    
-    
+export default function MenCategory({ categorySS, productsSS, history }: TMenCategorySSProps & TMenCategoryProps) {
+
+
+    const rootCategory = useAppSelector<TCategory>(state => selectPageCategory(state, "men"))
+    const pageMeta = useAppSelector<TPageMeta>(state => selectPageMeta(state, "men"))
+
+
     return (
         <ProductLayout title={pageMeta.title}
             category={rootCategory}
@@ -55,13 +52,13 @@ export default function LadiesCategory({categorySS, productsSS, history}: TLadie
                         </a>
                     </Link>
                 </section>
-                <ProductsContent productsSS={ productsSS }/>
+                <ProductsContent productsSS={productsSS} />
             </div>
         </ProductLayout>
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps<TLadiesCategorySSProps>(store => async ({ req, query, resolvedUrl }) => {
+export const getServerSideProps = wrapper.getServerSideProps<TMenCategorySSProps>(store => async ({ req, query, resolvedUrl }) => {
     console.log("ss request")
     if (!req || (req.url && req.url.startsWith('/_next/data'))) {
         console.log("ss request dumped");
@@ -85,26 +82,11 @@ export const getServerSideProps = wrapper.getServerSideProps<TLadiesCategorySSPr
         }
         const response = await fetch("http://localhost:4200/results")
         const productsSS = await response.json() as Array<TProduct>
-        const paginationSS = await fetch("http://localhost:4200/pagination")
-        const { currentPage, pageSize,
-            numberOfPages, totalNumberOfResults,
-            totalNumberOfResultsUnfiltered, sort } = await paginationSS.json() as TPagination
-        const facetsSS = await fetch("http://localhost:4200/facets")
-        const anyFacetsSS = await facetsSS.json() as Array<TAnyFacet>
-        const relevantFacetsSS = extractRelevantFacets(anyFacetsSS, state.filters.facets)
         //const response = await ProductsAPI.getList(requiredParams, optionalParams)
         //const productsSS = response.data.results
-        //products
         store.dispatch(setProducts(productsSS))
-        //navigation
         targetedCategory && store.dispatch(setCategory(targetedCategory))
-        store.dispatch(setCurrentPage(currentPage))
-        store.dispatch(setPageSize(pageSize))
-        store.dispatch(setTotalNumbers(numberOfPages, totalNumberOfResults, totalNumberOfResultsUnfiltered))
-        //sort&filters
-        store.dispatch(setSortBy(sort))
-        store.dispatch(setFacets(relevantFacetsSS))
-        
+
         return { props: { productsSS, categorySS: targetedCategory } }
     } catch (e) {
         console.log(e);
