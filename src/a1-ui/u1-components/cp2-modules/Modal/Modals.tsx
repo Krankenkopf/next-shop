@@ -34,6 +34,7 @@ export const Modals: FC<TModalsProps> = ({ modal, revealModal, onClose }) => {
         passRecovery: false,
         cart: false
     })
+    // TODO: maybe rename props to isFullyOpened isFullyClosed?
     const [closingModal, setClosingModal] = useState(false)
     const [current, setCurrent] = useState<TModal>(null);
     const [freezed, setFreezed] = useState<TModal>(null);
