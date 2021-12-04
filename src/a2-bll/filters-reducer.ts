@@ -58,10 +58,10 @@ export const filtersReducer =
                     ...state,
                     ...action.payload
                 }
-            case filtersActionVariables.SET_FILTER:
+            case filtersActionVariables.SET_FILTER:              
                 return {
                     ...state,
-                    ...action.payload.current
+                    current: {...state.current, ...action.payload.filter},         
                 }
             default: return state
         }
@@ -74,12 +74,12 @@ export const setFacets = (facets: typeof initialState.facets) => (
     } as const)
 
 export type TFilterKey = keyof typeof initialState.current
-type TFilter = { [key in TFilterKey]?: Nullable<Array<string>> }
+type TFilter = { [key in TFilterKey]?: Array<string> }
 
 export const setFilter = (filter: TFilter) => (
     {
         type: filtersActionVariables.SET_FILTER,
-        payload: { current: { filter } }
+        payload: { filter }
     } as const)
 
 
