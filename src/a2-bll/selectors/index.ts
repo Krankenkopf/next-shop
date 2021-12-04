@@ -1,6 +1,7 @@
 import { TCategory, TPageMeta, TRootCategoryValue } from './../../a0-common/c1-types/t1-instance/index'
 import { createSelector } from "reselect";
 import { TState } from "../store";
+import { capitalizeFirst } from '../../a0-common/c4-utils/ui';
 
 const selectCategories = (state: TState) => state.categories
 //const selectPageMeta = (state: TState) => 
@@ -17,11 +18,11 @@ export const selectPageCategory = createSelector(
         return selected
             ? selected
             : {
-            CatName: `${category.slice(0, 1).toUpperCase()}${category.slice(1)}`,
-            CategoryValue: category,
-            CategoriesArray: [],
-            tagCodes: [category]
-        }
+                CatName: capitalizeFirst(category),
+                CategoryValue: category,
+                CategoriesArray: [],
+                tagCodes: [category]
+            }   
         
     }
 )
@@ -35,6 +36,6 @@ export const selectPageMeta = createSelector(
         const selected = categories[category]
         return selected
             ? { title: selected.CatName, path: selected.CategoryValue }
-            : { title: `${category.slice(0, 1).toUpperCase()}${category.slice(1)}`, path: category }
+            : { title: capitalizeFirst(category), path: category }
     }
 )

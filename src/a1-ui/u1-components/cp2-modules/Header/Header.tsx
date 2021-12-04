@@ -3,6 +3,7 @@ import React, { FC } from "react"
 import { Search } from "./Search"
 import { TModal } from "../Modal/Modals"
 import { SessionMenu } from "./Menu/SessionMenu"
+import { capitalizeFirst } from "../../../../a0-common/c4-utils/ui"
 
 type THeaderProps = {
     revealModal: (modalType: TModal) => void
@@ -16,15 +17,15 @@ export const Header: FC<THeaderProps> = React.memo(({revealModal}) => {
         </li>)
     })
     const headerLinkNames = ["ladies", "divided", "men", "babies", "kids", "household", "sale"]
-    const headerLinks = headerLinkNames.map((n, i, arr) => {
-        if (n === "household") {
-            return <h4 key={n} style={{width: `calc(100%/${arr.length})`, height: '30px', textAlign: 'center'}}>
+    const headerLinks = headerLinkNames.map((name, i, arr) => {
+        if (name === "household") {
+            return <h4 key={name} style={{width: `calc(100%/${arr.length})`, height: '30px', textAlign: 'center'}}>
                 <Link href="/household"><a>H&M Home</a></Link>
             </h4>
         }
-        else return <h4 key={n} style={{width: `calc(100%/${arr.length})`, height: '30px', textAlign: 'center'}}>
-            <Link href={`/${n}`}>
-                <a>{`${n.slice(0, 1).toUpperCase()}${n.slice(1)}`}</a>
+        else return <h4 key={name} style={{width: `calc(100%/${arr.length})`, height: '30px', textAlign: 'center'}}>
+            <Link href={`/${name}`}>
+                <a>{capitalizeFirst(name)}</a>
             </Link>
         </h4>
     })

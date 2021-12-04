@@ -27,3 +27,7 @@ export const _toLiLinkA = (src: Array<any>, parentPath: string, className: strin
         )
     })
 }
+
+//=============================================================================================
+
+export const capitalizeFirst = (s: string) => (s && s[0].toUpperCase() + s.slice(1)) || ""

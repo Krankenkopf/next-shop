@@ -7,7 +7,8 @@ export enum FilterNames {
     ALLFILTERS = "ALL FILTERS",
 }
 
-export const SORTTITLES = ["Recommended", "Newest", "Lowest Price", "Highest Price"] 
+export const SORTTITLES = ["Recommended", "Newest", "Lowest Price", "Highest Price"]
+export const SIZETITLES = ["Womenswear", "Menswear", "Waist(inches)", "Footwear"]
 
 export enum IconColor {
     OK = "#00bb00",
