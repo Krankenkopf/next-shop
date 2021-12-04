@@ -23,17 +23,19 @@
         opacity: 1;
         transition: opacity .2s linear .1s;
         z-index: 3;
-        background-color: beige;
+        background-color: #ffffeb;
         label {
             transition: padding .2s linear;
         }
         //.dropdown__menu__closed
         &._closed {
-            transition: opacity .2s linear;
+            transition: opacity .2s linear, visibility 0s step-end 0.3s;
             opacity: 0;
+            visibility: hidden;
             label {
                 transition: padding .2s linear .1s;
                 padding: 0;
+
             }     
         }   
     }
