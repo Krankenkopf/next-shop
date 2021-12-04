@@ -1,0 +1,13 @@
+.sizesMenu {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;  
+    .dropdown__container {
+        padding: 5px;
+        //position: initial;
+        .dropdown__menu {
+            transform: translateY(-10px);
+            //display: grid;
+            //grid-template-columns: 1fr 1fr 1fr 1fr;  
+        }
+    } 
+}

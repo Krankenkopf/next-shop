@@ -1,0 +1,84 @@
+$box: 42px;
+$innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
+.colorsMenu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.transparent {
+    position: relative;
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        background-color: #ff3ba790;
+    }
+    &::before {
+        top: 0;
+        right: 0;
+    }
+    &::after {
+        bottom: 0;
+        left: 0;
+    }
+}
+
+@mixin circle($size) {
+    content: "";
+    position: absolute;
+    //border-radius: 50%;
+    width: $size;
+    height: $size;
+}
+
+.multi {
+    @include circle($box);
+    box-shadow: 0 0 1px 1px black inset;
+}
+.umbrella {
+    @include circle($box);
+    left: calc(50% - #{$box/2});
+    top: calc(50% - #{$box/2});
+    background-color: #ff3ba7;
+}
+.color {
+    @include circle($innerBox);
+    left: calc(50% - #{$innerBox/2});
+    top: calc(50% - #{$innerBox/2});
+}
+
+.multi {
+    overflow: hidden;
+    width: $box;
+    height: $box;
+    position: relative;
+}
+.umbrella {
+    position: relative;
+    //filter: blur(1.7em);
+    //transform: scale(1.35);
+}
+.color,
+.color:nth-child(n + 5):after {
+    clip: rect(0, $innerBox, $innerBox, #{$innerBox/2});
+}
+.color:after,
+.color:nth-child(n + 5) {
+    @include circle($innerBox);
+    clip: rect(0, #{$innerBox/2}, $innerBox, 0);
+}
+
+$colors: (#9ed110, #50b517, #476eaf, #cc42a2, #ff3ba7, #ff8100, #feac00, #ede604);
+@for $i from 0 to length($colors) {
+    .color:nth-child(#{1 + $i}):after {
+        background-color: nth($colors, $i + 1);
+        @if $i < 4 {
+            transform: rotate(#{45 * (1 + $i)}deg);
+            z-index: #{length($colors)-$i};
+        } @else {
+            transform: rotate(#{-45+ (45 * (1 + $i))}deg);
+        }
+    }
+}
