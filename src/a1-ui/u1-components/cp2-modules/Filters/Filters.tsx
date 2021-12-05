@@ -12,6 +12,7 @@ import { Icon } from "../../cp1-elements/el10-Icons/Icon"
 import { DropMenuOnClick } from "../DropMenu/DropMenuOnClick"
 import { ColorsMenu } from "./ColorsMenu/ColorsMenu"
 import css from "./Filters.module.scss"
+import { FitsMenu } from "./FitsMenu/FitsMenu"
 import { SizesMenu } from "./SizesMenu/SizesMenu"
 
 type TFiltersProps = {
@@ -26,24 +27,34 @@ export const Filters = () => {
     const { sortBy, sortValues } = useAppSelector<TSortState>(state => state.sort)
     const totalCount = useAppSelector<number>(state => state.navigation.totalNumberOfResults)
 
-
+    //menus togglers
+    const [isAnyOpen, setIsAnyOpen] = useState(false);
+    const initialVisibility = {
+        sort: false,
+        sustain: false,
+        size: false,
+        color: false,
+        pattern: false,
+        fits: false,
+    }
+    const [isMenuVisible, setIsMenuVisible] = useState(initialVisibility)
+    const onMenuToggle = (state: boolean, type: string | undefined) => {
+        setIsAnyOpen(state)
+        type && setIsMenuVisible((prev) => ({ ...initialVisibility, [type]: state }))
+    }
 
     //sortDropmenu =======================================================================================
-    const [isSortMenuVisible, setIsSortMenuVisible] = useState(false)
-    const onSortMenuToggle = useCallback((state) => {
-        setIsSortMenuVisible(state)
-    }, [])
     const onSortOptionChange = (value: TSortValue) => {
         dispatch(setSortBy(value))
     }
-    const sortMenu = {
+    const getSortMenu = useCallback(() => ({
         toggle: <div className="span__decorated right">
             <Icon name="chevron-right"
                 size="full"
                 side="right"
-                rotate={isSortMenuVisible ? 4 : 2}
+                rotate={isMenuVisible.sort ? 4 : 2}
                 className={css.filter__btn__icon}
-                containerClassName={isSortMenuVisible
+                containerClassName={isMenuVisible.sort
                     ? `${css.filter__btn} ${css._close}`
                     : css.filter__btn} />
             <span>{FilterNames.SORTBY}</span>
@@ -57,12 +68,8 @@ export const Filters = () => {
                 containerClassName={css.radioSplash__container}
                 className={css.radioSplash} />
         </Radio>
-    }
+    }), [isMenuVisible.sort, sortValues, sortBy] )
     //colorMenu =======================================================================================
-    const [isColorMenuVisible, setIsColorMenuVisible] = useState(false)
-    const onColorMenuToggle = useCallback((state) => {
-        setIsColorMenuVisible(state)
-    }, [])
     const onColorOptionChange = (state: boolean, value: string) => {
         state
             ? dispatch(setFilter({ colorWithNames: [...current.colorWithNames, value] }))
@@ -73,9 +80,9 @@ export const Filters = () => {
             <Icon name="chevron-right"
                 size="full"
                 side="right"
-                rotate={isColorMenuVisible ? 4 : 2}
+                rotate={isMenuVisible.color ? 4 : 2}
                 className={css.filter__btn__icon}
-                containerClassName={isColorMenuVisible
+                containerClassName={isMenuVisible.color
                     ? `${css.filter__btn} ${css._close}`
                     : css.filter__btn} />
             <span>{FilterNames.COLOR}</span>
@@ -84,13 +91,10 @@ export const Filters = () => {
             <ColorsMenu colors={facets.colorWithNames}
                 selected={current.colorWithNames}
                 onOptionChange={onColorOptionChange} />,
-    }), [isColorMenuVisible, facets.colorWithNames, current.colorWithNames])
+    }), [isMenuVisible.color, facets.colorWithNames, current.colorWithNames])
 
     //sustainMenu =======================================================================================
-    const [isSustainMenuVisible, setIsSustainMenuVisible] = useState(false)
-    const onSustainMenuToggle = useCallback((state) => {
-        setIsSustainMenuVisible(state)
-    }, [])
+
     const onSustainOptionChange = (state: boolean, value: string) => {
         console.log("Not implemented")
     }
@@ -99,34 +103,30 @@ export const Filters = () => {
             <Icon name="chevron-right"
                 size="full"
                 side="right"
-                rotate={isSustainMenuVisible ? 4 : 2}
+                rotate={isMenuVisible.sustain ? 4 : 2}
                 className={css.filter__btn__icon}
-                containerClassName={isSustainMenuVisible
+                containerClassName={isMenuVisible.sustain
                     ? `${css.filter__btn} ${css._close}`
                     : css.filter__btn} />
             <span>{FilterNames.CONSCIOUS}</span>
         </div>,
-        menu: <ul style={{ padding: "10px" }}>
+        menu: <ul style={{display: "grid", gridTemplateColumns: "1fr"}}>
             <li>
-                <Checkbox
+                <Checkbox name={FilterNames.CONSCIOUS}
+                    disabled
                     onChangeChecked={onSustainOptionChange}
-                    className={`${css.checkbox} ${css.active}`}
+                    className={`${css.checkbox}`}
                     titleClassName={css.checkbox__inner}>
                     <div className={css.checkbox__text}>
-                        Conscious
+                        <p style={{ color: "#f00", fontSize: "75%" }}>Not available</p>
                     </div>
                 </Checkbox>
-                <p style={{ color: "#f00", fontSize: "60%" }}>Not implemented</p>
             </li>
         </ul>,
-    }), [isSustainMenuVisible])
+    }), [isMenuVisible.sustain])
 
     //sizesMenu =========================================================================================
 
-    const [isSizesMenuVisible, setIsSizesMenuVisible] = useState(false)
-    const onSizesMenuToggle = useCallback((state) => {
-        setIsSizesMenuVisible(state)
-    }, [])
     const onSizesOptionChange = (state: boolean, value: string) => {
         state
             ? dispatch(setFilter({ sizes: [...current.sizes, value] }))
@@ -137,9 +137,9 @@ export const Filters = () => {
             <Icon name="chevron-right"
                 size="full"
                 side="right"
-                rotate={isSizesMenuVisible ? 4 : 2}
+                rotate={isMenuVisible.size ? 4 : 2}
                 className={css.filter__btn__icon}
-                containerClassName={isSizesMenuVisible
+                containerClassName={isMenuVisible.size
                     ? `${css.filter__btn} ${css._close}`
                     : css.filter__btn} />
             <span>{FilterNames.SIZE}</span>
@@ -148,8 +148,62 @@ export const Filters = () => {
             <SizesMenu sizes={facets.sizes}
                 selected={current.sizes}
                 onOptionChange={onSizesOptionChange} />,
-    }), [isSizesMenuVisible, facets.sizes, current.sizes])
+    }), [isMenuVisible.size, facets.sizes, current.sizes])
 
+    //patternsMenu
+    const onPatternsOptionChange = (state: boolean, value: string) => {
+        console.log("Not implemented");
+    }
+    const getPatternsMenu = useCallback(() => ({
+        toggle: <div className="span__decorated right" >
+            <Icon name="chevron-right"
+                size="full"
+                side="right"
+                rotate={isMenuVisible.pattern ? 4 : 2}
+                className={css.filter__btn__icon}
+                containerClassName={isMenuVisible.pattern
+                    ? `${css.filter__btn} ${css._close}`
+                    : css.filter__btn} />
+            <span>{FilterNames.PATTERN}</span>
+        </div>,
+        menu: <ul style={{ display: "grid", gridTemplateColumns: "1fr" }}>
+            <li>
+                <Checkbox name={FilterNames.PATTERN}
+                    disabled
+                    onChangeChecked={onPatternsOptionChange}
+                    className={`${css.checkbox}`}
+                    titleClassName={css.checkbox__inner}>
+                    <div className={css.checkbox__text}>
+                        <p style={{ color: "#f00", fontSize: "75%" }}>Not available</p>
+                    </div>
+                </Checkbox>
+            </li>
+        </ul>,
+    }), [isMenuVisible.pattern])
+
+    //fitsMenu
+    const onFitsOptionChange = (state: boolean, value: string) => {
+        state
+            ? dispatch(setFilter({ fits: [...current.fits, value] }))
+            : dispatch(setFilter({ fits: [...current.fits.filter((fit) => fit !== value)] }))
+    }
+    const getFitsMenu = useCallback(() => ({
+        toggle: <div className="span__decorated right" >
+            <Icon name="chevron-right"
+                size="full"
+                side="right"
+                rotate={isMenuVisible.fits ? 4 : 2}
+                className={css.filter__btn__icon}
+                containerClassName={isMenuVisible.fits
+                    ? `${css.filter__btn} ${css._close}`
+                    : css.filter__btn} />
+            <span>{"FITS"}</span>
+        </div>,
+        menu: facets.fits &&
+            <FitsMenu fits={facets.fits}
+                selected={current.fits}
+                onOptionChange={onFitsOptionChange} />,
+    }), [isMenuVisible.fits, facets.fits, current.fits])
 
     return <section className={css.sortfilterviewControls}>
         <form>
@@ -157,52 +211,54 @@ export const Filters = () => {
                 <section className={css.sort}>
                     <fieldset className={css.block}>
                         <legend>{FilterNames.SORTBY}</legend>
-                        <DropMenuOnClick id={FilterNames.SORTBY}
-                            toggle={sortMenu.toggle}
-                            menu={sortMenu.menu}
-                            onToggle={onSortMenuToggle} />
-                    </fieldset>
-                    <fieldset className={css.block}>
-                        <legend>{FilterNames.SIZE}</legend>
-                        <DropMenuOnClick id={FilterNames.SIZE}
-                            toggle={getSizesMenu().toggle}
-                            menu={getSizesMenu().menu}
-                            onToggle={onSizesMenuToggle} />
-                    </fieldset>
+                        <DropMenuOnClick type="sort"
+                            toggle={getSortMenu().toggle}
+                            menu={getSortMenu().menu}
+                            isNeedToClosePrevious={isAnyOpen}
+                            onToggle={onMenuToggle} />
+                    </fieldset>  
                 </section>
                 <section className={css.filters}>
                     <fieldset className={css.block}>
                         <legend>{FilterNames.CONSCIOUS}</legend>
-                        <DropMenuOnClick id={FilterNames.CONSCIOUS} toggle={getSustainMenu().toggle}
+                        <DropMenuOnClick type="sustain"
+                            toggle={getSustainMenu().toggle}
                             menu={getSustainMenu().menu}
-                            onToggle={onSustainMenuToggle} />
+                            isNeedToClosePrevious={isAnyOpen}
+                            onToggle={onMenuToggle}/>
                     </fieldset>
-                    {/* <fieldset className={css.block}>
+                    <fieldset className={css.block}>
                         <legend>{FilterNames.SIZE}</legend>
-                        <DropMenuOnClick id={FilterNames.SIZE} toggle={getSizesMenu().toggle}
+                        <DropMenuOnClick type="size"
+                            toggle={getSizesMenu().toggle}
                             menu={getSizesMenu().menu}
-                            onToggle={onSizesMenuToggle} />
-                    </fieldset> */}
+                            isNeedToClosePrevious={isAnyOpen}
+                            onToggle={onMenuToggle} />
+                    </fieldset>
                     <fieldset className={css.block}>
                         <legend>{FilterNames.COLOR}</legend>
-                        <DropMenuOnClick id={FilterNames.COLOR} toggle={getColorMenu().toggle}
+                        <DropMenuOnClick type="color"
+                            toggle={getColorMenu().toggle}
                             menu={getColorMenu().menu}
-                            onToggle={onColorMenuToggle} />
+                            isNeedToClosePrevious={isAnyOpen}
+                            onToggle={onMenuToggle} />
                     </fieldset>
                     <fieldset className={css.block}>
                         <legend>{FilterNames.PATTERN}</legend>
-                        <div>
-                            <div className="span__decorated right" >
-                                <Icon name="chevron-right"
-                                    size="full"
-                                    side="right"
-                                    className={css.filter__btn__icon}
-                                    containerClassName={css.filter__btn} />
-                                <span>{FilterNames.PATTERN}</span>
-                            </div>
-                            <div></div>
-                        </div>
+                        <DropMenuOnClick type="pattern"
+                            toggle={getPatternsMenu().toggle}
+                            menu={getPatternsMenu().menu}
+                            isNeedToClosePrevious={isAnyOpen}
+                            onToggle={onMenuToggle} />
                     </fieldset>
+                    <fieldset className={css.block}>
+                        <legend>{"FITS"}</legend>
+                        <DropMenuOnClick type="fits"
+                            toggle={getFitsMenu().toggle}
+                            menu={getFitsMenu().menu}
+                            isNeedToClosePrevious={isAnyOpen}
+                            onToggle={onMenuToggle} />
+                    </fieldset>         
                 </section>
                 <section className={css.allFilters}>
                     <fieldset className={css.block}>

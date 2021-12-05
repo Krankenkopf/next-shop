@@ -6,13 +6,14 @@ type TDropMenuOnClickProps = {
     toggle: ReactNode
     menu: ReactNode
     isNeedToClosePrevious?: boolean
-    id?: string
     className?: string
+    menuClassName?: string
     type?: string
     onToggle?: (state: boolean, type?: string) => void
 }
 
-export const DropMenuOnClick: FC<TDropMenuOnClickProps> = ({ toggle, menu, isNeedToClosePrevious = false, id, className, type, onToggle }) => {
+export const DropMenuOnClick: FC<TDropMenuOnClickProps> = (
+    { toggle, menu, isNeedToClosePrevious = false, className, menuClassName, type, onToggle }) => {
     const [isMenuVisible, setIsMenuVisible] = useState(false)
     const [isToggling, setIsToggling] = useState(false);
     // TODO: comment this barbarity!!
@@ -35,9 +36,9 @@ export const DropMenuOnClick: FC<TDropMenuOnClickProps> = ({ toggle, menu, isNee
     }, [isToggling])
     const dropmenu = useOnMouseDownOutside(() => {
         isMenuVisible && setIsMenuVisible(false)
-        onToggle && onToggle(false, type ? type : undefined)
+        isMenuVisible && onToggle && onToggle(false, type ? type : undefined)
     })
-    console.log(isNeedToClosePrevious);
+    console.log(type, " ", isNeedToClosePrevious);
     
     const onToggleMouseDown = (e: MouseEvent) => { // blocks onMouseDownOutside event
         if (!isNeedToClosePrevious) {
@@ -48,17 +49,18 @@ export const DropMenuOnClick: FC<TDropMenuOnClickProps> = ({ toggle, menu, isNee
         }      
     }
     const box = `${css.dropdown__container} ${className ? className : ""}`
+    const list = `${css.dropdown__menu} ${menuClassName ? menuClassName : ""}`
     // 
     return <div className={box}>
-        <div id={id} onClick={onToggleClick}
+        <div onClick={onToggleClick}
             onMouseDown={onToggleMouseDown}
             style={{padding: "5px"}}>
             {toggle}
         </div>
-        <div  ref={dropmenu}
+        <div ref={dropmenu}
             className={isMenuVisible
-                ? css.dropdown__menu
-                : `${css.dropdown__menu} ${css._closed}`}>
+                ? list
+                : `${list} ${css._closed}`}>
             {menu}
         </div>
     </div>

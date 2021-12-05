@@ -82,18 +82,20 @@ $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
         }
     }
     .checkbox__inner {
-        display: flex;
         flex: 1 1 auto;
+        white-space: nowrap;
     }
     .checkbox__text {
+        display: inline;
         flex: 1 1 auto;
-        font-size: 80%;
-        margin-right: 2em;
+        font-size: 85%;
+        margin-right: 2rem;
     }
     //.checkbox__item
     &__item {
         position: relative;
         display: flex;
+        flex: 0 0 42px;
         margin: -10px -10px -10px 0;
         width: $box;
         height: $box;
@@ -131,7 +133,7 @@ $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
 
 .filter__btn {
     transform: translateY(-7%);
-    .sortfilters fieldset:hover & {
+    fieldset:hover & {
         animation: floatY 1s linear 10;
     }
     &._close {

@@ -98,16 +98,17 @@ export const SizesMenu: FC<TSizesMenuProps> = ({ selected, sizes, onOptionChange
                             </li>
                         )
                     })
-                    return <ul className={css.dropdown__menu}>
+                    return <ul>
                         {mappedSizes}
                     </ul>
                 },
             }
             return <li>
-                <DropMenuOnClick id={category} toggle={menu.toggle}
+                <DropMenuOnClick toggle={menu.toggle}
                     menu={menu.menu()}
                     type={category}
                     className={css.dropdown__container}
+                    menuClassName={css.dropdown__menu}
                     isNeedToClosePrevious={isAnyOpen}
                     onToggle={onCategoryToggle} />
             </li>
@@ -123,14 +124,3 @@ export const SizesMenu: FC<TSizesMenuProps> = ({ selected, sizes, onOptionChange
 
     )
 }
-
-{/* <ul className={css.sizesMenu}>
-            {mappedSizes}
-            {mappedSizes.length % 2 && mappedSizes.length > 2 &&
-                <li>
-                    <div className={sortedSizes[sortedSizes.length - 1].count ? `${gcss.checkbox} ${gcss.active}` : `${gcss.checkbox}`}>
-                        {/*  {sortedSizes[sortedSizes.length - 1].count && <div className={css.overlay}></div>} */}
-{/* <div className={gcss.overlay}></div>
-                    </div>
-                </li>}
-        </ul> */}
