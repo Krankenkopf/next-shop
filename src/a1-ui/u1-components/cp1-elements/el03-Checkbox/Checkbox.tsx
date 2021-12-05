@@ -25,7 +25,6 @@ export const Checkbox: React.FC<ExtraCheckboxPropsType> = (
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
         onChangeChecked && onChangeChecked(e.currentTarget.checked, e.currentTarget.value)
         onChange && onChange(e)
-
     }
 
     const box = `${css.checkbox} ${className ? className : ''}`

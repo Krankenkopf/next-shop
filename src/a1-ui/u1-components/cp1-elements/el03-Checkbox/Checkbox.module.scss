@@ -1,8 +1,8 @@
 .title {
     display: flex;
     align-items: center;
-    margin: 0 0 0 0.5em;
     font-size: 16px;
+    flex: 1 1 auto;
 }
 
 .input {
@@ -17,7 +17,7 @@
     transform: translate3d(0, 0, 0);
 }
 .checkbox {
-    //position: relative;
+    position: relative;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -25,7 +25,10 @@
         stroke: #202020;
     }
     svg {
+        min-height: 21.9px;
+        min-width: 21.9px;
         position: relative;
+        margin-right: 0.5em;
         z-index: 10;
         fill: none;
         stroke-linecap: round;
@@ -57,5 +60,23 @@
         stroke-dashoffset: 42;
         transition: all 0.2s linear;
         transition-delay: 0.15s;
+    }
+}
+
+.input:disabled + label {
+    svg {
+        stroke: #666;
+    }
+    .checkbox::after {
+        content: "×";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 42px;
+        height: 42px;
+        padding: 0 10px;
+        font-size: 42px;
+        line-height: 42px;
+        color: #ddd;
     }
 }
