@@ -3,36 +3,50 @@ import ReactDOM from "react-dom";
 import { Login } from "../AuthModules/Login";
 import { Signup } from "../AuthModules/Signup";
 import css from "./Modal.module.scss"
-import { Modal } from "./Modal"
+import { Popup } from "./Popup"
 import { SignupPassUnconfirmed } from "../AuthModules/SignupPassUnconfirmed";
 import { TAuthState } from "../../../../a2-bll/auth-reducer";
 import { TState } from "../../../../a2-bll/store";
 import { useSelector } from "react-redux";
 import { PassRecovery } from "../AuthModules/PassRecovery";
+import { SideMenu } from "./SideMenu";
+import { FiltersMenu } from "../Filters/FiltersMenu";
+import { useAppDispatch, useAppSelector } from "../../../../a0-common/c3-hooks";
+import { selectModal } from "../../../../a2-bll/selectors";
+import { Nullable } from "../../../../a0-common/c1-types/t1-instance";
+import { closeModal, setModal } from "../../../../a2-bll/app-reducer";
 
-export type TModal = "signup" | "signupPassUnconfirmed" | "login" | "passRecovery" | "cart" | null
+export type TModal = 
+    "signup" | "signupPassUnconfirmed" | "login" | "passRecovery" | "cart"
+    | "mainMenu" | "filtersMenu"
+    | null
 
 type TModalsProps = {
-    modal: TModal
-    revealModal: (modalType: TModal) => void
-    onClose: () => void
+    
 }
 export const TRANSITION_TIME = 600
 
-export const Modals: FC<TModalsProps> = ({ modal, revealModal, onClose }) => {
+export const Modals: FC<TModalsProps> = ({ }) => {
     //==========================================================
     const [isBrowser, setIsBrowser] = useState(false);
     useEffect(() => {
         setIsBrowser(true);
     }, []);
     //==========================================================
-    const { isLoggedIn } = useSelector<TState, TAuthState>((state) => state.auth)
+    const dispatch = useAppDispatch()
+    const { isLoggedIn } = useAppSelector<TAuthState>((state) => state.auth)
+    const modal = useAppSelector<TModal>(selectModal)
+
     const [modalsState, setModalsState] = useState({
+        //pop-ups
         signup: false,
         signupPassUnconfirmed: false,
         login: false,
         passRecovery: false,
-        cart: false
+        cart: false,
+        //sideMenus
+        mainMenu: false,
+        filtersMenu: false,
     })
     // TODO: maybe rename props to isFullyOpened isFullyClosed?
     const [closingModal, setClosingModal] = useState(false)
@@ -72,7 +86,11 @@ export const Modals: FC<TModalsProps> = ({ modal, revealModal, onClose }) => {
         }
     }, [modal])
     
-    const closeModal = useCallback((modalToClose: TModal) => {
+    const revealModal = useCallback((modal) => {
+        dispatch(setModal(modal))
+    }, [dispatch])
+
+    const handleCloseModal = useCallback((modalToClose: TModal) => {
         if (modal && modalToClose) {
             
             //setScrollLock(true)   
@@ -103,7 +121,7 @@ export const Modals: FC<TModalsProps> = ({ modal, revealModal, onClose }) => {
                             setClosingModal(false)
                             setScrollLock(false)
                         }, TRANSITION_TIME)
-                        onClose()
+                        dispatch(closeModal())
                     }, TRANSITION_TIME)
                 }
                 if (!freezed) {
@@ -117,9 +135,8 @@ export const Modals: FC<TModalsProps> = ({ modal, revealModal, onClose }) => {
                         setClosingModal(false)
                         setScrollLock(false)
                     }, TRANSITION_TIME)
-                    onClose()
-                }
-                
+                    dispatch(closeModal())
+                }    
             }
         }
     }, [modal, freezed])
@@ -133,43 +150,51 @@ export const Modals: FC<TModalsProps> = ({ modal, revealModal, onClose }) => {
     if (isBrowser) {
         const modals = (
             <div className={className}>
-                <Modal modalType={"signup"}
+                <Popup modalType={"signup"}
                     scrollLock={scrollLock}
                     current={current}
                     isOpen={modalsState.signup}
                     isFreezed={freezed === "signup"}
-                    onClose={closeModal}>
+                    onClose={handleCloseModal}>
                     <Signup revealModal={revealModal}
                         freezePrevious={(modal) => setFreezed(modal)}
-                        closeModal={closeModal} />
-                </Modal>
-               <Modal modalType={"login"}
+                        closeModal={handleCloseModal} />
+                </Popup>
+               <Popup modalType={"login"}
                     scrollLock={scrollLock}
                     current={current}
                     isOpen={modalsState.login}
-                    onClose={closeModal}>
+                    onClose={handleCloseModal}>
                     <Login revealModal={revealModal} />
-                </Modal>
-                <Modal modalType={"signupPassUnconfirmed"}
+                </Popup>
+                <Popup modalType={"signupPassUnconfirmed"}
                     scrollLock={scrollLock}
                     current={current}
                     layout={2}
                     isOpen={modalsState.signupPassUnconfirmed}
-                    onClose={closeModal}>
+                    onClose={handleCloseModal}>
                     <SignupPassUnconfirmed
                         revealModal={revealModal}
-                        closeModal={closeModal} />
-                </Modal>
-                <Modal modalType={"passRecovery"}
+                        closeModal={handleCloseModal} />
+                </Popup>
+                <Popup modalType={"passRecovery"}
                     scrollLock={scrollLock}
                     current={current}
                     layout={2}
                     isOpen={modalsState.passRecovery}
-                    onClose={closeModal}>
+                    onClose={handleCloseModal}>
                     <PassRecovery
                         revealModal={revealModal}
-                        closeModal={closeModal} />
-                </Modal>
+                        closeModal={handleCloseModal} />
+                </Popup>
+
+                <SideMenu modalType="filtersMenu"
+                    scrollLock={scrollLock}
+                    current={current}
+                    isOpen={modalsState.filtersMenu}
+                    onClose={handleCloseModal}>
+                    <FiltersMenu />
+                </SideMenu>
             </div>
         )
         const container = document.getElementById("modal-root")

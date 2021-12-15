@@ -16,9 +16,6 @@ type TProductLayoutProps = {
 export const ProductLayout: FC<TProductLayoutProps> =
     ({ children, title = 'Noname Shop', category, rootCategoryName }) => {
     const router = useRouter()
-    
-    const [modal, setModal] = useState<TModal>(null);
-    const revealModal = useCallback((modalType: TModal) => setModal(modalType), [])
 
     return (
         <>
@@ -28,12 +25,12 @@ export const ProductLayout: FC<TProductLayoutProps> =
                 <meta name="description" content="some description"></meta>
                 <meta charSet="utf-8" />
             </Head>
-            <Header revealModal={revealModal}/>
+            <Header />
             <main className="wrapper__products">
                 <Sidebar rootCategoryName={rootCategoryName} category={category}/>
                 {children}
             </main>
-            <Modals onClose={() => setModal(null)} modal={modal} revealModal={revealModal} />
+            <Modals />
             <Footer />
         </>
     )

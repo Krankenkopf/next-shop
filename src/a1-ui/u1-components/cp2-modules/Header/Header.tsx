@@ -6,10 +6,10 @@ import { SessionMenu } from "./Menu/SessionMenu"
 import { capitalizeFirst } from "../../../../a0-common/c4-utils/ui"
 
 type THeaderProps = {
-    revealModal: (modalType: TModal) => void
+
 }
 
-export const Header: FC<THeaderProps> = React.memo(({revealModal}) => {
+export const Header: FC<THeaderProps> = React.memo(({}) => {
     const menuServicesTitles = ["Customer Service", "Ahrlist Discount", "Find a store"]
     const menuServices = menuServicesTitles.map((item) => {
         return (<li key={item} style={{ display: "inline-block" }}>
@@ -45,7 +45,7 @@ export const Header: FC<THeaderProps> = React.memo(({revealModal}) => {
                         </div>
                     </Link>
                 </div>
-                <SessionMenu revealModal={revealModal} />
+                <SessionMenu />
                 <div className="header-menu-primary">
                     {headerLinks}
                 </div>

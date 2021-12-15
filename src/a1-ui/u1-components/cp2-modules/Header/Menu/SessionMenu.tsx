@@ -1,25 +1,29 @@
 import Link from "next/link"
-import React, { FC, useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import React, { FC, useCallback, useEffect, useState } from "react"
+import { useAppDispatch, useAppSelector } from "../../../../../a0-common/c3-hooks"
+import { setModal } from "../../../../../a2-bll/app-reducer"
 import { logout, TAuthState } from "../../../../../a2-bll/auth-reducer"
-import { TState } from "../../../../../a2-bll/store"
 import Button from "../../../cp1-elements/el02-Button/Button"
 import { Icon } from "../../../cp1-elements/el10-Icons/Icon"
 import { DropMenuOnHover } from "../../DropMenu/DropMenuOnHover"
-
-import { TModal } from "../../Modal/Modals"
 import { MiniCart } from "../MiniCart/MiniCart"
 
 type TSessionMenuProps = {
-    revealModal: (modalType: TModal) => void
+    
 }
 
-export const SessionMenu: FC<TSessionMenuProps> = ({ revealModal }) => {
-    const dispatch = useDispatch()
-    const { isLoggedIn } = useSelector<TState, TAuthState>((state) => state.auth)
-    const handleLogout = () => {
+export const SessionMenu: FC<TSessionMenuProps> = ({}) => {
+    const dispatch = useAppDispatch()
+    const { isLoggedIn } = useAppSelector<TAuthState>((state) => state.auth)
+    const handleLogout = useCallback(() => {
         dispatch(logout())
-    }
+    }, [dispatch])
+    const onLoginClick = useCallback(() => {
+        dispatch(setModal("login"))
+    }, [dispatch])
+    const onSignupClick = useCallback(() => {
+        dispatch(setModal("signup"))
+    }, [dispatch])
     const authMenu = isLoggedIn
         ? {
             toggle: <Link href="/account">
@@ -47,7 +51,7 @@ export const SessionMenu: FC<TSessionMenuProps> = ({ revealModal }) => {
             </div>,
         }
         : {
-            toggle: <a onClick={() => revealModal("login")}>
+            toggle: <a onClick={onLoginClick}>
                 <div className="span__decorated">
                     <Icon name="user" className="icon__session" />
                     <span>Sign In</span>
@@ -55,7 +59,7 @@ export const SessionMenu: FC<TSessionMenuProps> = ({ revealModal }) => {
             </a>,
             menu: <div className="session-auth">
                 <div className="button-container">
-                    <Button variant="ok" onClick={() => revealModal("login")}>
+                    <Button variant="ok" onClick={onLoginClick}>
                         Sign in
                     </Button>
                 </div>
@@ -64,7 +68,7 @@ export const SessionMenu: FC<TSessionMenuProps> = ({ revealModal }) => {
                         <Link href="/"><a><span>Loyalty Program Info</span></a></Link>
                     </li>
                     <li style={{ fontSize: "90%" }}>
-                        <a onClick={() => revealModal("signup")}>
+                        <a onClick={onSignupClick}>
                             <em>Not a Member yet? Join here!</em>
                         </a>
                     </li>

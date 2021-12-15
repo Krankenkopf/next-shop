@@ -13,19 +13,10 @@ export const LandingLayout = ({ children, title = 'Noname Shop' }: any) => {
     const router = useRouter()
     const dispatch = useDispatch()
     const isInitialized = useSelector<TState, boolean>(state => state.app.isInitialized)
-    const [modal, setModal] = useState<TModal>(null);
 
     useEffect(() => {
         dispatch(me())
     }, [dispatch])
-
-    
-
-
-    const revealModal = useCallback((modalType: TModal) => {
-        setModal(modalType)
-    }, [modal])
-    const closeModal = useCallback(() => setModal(null), [])
 
     return (
         <>
@@ -36,7 +27,7 @@ export const LandingLayout = ({ children, title = 'Noname Shop' }: any) => {
                 <meta charSet="utf-8" />
             </Head>
             
-            <Header revealModal={revealModal} />
+            <Header />
             <main className="wrapper _container">
                 {children}
             </main>
@@ -52,7 +43,7 @@ export const LandingLayout = ({ children, title = 'Noname Shop' }: any) => {
             }}>
                 <Preloader isVisible={!isInitialized}/>
             </div>
-            <Modals onClose={closeModal} modal={modal} revealModal={revealModal} />
+            <Modals />
             
             
         </>
