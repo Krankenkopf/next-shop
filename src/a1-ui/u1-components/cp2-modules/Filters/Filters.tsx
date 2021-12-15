@@ -1,30 +1,39 @@
-import React, { useCallback, useState, FocusEvent, useRef } from "react"
-import { Nullable } from "../../../../a0-common/c1-types/t1-instance"
+import React, { useCallback, useState } from "react"
 import { TSortValue } from "../../../../a0-common/c1-types/t2-request"
 import { FilterNames, SORTTITLES } from "../../../../a0-common/c2-constants"
-import { useAppDispatch, useAppSelector, useOnMouseDownOutside } from "../../../../a0-common/c3-hooks"
-import { setFilter, TFacets, TFilters, TFiltersState } from "../../../../a2-bll/filters-reducer"
-import { TNavigationState } from "../../../../a2-bll/navigation-reducer"
+import { useAppDispatch, useAppSelector} from "../../../../a0-common/c3-hooks"
+import { setModal } from "../../../../a2-bll/app-reducer"
+import { setFilter, TFiltersState } from "../../../../a2-bll/filters-reducer"
+import { selectFilters, selectSort } from "../../../../a2-bll/selectors"
 import { setSortBy, TSortState } from "../../../../a2-bll/sort-reducer"
 import { Checkbox } from "../../cp1-elements/el03-Checkbox/Checkbox"
 import { Radio } from "../../cp1-elements/el07-Radio/Radio"
 import { Icon } from "../../cp1-elements/el10-Icons/Icon"
 import { DropMenuOnClick } from "../DropMenu/DropMenuOnClick"
 import { ColorsMenu } from "./ColorsMenu/ColorsMenu"
-import css from "./Filters.module.scss"
 import { FitsMenu } from "./FitsMenu/FitsMenu"
 import { SizesMenu } from "./SizesMenu/SizesMenu"
+import css from "./Filters.module.scss"
 
 type TFiltersProps = {
 
 }
 
+type TMenuFlags = {
+    sort: boolean
+    sustain: boolean
+    size: boolean
+    color: boolean
+    pattern: boolean
+    fits: boolean
+}
+
 export const Filters = () => {
     const dispatch = useAppDispatch()
     // filters: sizes, collection, concepts, colorWithNames, contexts, fits, functions, qualities
-    const { current, facets } = useAppSelector<TFiltersState>(state => state.filters)
+    const { current, facets } = useAppSelector<TFiltersState>(selectFilters)
 
-    const { sortBy, sortValues } = useAppSelector<TSortState>(state => state.sort)
+    const { sortBy, sortValues } = useAppSelector<TSortState>(selectSort)
     const totalCount = useAppSelector<number>(state => state.navigation.totalNumberOfResults)
 
     //menus togglers
@@ -36,9 +45,9 @@ export const Filters = () => {
         color: false,
         pattern: false,
         fits: false,
-    }
+    } as TMenuFlags
     const [isMenuVisible, setIsMenuVisible] = useState(initialVisibility)
-    const onMenuToggle = (state: boolean, type: string | undefined) => {
+    const onMenuToggle = (state: boolean, type: keyof TMenuFlags | undefined) => {
         setIsAnyOpen(state)
         type && setIsMenuVisible((prev) => ({ ...initialVisibility, [type]: state }))
     }
@@ -205,6 +214,10 @@ export const Filters = () => {
                 onOptionChange={onFitsOptionChange} />,
     }), [isMenuVisible.fits, facets.fits, current.fits])
 
+    const onFiltersMenuClick = useCallback(() => {
+        dispatch(setModal("filtersMenu"))
+    }, [dispatch])
+
     return <section className={css.sortfilterviewControls}>
         <form>
             <div className={css.sortfilters}>
@@ -264,7 +277,8 @@ export const Filters = () => {
                     <fieldset className={css.block}>
                         <legend>{FilterNames.ALLFILTERS}</legend>
                         <div>
-                            <div className="span__decorated right" >
+                            <div className="span__decorated right"
+                                onClick={onFiltersMenuClick}>
                                 <Icon name="filters"
                                     size="full"
                                     side="right"

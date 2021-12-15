@@ -1,19 +1,22 @@
 
-import React, { FC, ReactNode, useCallback, useState, MouseEvent, useEffect } from "react"
+import React, { FC, ReactNode, useCallback, useState, MouseEvent, useEffect, PropsWithChildren } from "react"
 import { useOnMouseDownOutside } from "../../../../a0-common/c3-hooks"
 import css from "./DropMenu.module.scss"
-type TDropMenuOnClickProps = {
+type TDropMenuOnClickProps<TMenu> = {
     toggle: ReactNode
     menu: ReactNode
     isNeedToClosePrevious?: boolean
     className?: string
     menuClassName?: string
-    type?: string
-    onToggle?: (state: boolean, type?: string) => void
+    type?: TMenu
+    onToggle?: (state: boolean, type?: TMenu) => void
 }
 
-export const DropMenuOnClick: FC<TDropMenuOnClickProps> = (
-    { toggle, menu, isNeedToClosePrevious = false, className, menuClassName, type, onToggle }) => {
+export const DropMenuOnClick = <TMenu extends string>(
+    {
+        toggle, menu, isNeedToClosePrevious = false,
+        className, menuClassName, type, onToggle
+    }: PropsWithChildren<TDropMenuOnClickProps<TMenu>>) => {
     const [isMenuVisible, setIsMenuVisible] = useState(false)
     const [isToggling, setIsToggling] = useState(false);
     // TODO: comment this barbarity!!
