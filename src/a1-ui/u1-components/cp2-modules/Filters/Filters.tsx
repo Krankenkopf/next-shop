@@ -11,9 +11,9 @@ import { Radio } from "../../cp1-elements/el07-Radio/Radio"
 import { Icon } from "../../cp1-elements/el10-Icons/Icon"
 import { DropMenuOnClick } from "../DropMenu/DropMenuOnClick"
 import { ColorsMenu } from "./ColorsMenu/ColorsMenu"
-import { FitsMenu } from "./FitsMenu/FitsMenu"
 import { SizesMenu } from "./SizesMenu/SizesMenu"
 import css from "./Filters.module.scss"
+import { DefaultFilterMenu } from "./DefaultFilterMenu/DefaultFilterMenu"
 
 type TFiltersProps = {
 
@@ -96,10 +96,12 @@ export const Filters = () => {
                     : css.filter__btn} />
             <span>{FilterNames.COLOR}</span>
         </div>,
-        menu: facets.colorWithNames &&
+        menu: facets.colorWithNames && <ul className={css.colorsMenu}>
             <ColorsMenu colors={facets.colorWithNames}
-                selected={current.colorWithNames}
-                onOptionChange={onColorOptionChange} />,
+                    selected={current.colorWithNames}
+                    onOptionChange={onColorOptionChange} />
+        </ul>
+            ,
     }), [isMenuVisible.color, facets.colorWithNames, current.colorWithNames])
 
     //sustainMenu =======================================================================================
@@ -120,7 +122,7 @@ export const Filters = () => {
             <span>{FilterNames.CONSCIOUS}</span>
         </div>,
         menu: <ul style={{display: "grid", gridTemplateColumns: "1fr"}}>
-            <li>
+            <li className={css.menuoption}>
                 <Checkbox name={FilterNames.CONSCIOUS}
                     disabled
                     onChangeChecked={onSustainOptionChange}
@@ -176,7 +178,7 @@ export const Filters = () => {
             <span>{FilterNames.PATTERN}</span>
         </div>,
         menu: <ul style={{ display: "grid", gridTemplateColumns: "1fr" }}>
-            <li>
+            <li className={css.menuoption}>
                 <Checkbox name={FilterNames.PATTERN}
                     disabled
                     onChangeChecked={onPatternsOptionChange}
@@ -209,7 +211,7 @@ export const Filters = () => {
             <span>{"FITS"}</span>
         </div>,
         menu: facets.fits &&
-            <FitsMenu fits={facets.fits}
+            <DefaultFilterMenu categoryOptions={facets.fits}
                 selected={current.fits}
                 onOptionChange={onFitsOptionChange} />,
     }), [isMenuVisible.fits, facets.fits, current.fits])

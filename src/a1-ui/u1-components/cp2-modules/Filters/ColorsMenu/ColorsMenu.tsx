@@ -1,6 +1,6 @@
 import React, { FC } from "react"
 import { TFacet } from "../../../../../a0-common/c1-types/t3-response/TProductsResponse"
-import { capitalizeFirst } from "../../../../../a0-common/c4-utils/ui"
+import { capitalizeFirst, sortNonZeroFirst } from "../../../../../a0-common/c4-utils/ui"
 import { Checkbox } from "../../../cp1-elements/el03-Checkbox/Checkbox"
 import { Icon } from "../../../cp1-elements/el10-Icons/Icon"
 import css from "./ColorsMenu.module.scss"
@@ -15,10 +15,7 @@ type TColorsMenuProps = {
 }
 
 export const ColorsMenu: FC<TColorsMenuProps> = ({ selected, colors, onOptionChange }) => {
-    const sortedColors = [
-        ...colors.values.filter((color) => color.count),
-        ...colors.values.filter((color) => !color.count)
-    ]
+    const sortedColors = sortNonZeroFirst(colors.values, "count")
     const mappedColors = sortedColors.map((color) => {
         //extract data from string like "black_000000"
         const colorData = { colorName: "", hexColor: "" }
@@ -29,13 +26,13 @@ export const ColorsMenu: FC<TColorsMenuProps> = ({ selected, colors, onOptionCha
 
         //
         return (
-            <li key={color.code}>
+            <li key={color.code} className={isActive ? `${gcss.menuoption} ${gcss.active}` : `${gcss.menuoption}`}>
                 <Checkbox name={colorData.colorName}
                     disabled={!isActive}
                     checked={selected.some((item) => item === color.code)}
                     value={color.code}
                     onChangeChecked={onOptionChange}
-                    className={isActive ? `${gcss.checkbox} ${gcss.active}` : `${gcss.checkbox}`}
+                    className={gcss.checkbox}
                     titleClassName={gcss.checkbox__inner}>
                     <div className={gcss.checkbox__text}>
                         {capitalizeFirst(colorData.colorName)}
@@ -75,7 +72,7 @@ export const ColorsMenu: FC<TColorsMenuProps> = ({ selected, colors, onOptionCha
         )
     })
     return (
-        <ul className={css.colorsMenu}>
+        <>
             {mappedColors}
             {mappedColors.length % 2 && mappedColors.length > 2 &&
                 <li>
@@ -84,6 +81,6 @@ export const ColorsMenu: FC<TColorsMenuProps> = ({ selected, colors, onOptionCha
                         <div className={gcss.overlay}></div>
                     </div>
                 </li>}
-        </ul>
+        </>
     )
 }

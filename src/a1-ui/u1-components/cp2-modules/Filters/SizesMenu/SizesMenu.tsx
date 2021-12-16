@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useState } from "react"
 import { TFacet } from "../../../../../a0-common/c1-types/t3-response/TProductsResponse"
-import { capitalizeFirst } from "../../../../../a0-common/c4-utils/ui"
+import { capitalizeFirst, sortNonZeroFirst } from "../../../../../a0-common/c4-utils/ui"
 import { Checkbox } from "../../../cp1-elements/el03-Checkbox/Checkbox"
 import { Icon } from "../../../cp1-elements/el10-Icons/Icon"
 import css from "./SizesMenu.module.scss"
@@ -37,10 +37,7 @@ export const SizesMenu: FC<TSizesMenuProps> = ({ selected, sizes, onOptionChange
         type && setIsCategoryVisible((prev) => ({ ...initialVisibility, [type]: state }))
     }
 
-    const sortedSizes = [
-        ...sizes.values.filter((size) => size.count),
-        ...sizes.values.filter((size) => !size.count)
-    ]
+    const sortedSizes = sortNonZeroFirst(sizes.values, "count")
 
     const getCategorizedSizes = useCallback(() => {
         const initial = {
@@ -50,8 +47,9 @@ export const SizesMenu: FC<TSizesMenuProps> = ({ selected, sizes, onOptionChange
             footwear: [] as Array<TFacetValue>,
         }
         sortedSizes.forEach((value) => {
-            const key = value.code.split("_")[3] //"366_s_1_womenswear"
-            initial[key as keyof typeof initial].push({ ...value, title: value.code.split("_")[1] })
+            const parsedCode = value.code.split("_")//"366_s_1_womenswear" => [366, s, 1, womenswear]
+            const key = parsedCode[3] 
+            initial[key as keyof typeof initial].push({ ...value, title: parsedCode[1]+parsedCode[2] })
         })
         return initial
     }, [sizes])
@@ -77,13 +75,13 @@ export const SizesMenu: FC<TSizesMenuProps> = ({ selected, sizes, onOptionChange
                         const isActive = size.count !== 0
                         //
                         return (
-                            <li key={size.code}>
+                            <li key={size.code} className={isActive ? `${gcss.menuoption} ${gcss.active}` : `${gcss.menuoption}`}>
                                 <Checkbox name={size.title}
                                     disabled={!isActive}
                                     checked={selected.some((item) => item === size.code)}
                                     value={size.code}
                                     onChangeChecked={onOptionChange}
-                                    className={isActive ? `${gcss.checkbox} ${gcss.active}` : `${gcss.checkbox}`}
+                                    className={gcss.checkbox}
                                     titleClassName={gcss.checkbox__inner}>
                                     <div className={gcss.checkbox__text}>
                                         {size.title.toUpperCase()}
@@ -103,7 +101,7 @@ export const SizesMenu: FC<TSizesMenuProps> = ({ selected, sizes, onOptionChange
                     </ul>
                 },
             }
-            return <li>
+            return <li key={category}>
                 <DropMenuOnClick toggle={menu.toggle}
                     menu={menu.menu()}
                     type={category}
@@ -114,8 +112,6 @@ export const SizesMenu: FC<TSizesMenuProps> = ({ selected, sizes, onOptionChange
             </li>
         })
     }, [sizes, selected, isCategoryVisible])
-
-
 
     return (
         <ul className={css.sizesMenu}>

@@ -43,6 +43,20 @@
             @media (max-width: 1170px) {
                 display: none;
             }
+            li.menuoption {
+                padding: 10px;
+                background-color: #eeeeee;
+                color: #666;
+                cursor: default;
+                &.active {
+                    cursor: pointer;
+                    background-color: #ffffeb;
+                    color: inherit;
+                    &:hover {
+                        background-color: #dceaf7;
+                    }
+                }
+            }
         }
         .allFilters {
             position: relative;
@@ -65,22 +79,16 @@
         left: -5000px;
     }
 }
+.colorsMenu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
 $box: 42px;
 $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
 .checkbox {
-    padding: 10px;
+    //padding: 10px;
     position: relative;
-    background-color: #eeeeee;
-    color: #666;
-    cursor: default;
-    &.active {
-        cursor: pointer;
-        background-color: #ffffeb;
-        color: inherit;
-        &:hover {
-            background-color: #dceaf7;
-        }
-    }
+
     .checkbox__inner {
         flex: 1 1 auto;
         white-space: nowrap;
@@ -138,6 +146,56 @@ $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
     }
     &._close {
         top: 7%;
+    }
+}
+
+.sidemenu {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    min-height: 100%;
+    padding: 40px 0 20px;
+    header {
+        display: flex;
+        margin-bottom: 20px;
+        padding: 0 15px;
+    }
+    p {
+        align-self: center;
+        font-size: 80%;
+        margin-bottom: 10px;
+    }
+    ul {
+        flex: 1 1 auto;
+    }
+    li.menuTitle {
+        cursor: pointer;
+        padding: 10px 5px 10px 15px;
+        margin-bottom: 10px;
+        &:hover {
+            font-weight: bold;
+            background-color: #e6f7dc;
+        }
+    }
+    li.menuoption {
+        label > div {
+            padding: 10px 10px 10px 15px;
+            background-color: #eeeeee;
+            color: #666;
+            cursor: default;
+        }
+        &.active {
+            label > div {
+                cursor: pointer;
+                background-color: #ffffeb;
+                color: inherit;
+            }
+            &:hover {
+                label > div {
+                    background-color: #dceaf7;
+                }
+            }
+        }
     }
 }
 

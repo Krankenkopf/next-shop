@@ -1,9 +1,5 @@
 $box: 42px;
 $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
-.colorsMenu {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
 
 .transparent {
     position: relative;
