@@ -67,7 +67,7 @@ export const SizesMenu: FC<TSizesMenuProps> = ({ selected, sizes, onOptionChange
                         containerClassName={isCategoryVisible[category]
                             ? `${gcss.filter__btn} ${gcss._close}`
                             : gcss.filter__btn} />
-                    <span>{SIZETITLES[i]}</span>
+                    <span>{SIZETITLES[i].title}</span>
                 </div>,
                 menu: () => {
                     const sizes = categorizedSizes[category]

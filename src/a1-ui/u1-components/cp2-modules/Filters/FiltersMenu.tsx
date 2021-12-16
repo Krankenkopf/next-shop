@@ -13,6 +13,7 @@ import { ColorsMenu } from "./ColorsMenu/ColorsMenu"
 import { DefaultFilterMenu } from "./DefaultFilterMenu/DefaultFilterMenu"
 import css from "./Filters.module.scss"
 import { CollectionsMenu } from "./CollectionsMenu/CollectionsMenu"
+import { SizesSideMenu } from "./SizesMenu/SizesSideMenu"
 
 type TFiltersMenuProps = {
 
@@ -24,23 +25,22 @@ type ArrayElement<ArrayType extends readonly unknown[]> =
 export const FiltersMenu = () => {
     const dispatch = useAppDispatch()
     const { sortBy, sortValues } = useAppSelector<TSortState>(selectSort)
-    const {current, facets} = useAppSelector<TFiltersState>(selectFilters)
+    const { current, facets } = useAppSelector<TFiltersState>(selectFilters)
     const totalCount = useAppSelector<number>(selectItemsTotalCount)
     const totalCountUnfiltered = useAppSelector<number>(selectItemsTotalCountUnfiltered)
 
     const rootTitle = "Filter&Sort"
     const [title, setTitle] = useState(rootTitle);
-    const menuTypes: Array<"sort" | TFilterKey> = ["sort", ...getKeys(facets)] 
+    const menuTypes: Array<"sort" | TFilterKey> = ["sort", ...getKeys(facets)]
 
     const [currentMenu, setCurrentMenu] = useState<"" | ArrayElement<typeof menuTypes>>("")
-    const onMenuToggle = (state: boolean, type: "" | ArrayElement<typeof menuTypes>) => {
+    const onMenuToggle = (type: "" | ArrayElement<typeof menuTypes>) => {
         setCurrentMenu(type)
         setTitle(FILTERSSORTTITLES.find(filter => filter.code === type)?.title || rootTitle)
     }
-    
-    
+
     const mappedFilters = FILTERSSORTTITLES.map((title) => ((
-        <li key={title.code} onClick={() => onMenuToggle(true, title.code)} className={css.menuTitle}>
+        <li key={title.code} onClick={() => onMenuToggle(title.code)} className={css.menuTitle}>
             <div className="span__decorated right" >
                 <Icon name="chevron-right"
                     size="full"
@@ -61,7 +61,7 @@ export const FiltersMenu = () => {
             state
                 ? dispatch(setFilter({ [category]: [...current[category], value] }))
                 : dispatch(setFilter({ [category]: [...current[category].filter((option) => option !== value)] }))
-        }    
+        }
     }
     const getMenu = () => {
         switch (currentMenu) {
@@ -77,20 +77,10 @@ export const FiltersMenu = () => {
                 </Radio>
             )
             case "sizes": return (
-                <ul>
-                    {SIZETITLES.map((title) => ((
-                <li onClick={() => { }} className={css.menuTitle}>
-                    <div className="span__decorated right" >
-                        <Icon name="chevron-right"
-                            size="full"
-                            side="right"
-                            className={css.filter__btn__icon}
-                            containerClassName={css.filter__btn} />
-                        <span>{title}</span>
-                    </div>
-                </li>
-            )))}
-                </ul>
+                facets.sizes && <SizesSideMenu
+                    sizes={facets.sizes}
+                    selected={current.sizes}
+                    onOptionChange={onCategoryOptionChange} />
             )
             case "contexts": return (
                 facets.contexts && <DefaultFilterMenu
@@ -133,7 +123,7 @@ export const FiltersMenu = () => {
                     <ColorsMenu colors={facets.colorWithNames}
                         selected={current.colorWithNames}
                         onOptionChange={onCategoryOptionChange} />
-                    </ul>
+                </ul>
             )
             default: return (
                 <ul>
@@ -155,8 +145,18 @@ export const FiltersMenu = () => {
 
     return <aside className={css.sidemenu}>
         <header>
-            {title !== rootTitle && <Button onClick={() => onMenuToggle(true, "")}></Button>}
-            <h4>{title}</h4>
+            {title !== rootTitle
+                ?
+                <div className="span__decorated left" >
+                    <Icon name="chevron-right"
+                        side="left"
+                        rotate={3}
+                        className={css.filter__btn__icon}
+                        containerClassName={css.icon}
+                        onClick={() => onMenuToggle("")} />
+                    <span><h4 style={{paddingLeft: "0.5em"}}>{title}</h4></span>
+                </div>
+                : <h4>{title}</h4>} 
         </header>
         {getMenu()}
         <p>{getTotalsDescription()}</p>

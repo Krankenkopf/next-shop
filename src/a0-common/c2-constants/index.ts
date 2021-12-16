@@ -9,7 +9,12 @@ export enum FilterNames {
 }
 
 export const SORTTITLES = ["Recommended", "Newest", "Lowest Price", "Highest Price"]
-export const SIZETITLES = ["Womenswear", "Menswear", "Waist(inches)", "Footwear"]
+export const SIZETITLES = [
+    { code: "womenswear", title: "Womenswear"},
+    { code: "menswear", title: "Menswear"},
+    { code: "waist", title: "Waist(inches)"},
+    { code: "footwear", title: "Footwear"},
+] as const
 export const FILTERSSORTTITLES: Array<{ code: "sort" | keyof TFilters, title: string }> = [
     { code: "sort", title: "Sort By" },
     { code: "sizes", title: "Size" },
