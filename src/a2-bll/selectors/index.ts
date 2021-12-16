@@ -4,7 +4,13 @@ import { TState } from "../store";
 import { capitalizeFirst } from '../../a0-common/c4-utils/ui';
 
 const selectCategories = (state: TState) => state.categories
-//const selectPageMeta = (state: TState) => 
+
+export const selectFilters = (state: TState) => state.filters
+export const selectSort = (state: TState) => state.sort
+export const selectModal = (state: TState) => state.app.modal
+export const selectItemsTotalCount = (state: TState) => state.navigation.totalNumberOfResults
+export const selectItemsTotalCountUnfiltered = (state: TState) => state.navigation.totalNumberOfResultsUnfiltered
+
 export const selectPageCategory = createSelector(
     [
         // Usual first input - extract value from `state`
