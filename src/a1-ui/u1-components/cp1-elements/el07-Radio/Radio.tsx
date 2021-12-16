@@ -18,7 +18,7 @@ export const Radio: React.FC<TRadioProps<TSortValue>> = (
 
     const mappedOptions = options
         ? options.map((option, i) => (
-            <div key={option}>
+            <li key={option}>
                 <input
                     id={option}
                     type={'radio'}
@@ -31,14 +31,14 @@ export const Radio: React.FC<TRadioProps<TSortValue>> = (
                 />
                 <label  htmlFor={option}>
                     <div className={css.radio}>
-                        {option === value && children}
+                        {children}
                     </div>
                     {titles ? titles[i] : option}
                 </label>
-            </div>
+            </li>
         )) : []
 
     return (
-        <div className={css.radio__container}>{mappedOptions}</div>
+        <ul className={css.radio__container}>{mappedOptions}</ul>
     )
 }

@@ -40,3 +40,13 @@ export const sortNonZeroFirst = <T extends Object>(arr: Array<T>, criteriaName: 
         ...arr.filter((item) => !item[criteriaName])
     ]      
 }
+
+//=============================================================================================
+
+export const getBrightness = (hex: string) => {
+    let rgb = parseInt(hex.substring(1), 16);   // convert rrggbb to decimal
+    let r = (rgb >> 16) & 0xff;  // extract red
+    let g = (rgb >> 8) & 0xff;  // extract green
+    let b = (rgb >> 0) & 0xff;  // extract blue
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+}

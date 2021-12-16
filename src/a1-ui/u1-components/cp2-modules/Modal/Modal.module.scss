@@ -1,6 +1,7 @@
 $transitionTime: 600ms;
 $primary: #292825;
 $softRed: #ffccfc;
+$mainBgc: #ffffeb;
 .modal {
 	position: fixed;
 	top: 0;
@@ -87,9 +88,13 @@ $softRed: #ffccfc;
 			box-shadow: 0 0 20px 2px $primary;
 		}
 		&.side {
+			display: flex;
+			min-height: 100vh;
 			padding: 0;
+			background-color: $mainBgc;
 			&.left {
-				margin: 0 0 0 auto;
+				
+				margin: 0 0 auto auto;
 			}
 			&.right { 
 				margin: 0 auto 0 0;
