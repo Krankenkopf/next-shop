@@ -57,3 +57,10 @@ export const extractRelevantFacets = (heap: Array<TAnyFacet>, template: TFacets)
 }
 
 //=======================================================================================================
+export const convertObjToFlags = <T>(obj: T)  => {
+    return getKeys(obj).reduce((flags, key) => {
+        flags[key] = false
+        return flags
+    }, {} as { [Key in keyof T]: boolean })
+}
+    

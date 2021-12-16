@@ -1,3 +1,4 @@
+import { TFilters } from './../../a2-bll/filters-reducer'
 export enum FilterNames {
     SORTBY = "SORT BY",
     CONSCIOUS = "CONSCIOUS",
@@ -9,6 +10,17 @@ export enum FilterNames {
 
 export const SORTTITLES = ["Recommended", "Newest", "Lowest Price", "Highest Price"]
 export const SIZETITLES = ["Womenswear", "Menswear", "Waist(inches)", "Footwear"]
+export const FILTERSSORTTITLES: Array<{ code: "sort" | keyof TFilters, title: string }> = [
+    { code: "sort", title: "Sort By" },
+    { code: "sizes", title: "Size" },
+    { code: "contexts", title: "Occasion" },
+    { code: "concepts", title: "Concept" },
+    { code: "collection", title: "Collection" },
+    { code: "qualities", title: "Quality" },
+    { code: "fits", title: "Fit" },
+    { code: "functions", title: "Function" },
+    { code: "colorWithNames", title: "Color" }
+]
 
 export enum IconColor {
     OK = "#00bb00",

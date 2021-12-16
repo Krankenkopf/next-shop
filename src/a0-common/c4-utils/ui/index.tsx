@@ -31,3 +31,12 @@ export const _toLiLinkA = (src: Array<any>, parentPath: string, className: strin
 //=============================================================================================
 
 export const capitalizeFirst = (s: string) => (s && s[0].toUpperCase() + s.slice(1)) || ""
+
+//=============================================================================================
+
+export const sortNonZeroFirst = <T extends Object>(arr: Array<T>, criteriaName: keyof T) => {
+    return [
+        ...arr.filter((item) => item[criteriaName]),
+        ...arr.filter((item) => !item[criteriaName])
+    ]      
+}
