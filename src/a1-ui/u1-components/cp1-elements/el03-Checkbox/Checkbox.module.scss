@@ -24,11 +24,15 @@
     &:hover svg {
         stroke: #202020;
     }
+    .icon {
+        position: relative;
+        display: flex;
+        margin-right: 0.5em;
+    }
     svg {
         min-height: 21.9px;
         min-width: 21.9px;
-        position: relative;
-        margin-right: 0.5em;
+        margin: auto;
         z-index: 10;
         fill: none;
         stroke-linecap: round;
@@ -67,14 +71,14 @@
     svg {
         stroke: #666;
     }
-    .checkbox::after {
+    .icon::after {
         content: "×";
         position: absolute;
-        top: 0;
+        margin: auto auto auto 0;
+        top: -10px;
         left: 0;
-        width: 42px;
-        height: 42px;
-        padding: 0 10px;
+        width: 21.9px;
+        height: 21.9px;
         font-size: 42px;
         line-height: 42px;
         color: #ddd;

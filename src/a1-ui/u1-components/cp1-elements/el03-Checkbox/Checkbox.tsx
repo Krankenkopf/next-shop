@@ -1,16 +1,16 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes} from 'react'
+import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, PropsWithChildren} from 'react'
 import css from './Checkbox.module.scss'
 
 
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
-type ExtraCheckboxPropsType = DefaultInputPropsType & {
+type TCheckboxProps<T> = DefaultInputPropsType & {
     boxClassName?: string
     titleClassName?: string
 
-    onChangeChecked?: (checked: boolean, value: string) => void
+    onChangeChecked?: (checked: boolean, value: T) => void
 }
 
-export const Checkbox: React.FC<ExtraCheckboxPropsType> = (
+export const Checkbox = <TValue extends string>(
     {
         name,
         type,
@@ -20,10 +20,10 @@ export const Checkbox: React.FC<ExtraCheckboxPropsType> = (
         alt,
         children,
         ...restProps
-    }
+    }: PropsWithChildren<TCheckboxProps<TValue>>
 ) => {
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
-        onChangeChecked && onChangeChecked(e.currentTarget.checked, e.currentTarget.value)
+        onChangeChecked && onChangeChecked(e.currentTarget.checked, e.currentTarget.value as TValue)
         onChange && onChange(e)
     }
 
@@ -42,10 +42,12 @@ export const Checkbox: React.FC<ExtraCheckboxPropsType> = (
             />
             <label htmlFor={name} >
                 <div className={box}>
-                    <svg width="22px" height="22px" viewBox="0 0 18 18">
-                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"> </path>
-                        <polyline points="1 9 7 14 15 4"> </polyline>
-                    </svg>
+                    <div className={css.icon}>
+                        <svg width="22px" height="22px" viewBox="0 0 18 18">
+                            <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"> </path>
+                            <polyline points="1 9 7 14 15 4"> </polyline>
+                        </svg>
+                    </div>
                     {children && <div className={title}>{children}</div>}
                 </div>
             </label>
