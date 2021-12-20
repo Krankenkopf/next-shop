@@ -1,5 +1,4 @@
-import React, { ChangeEvent, InputHTMLAttributes, DetailedHTMLProps } from 'react'
-import { TSortValue } from '../../../../a0-common/c1-types/t2-request'
+import React, { ChangeEvent, InputHTMLAttributes, DetailedHTMLProps, PropsWithChildren } from 'react'
 import css from './Radio.module.scss'
 
 type TDefaultRadioProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
@@ -8,12 +7,12 @@ type TRadioProps<T> = TDefaultRadioProps & {
     titles?: Array<string>
     onChangeOption?: (option: T) => void
 }
-export const Radio: React.FC<TRadioProps<TSortValue>> = (
-    { type, name, titles, options, value, onChange, onChangeOption, children, ...restProps }) => {
+export const Radio = <TValue extends string>(
+    { type, name, titles, options, value, className, onChange, onChangeOption, children, ...restProps }: PropsWithChildren<TRadioProps<TValue>>) => {
 
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
         onChange && onChange(e)
-        onChangeOption && onChangeOption(e.currentTarget.value as TSortValue)
+        onChangeOption && onChangeOption(e.currentTarget.value as TValue)
     }
 
     const mappedOptions = options
@@ -39,6 +38,6 @@ export const Radio: React.FC<TRadioProps<TSortValue>> = (
         )) : []
 
     return (
-        <ul className={css.radio__container}>{mappedOptions}</ul>
+        <ul className={className ? `${css.radio__container} ${className}` : css.radio__container}>{mappedOptions}</ul>
     )
 }

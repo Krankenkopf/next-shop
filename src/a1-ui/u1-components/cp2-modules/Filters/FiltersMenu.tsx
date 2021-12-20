@@ -69,6 +69,7 @@ export const FiltersMenu = () => {
                 <Radio titles={SORTTITLES}
                     options={sortValues}
                     value={sortBy}
+                    className={css.radio}
                     onChangeOption={onSortOptionChange}>
                     <Icon name="circle"
                         size="full"
