@@ -1,3 +1,5 @@
+$colorOptional: #5555ff;
+
 .sortfilterviewControls {
     padding-left: 15px;
     margin-bottom: 35px;
@@ -79,6 +81,48 @@
         left: -5000px;
     }
 }
+
+.toggle {
+    font-size: 75%;
+    font-weight: bold;
+
+    color: inherit;
+    label {
+        height: 100%;
+        &:hover div {
+            color: $colorOptional;
+            &::after {
+                opacity: 0.5;
+            }
+        }
+        .toggle__frame__view {
+            border-bottom: 2px solid $colorOptional;
+        }
+    }
+    input:checked + label div {
+        color: $colorOptional;
+        &::after {
+            opacity: 0;
+        }
+    }
+}
+
+.layout__toggle {
+    label {
+        cursor: pointer;
+        margin-right: 5px;
+        &:last-child {
+            margin-right: 0;
+        }
+        & > div {
+            font-size: 48px;
+        }
+    }
+    .toggle__frame__layout {
+            border: 2px solid $colorOptional;
+    }
+}
+
 .colorsMenu {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -126,6 +170,11 @@ $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
     height: 22px;
 }
 
+.radio li label {
+    font-size: 90%;
+    padding: 10px 15px;
+}
+
 .radioSplash {
     --primary: #292825;
     --secondary: #292825;
@@ -136,7 +185,7 @@ $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
         width: 10px;
         opacity: 1;
         visibility: hidden;
-        transform: scale(0.5) translateX(-0.5px);      
+        transform: scale(0.5) translateX(-0.5px);
         input:checked + label & {
             transition: transform 0.6s ease-out, opacity 0.6s ease-in-out;
             visibility: visible;

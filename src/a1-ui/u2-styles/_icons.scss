@@ -63,6 +63,18 @@
 			--secondary: #E50010;
 		}
 	}
+	&__layout {
+		--primary: #5555ff;
+		--secondary: #292825;
+		&:hover {
+			--primary: #292825;
+			--secondary: #00bb00;
+		}
+		&.active {
+			--primary: #292825;
+			--secondary: #00bb00;
+		}
+	}
 	&-magnifying-glass {
 		position: absolute;
 		top: 0;

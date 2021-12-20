@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react"
 import { TSortValue } from "../../../../a0-common/c1-types/t2-request"
 import { FilterNames, SORTTITLES } from "../../../../a0-common/c2-constants"
-import { useAppDispatch, useAppSelector} from "../../../../a0-common/c3-hooks"
+import { useAppDispatch, useAppSelector } from "../../../../a0-common/c3-hooks"
 import { setModal } from "../../../../a2-bll/app-reducer"
 import { setFilter, TFiltersState } from "../../../../a2-bll/filters-reducer"
 import { selectFilters, selectSort } from "../../../../a2-bll/selectors"
@@ -14,6 +14,7 @@ import { ColorsMenu } from "./ColorsMenu/ColorsMenu"
 import { SizesMenu } from "./SizesMenu/SizesMenu"
 import css from "./Filters.module.scss"
 import { DefaultFilterMenu } from "./DefaultFilterMenu/DefaultFilterMenu"
+import { Toggle } from "../../cp1-elements/el06-Toggle/Toggle"
 
 type TFiltersProps = {
 
@@ -27,6 +28,8 @@ type TMenuFlags = {
     pattern: boolean
     fits: boolean
 }
+
+type TLayout = "list1" | "grid2" | "grid3" | "grid4"
 
 export const Filters = () => {
     const dispatch = useAppDispatch()
@@ -52,6 +55,18 @@ export const Filters = () => {
         type && setIsMenuVisible((prev) => ({ ...initialVisibility, [type]: state }))
     }
 
+    //view toggler
+    const [view, setView] = useState<"Model" | "Product">("Model");
+    const onViewToggle = (view: "Model" | "Product") => {
+        setView(view)
+    }
+
+    //layout toggler
+    const [layout, setLayout] = useState<TLayout>("grid3")
+    const onLayoutToggle = (layout: TLayout) => {
+        setLayout(layout)
+    }
+
     //sortDropmenu =======================================================================================
     const onSortOptionChange = (value: TSortValue) => {
         dispatch(setSortBy(value))
@@ -71,13 +86,14 @@ export const Filters = () => {
         menu: <Radio titles={SORTTITLES}
             options={sortValues}
             value={sortBy}
+            className={css.radio}
             onChangeOption={onSortOptionChange}>
             <Icon name="circle"
                 size="full"
                 containerClassName={css.radioSplash__container}
                 className={css.radioSplash} />
         </Radio>
-    }), [isMenuVisible.sort, sortValues, sortBy] )
+    }), [isMenuVisible.sort, sortValues, sortBy])
     //colorMenu =======================================================================================
     const onColorOptionChange = (state: boolean, value: string) => {
         state
@@ -98,10 +114,10 @@ export const Filters = () => {
         </div>,
         menu: facets.colorWithNames && <ul className={css.colorsMenu}>
             <ColorsMenu colors={facets.colorWithNames}
-                    selected={current.colorWithNames}
-                    onOptionChange={onColorOptionChange} />
+                selected={current.colorWithNames}
+                onOptionChange={onColorOptionChange} />
         </ul>
-            ,
+        ,
     }), [isMenuVisible.color, facets.colorWithNames, current.colorWithNames])
 
     //sustainMenu =======================================================================================
@@ -121,7 +137,7 @@ export const Filters = () => {
                     : css.filter__btn} />
             <span>{FilterNames.CONSCIOUS}</span>
         </div>,
-        menu: <ul style={{display: "grid", gridTemplateColumns: "1fr"}}>
+        menu: <ul style={{ display: "grid", gridTemplateColumns: "1fr" }}>
             <li className={css.menuoption}>
                 <Checkbox name={FilterNames.CONSCIOUS}
                     disabled
@@ -231,7 +247,7 @@ export const Filters = () => {
                             menu={getSortMenu().menu}
                             isNeedToClosePrevious={isAnyOpen}
                             onToggle={onMenuToggle} />
-                    </fieldset>  
+                    </fieldset>
                 </section>
                 <section className={css.filters}>
                     <fieldset className={css.block}>
@@ -240,7 +256,7 @@ export const Filters = () => {
                             toggle={getSustainMenu().toggle}
                             menu={getSustainMenu().menu}
                             isNeedToClosePrevious={isAnyOpen}
-                            onToggle={onMenuToggle}/>
+                            onToggle={onMenuToggle} />
                     </fieldset>
                     <fieldset className={css.block}>
                         <legend>{FilterNames.SIZE}</legend>
@@ -273,7 +289,7 @@ export const Filters = () => {
                             menu={getFitsMenu().menu}
                             isNeedToClosePrevious={isAnyOpen}
                             onToggle={onMenuToggle} />
-                    </fieldset>         
+                    </fieldset>
                 </section>
                 <section className={css.allFilters}>
                     <fieldset className={css.block}>
@@ -301,43 +317,45 @@ export const Filters = () => {
                     </div>
                     <fieldset className={css.block}>
                         <legend>Toggle Image Type</legend>
-                        <div className={css.textBlock}>
-                            <span>Model</span>
-                            <span>Product</span>
-                        </div>
+                        <Toggle options={["Model", "Product"]}
+                            className={css.toggle}
+                            frameClassName={css.toggle__frame__view}
+                            value={view}
+                            onChangeOption={onViewToggle} />
                     </fieldset>
                     <fieldset className={css.block}>
                         <legend>Toggle Image Size</legend>
-                        <div>
-                            <div className="span__decorated right" >
-                                <Icon name="grid-2"
-                                    size="full"
-                                    side="right"
-                                    className={css.view__btn__icon} />
-                                <span></span>
-                            </div>
-                            <div className="span__decorated right" >
-                                <Icon name="grid"
-                                    size="full"
-                                    side="right"
-                                    className={css.view__btn__icon} />
-                                <span></span>
-                            </div>
-                            <div className="span__decorated right" >
-                                <Icon name="grid-4"
-                                    size="full"
-                                    side="right"
-                                    className={css.view__btn__icon} />
-                                <span></span>
-                            </div>
-                            <div className="span__decorated right" >
-                                <Icon name="list"
-                                    size="full"
-                                    side="right"
-                                    className={css.view__btn__icon} />
-                                <span></span>
-                            </div>
-                        </div>
+                            <Toggle options={["grid2", "grid3", "grid4", "list1"]}
+                                value={layout}
+                                className={css.layout__toggle}
+                                frameClassName={css.toggle__frame__layout}
+                                onChangeOption={onLayoutToggle}
+                                titles={[
+                                    <div className="span__decorated right" >
+                                        <Icon name="grid-2"
+                                            side="right"
+                                            className={`icon__layout ${layout === "grid2" && "active"}`} />
+                                        <span></span>
+                                    </div>,
+                                    <div className="span__decorated right" >
+                                        <Icon name="grid"
+                                            side="right"
+                                            className={`icon__layout ${layout === "grid3" && "active"}`} />
+                                        <span></span>
+                                    </div>,
+                                    <div className="span__decorated right" >
+                                        <Icon name="grid-4"
+                                            side="right"
+                                            className={`icon__layout ${layout === "grid4" && "active"}`} />
+                                        <span></span>
+                                    </div>,
+                                    <div className="span__decorated right" >
+                                        <Icon name="list"
+                                            side="right"
+                                            className={`icon__layout ${layout === "list1" && "active"}`} />
+                                        <span></span>
+                                    </div>,
+                                ]} />
                     </fieldset>
                 </section>
             </div>
