@@ -120,6 +120,7 @@ $colorOptional: #5555ff;
     }
     .toggle__frame__layout {
             border: 2px solid $colorOptional;
+            border-radius: 2px;
     }
 }
 
@@ -196,7 +197,7 @@ $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
 }
 
 .filter__btn {
-    transform: translateY(-7%);
+    transform: translateY(-5%);
     fieldset:hover & {
         animation: floatY 1s linear 10;
     }
@@ -282,18 +283,18 @@ $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
 }
 @keyframes floatY {
     0% {
-        transform: translateY(-7%);
+        transform: translateY(-5%);
     }
     25% {
-        transform: translateY(-2%);
+        transform: translateY(0%);
     }
     50% {
-        transform: translateY(-7%);
+        transform: translateY(-5%);
     }
     75% {
-        transform: translateY(-12%);
+        transform: translateY(-10%);
     }
     100% {
-        transform: translateY(-7%);
+        transform: translateY(-5%);
     }
 }

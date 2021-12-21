@@ -1,9 +1,9 @@
-import { LanguageCodes, CountryCodes } from "../a0-common/c1-types/t1-instance/regions"
+import { CountryCodes, LanguageCodes } from "../a0-common/c2-constants"
 
 
 const initialState = {
-    lang: LanguageCodes.English as LanguageCodes,
-    country: CountryCodes.United_States as CountryCodes
+    lang: LanguageCodes.Français as LanguageCodes,
+    country: CountryCodes.France as CountryCodes
 }
 
 export const regionsReducer =

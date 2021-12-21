@@ -16,7 +16,7 @@ type TIconProps = TDefaulSVGProps & {
     secondaryColor?: string
     primaryOpacity?: string
     secondaryOpacity?: string
-    //onClick?: () => void
+    onClick?: (e: MouseEvent<HTMLElement>) => void
 }
 
 export const Icon: FC<TIconProps> = ({
@@ -41,7 +41,7 @@ export const Icon: FC<TIconProps> = ({
         }
     }, [side, containerClassName])
 
-    const onClickHandler = (e: MouseEvent<SVGSVGElement>) => {
+    const onClickHandler = (e: MouseEvent<HTMLElement>) => {
         active && onClick && onClick(e)
     }
 
@@ -67,9 +67,9 @@ export const Icon: FC<TIconProps> = ({
     }, [rotate])
 
     return (
-        <div className={`${getContainerStyle()}`}>
+        <div className={`${getContainerStyle()}`} onClick={onClickHandler}>
             <div style={rotated()} className="icon__rotate">
-                <svg ref={ref} onClick={onClickHandler} className={`icon icon-${name} ${className} ${size}`}>
+                <svg ref={ref}  className={`icon icon-${name} ${className} ${size}`}>
                 <use id={`${name}`} xlinkHref={`#${name}`}></use>
             </svg>
             </div>

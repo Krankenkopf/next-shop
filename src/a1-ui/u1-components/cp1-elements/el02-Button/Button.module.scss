@@ -40,20 +40,20 @@
 
 .button:after {
     content: "";
-    background: #00ff00;
+    background-color: inherit;
     display: block;
     position: absolute;
-    padding-top: 300%;
+    padding-top: 200%;
     padding-left: 350%;
     margin-left: -20px !important;
-    margin-top: -120%;
+    margin-top: -100%;
     opacity: 0;
-    transition: all 0.4s
+    transition: all 0.4s;
 }
 
 .button:active:after {
-    padding: 0;
-    margin: 0;
+    padding-left: 0;
+    margin-left: 0;
     opacity: 0.9;
     transition: 0s
 }

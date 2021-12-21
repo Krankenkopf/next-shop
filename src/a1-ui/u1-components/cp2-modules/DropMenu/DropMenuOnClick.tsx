@@ -41,7 +41,6 @@ export const DropMenuOnClick = <TMenu extends string>(
         isMenuVisible && setIsMenuVisible(false)
         isMenuVisible && onToggle && onToggle(false, type ? type : undefined)
     })
-    console.log(type, " ", isNeedToClosePrevious);
     
     const onToggleMouseDown = (e: MouseEvent) => { // blocks onMouseDownOutside event
         if (!isNeedToClosePrevious) {
