@@ -1,13 +1,16 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
 import React, { FC, MouseEvent, useState } from "react"
-import { Marker, SellingAttribute } from "../../../../../a0-common/c1-types/t1-instance/TProduct"
+import { Marker, SellingAttribute, TProduct } from "../../../../../a0-common/c1-types/t1-instance/TProduct"
+import { useAppDispatch } from "../../../../../a0-common/c3-hooks"
+import { addItem, removeItem } from "../../../../../a2-bll/cart-reducer"
 import Button from "../../../cp1-elements/el02-Button/Button"
 import { Icon } from "../../../cp1-elements/el10-Icons/Icon"
 import css from "./ProductItem.module.scss"
 
 type TProductItems = {
     code: string
+    product: TProduct
     name: string
     price: string
     imgSrc: string
@@ -19,19 +22,28 @@ type TProductItems = {
     sellingAttributes?: Array<SellingAttribute>
 
     defaultImgType?: "model" | "product"
-    addToFavorites: (e: MouseEvent<SVGSVGElement>) => void
+    isInCart: boolean
+    isInFavorites: boolean
 }
 
 export const ProductItem: FC<TProductItems> = (props) => {
-    const { code, name, price, imgSrc,
+    const dispatch = useAppDispatch()
+    const { code, product, name, price, imgSrc,
         imgSrcAlt, rgbColors, articleCodes,
         articleColorNames, markers, sellingAttributes,
         defaultImgType = "model",
+        isInCart, isInFavorites
         // callbacks
-        addToFavorites } = props
+        // ...
+    } = props
     const router = useRouter()
     const revealItem = () => {
         //router.push('/productpage/[id]', `/productpage/${code}`)
+    }
+    const onCartButtonClick = () => {
+        isInCart
+            ? dispatch(removeItem(product.code))
+            : dispatch(addItem(product))
     }
     const colorVariants = rgbColors && rgbColors.map((color: string, i: number) => {
         return (
@@ -50,7 +62,7 @@ export const ProductItem: FC<TProductItems> = (props) => {
     //mock
     const [isFavorite, setIsFavorite] = useState(Math.random() > 0.7 ? true : false);
     const [redprice, setRedprice] = useState(Math.random() > 0.5 ? `${(Math.random() * 100).toFixed(0)}$` : null);
-    
+
     return (
         <li className={css.card__cell}>
             <div className={css.card}>
@@ -109,7 +121,14 @@ export const ProductItem: FC<TProductItems> = (props) => {
                 <div className={css.card__overlay}>
                     <div className={css.card__controls}>
                         <div className={css.card__button}>
-                            <Button variant="ok">Add to the cart</Button>
+                            {isInCart
+                                ? <Button variant="ok__alt">
+                                    {"Go to cart"}
+                                </Button>
+                                : <Button variant={"ok"}
+                                    onClick={onCartButtonClick}>
+                                    {"Add to cart"}
+                                </Button>}
                         </div>
                         <div className={css.card__button__favorites}>
                             {isFavorite
@@ -120,7 +139,7 @@ export const ProductItem: FC<TProductItems> = (props) => {
                                     side="right"
                                     size="full"
                                     onClick={() => setIsFavorite(!isFavorite)} />}
-                                <Icon name="heart"
+                            <Icon name="heart"
                                 value={code}
                                 className={isFavorite
                                     ? css.favoritesClicked
@@ -131,6 +150,12 @@ export const ProductItem: FC<TProductItems> = (props) => {
                                 side="right"
                                 onClick={() => setIsFavorite(!isFavorite)} />
                         </div>
+                        {isInCart && <div className={css.card__button}>
+                            <Button variant={"cancel"}
+                                onClick={onCartButtonClick}>
+                                {"Remove from cart"}
+                            </Button>
+                        </div>}
                     </div>
                 </div>
             </div>

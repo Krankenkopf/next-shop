@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import React, { FC, useEffect } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { Nullable } from "../../../../../a0-common/c1-types/t1-instance"
 import { TProduct } from "../../../../../a0-common/c1-types/t1-instance/TProduct"
 import { useAppDispatch, useAppSelector } from "../../../../../a0-common/c3-hooks"
@@ -21,7 +21,9 @@ export const ProductsContent: FC<TProductsContentProps> = ({ productsSS }) => {
     const status = useAppSelector<TRequestStatus>(state => state.app.status)
     const { currentPage, category, pageSize, numberOfPages, totalNumberOfResults } = useAppSelector<TNavigationState>(state => state.navigation)
     const products = useAppSelector<Nullable<Array<TProduct>>>(state => state.products.products)
-
+    const cart = useAppSelector<Array<string>>(state => state.cart.products.map((product) => product.code))
+    const [favorites, setFavorites] = useState<Array<string>>([]);
+    
     useEffect(() => {
         const onLoad = async () => {
             const queryCategories = query.categories as Array<string>
@@ -42,7 +44,7 @@ export const ProductsContent: FC<TProductsContentProps> = ({ productsSS }) => {
         </header>
         <Filters />
         <div className="products-list__container">
-            {products && <ProductsList products={products} />}
+            {products && <ProductsList products={products} favorites={favorites} cart={cart}/>}
             {products && <div className="products-list__paginator">
             <Paginator currentPage={currentPage+1}
                 itemsPerPage={pageSize}
