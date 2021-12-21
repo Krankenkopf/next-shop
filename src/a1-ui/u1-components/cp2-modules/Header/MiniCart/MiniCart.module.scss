@@ -11,10 +11,21 @@
         position: relative;
         margin-bottom: 10px;
         .carousel__controls {
+            cursor: pointer;
             position: relative;
             margin: 0 auto auto;
             height: 30px;
             width: 30px;
+            & > *:hover::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                border-radius: 50%;
+                background-color: #0002;
+            }
         }
         .carousel__view {
             overflow: hidden;
@@ -45,20 +56,35 @@
             height: 100%;
             width: 100px;
             display: flex;
+            flex: 0 0 100px;
             img {
-                width: 88px;
+                object-fit: cover;
+                max-width: 88px;
+                max-height: 88px;
                 margin: auto;
             }
         }
         // .minicart__item__desc
         &__desc {
+            h4 {
+                font-size: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
             padding: 5px;
             table {
                 font-size: 90%;
                 display: grid;
-                grid-template-columns: auto auto;
+                grid-template-columns: 5em auto;
                 * {
-                    margin-right: 2em;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                *:nth-child(2n+1) {
+                    margin-right: 1em;
+                    
                 }
             }
         }

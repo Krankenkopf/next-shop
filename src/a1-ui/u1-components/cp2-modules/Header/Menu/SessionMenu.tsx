@@ -1,5 +1,6 @@
 import Link from "next/link"
 import React, { FC, useCallback, useEffect, useState } from "react"
+import { TProduct } from "../../../../../a0-common/c1-types/t1-instance/TProduct"
 import { useAppDispatch, useAppSelector } from "../../../../../a0-common/c3-hooks"
 import { setModal } from "../../../../../a2-bll/app-reducer"
 import { logout, TAuthState } from "../../../../../a2-bll/auth-reducer"
@@ -15,6 +16,7 @@ type TSessionMenuProps = {
 export const SessionMenu: FC<TSessionMenuProps> = ({}) => {
     const dispatch = useAppDispatch()
     const { isLoggedIn } = useAppSelector<TAuthState>((state) => state.auth)
+    const cartProducts = useAppSelector<Array<TProduct>>(state => state.cart.products)
     const handleLogout = useCallback(() => {
         dispatch(logout())
     }, [dispatch])
@@ -86,7 +88,7 @@ export const SessionMenu: FC<TSessionMenuProps> = ({}) => {
                 </div>
             </a>
         </Link>,
-        menu: <MiniCart />
+        menu: <MiniCart items={ cartProducts }/>
     }
     return (
         <ul className="header-menu-session">
