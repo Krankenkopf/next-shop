@@ -1,0 +1,93 @@
+$softRed: #ffcccc;
+$primary: #292825;
+
+.unique_propositions {
+	min-height: 60px;
+	display: flex;
+	justify-content: center;
+	li {
+		position: relative;
+		padding: 2%;
+		width: 33.33%;
+		font-size: 80%;
+		display: flex;
+		a {
+			margin: auto;
+		}
+	}
+}
+
+
+.banner {
+    padding: 2%;
+    background-color: #ffcccc;
+	font-size: 80%;
+	.banner__title {
+		letter-spacing: 1px;
+		margin-bottom: 5px;
+	}
+}
+
+.campaign {
+	position: relative;
+	& div:first-child {
+		min-height: 300px;
+	}
+	& div:nth-child(2n) {
+		position: absolute;
+		top: 0;
+		height: 100%;
+		width: 100%;
+		background-color: rgba(255, 240, 240, 0.5);
+		transition: all .5s ease-out;
+	}
+	& a:hover div:nth-child(2n) {
+		background-color: transparent;
+		&::after {
+			bottom: 0;
+    		content: "";
+    		display: block;
+    		left: 0;
+    		position: absolute;
+    		right: 0;
+    		top: 0;
+    		//z-index: 1;
+			background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.35) 100%);
+		}
+	}
+	img {
+		width: 100%;
+	}
+	
+	a:hover h2, a:hover button, a:hover p{
+		color: $softRed;
+		border-color: $softRed;
+	}
+	.campaign__block {
+		position: absolute;
+		width: 100%;
+		bottom: 0;
+		left: 50%;
+		transform: translate(-50%, 0);
+		text-align: center;
+		button {
+			color: $primary;
+			border-color: $primary;
+		}
+		p {
+			color: $primary;
+			margin-bottom: 10px;
+			transition: all .5s ease-out;
+			letter-spacing: 1px;
+		}
+		h2 {
+			margin-bottom: 10px;
+			transition: all .5s ease-out;
+			letter-spacing: 1px;
+		}
+		div {
+			height: 40px;
+			margin-bottom: 30px;
+		}
+	}
+}

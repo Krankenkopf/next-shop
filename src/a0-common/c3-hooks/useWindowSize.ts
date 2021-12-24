@@ -5,7 +5,7 @@ export const useWindowSize = () => {
         return {
             width: window.innerWidth,
             height: window.innerHeight
-        };
+        }
     }
 
     const [windowSize, setWindowSize] = useState(getSize);
