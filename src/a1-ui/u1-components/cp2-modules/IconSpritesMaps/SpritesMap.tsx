@@ -1,6 +1,7 @@
 import React from "react"
 import { ArrowNavSpritesMap } from "./ArrowNavSpritesMap"
 import { AuthSpritesMap } from "./AuthSpritesMap"
+import { BrandSpritesMap } from "./BrandSpritesMap"
 import { CommerceSpritesMap } from "./CommerceSpritesMap"
 import { CommonUISpritesMap } from "./CommonUISpritesMap"
 import { CRUDSpritesMap } from "./CRUDSpritesMap"
@@ -18,5 +19,6 @@ export const SpritesMap = () => {
         <CommerceSpritesMap />
         <LayoutSpritesMap />
         <CRUDSpritesMap />
+        <BrandSpritesMap />
     </>
 }

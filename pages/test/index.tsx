@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { LoginForm } from "../../src/a1-ui/u1-components/cp2-modules/AuthModules/Forms/LoginForm"
 import { ArrowNavSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/ArrowNavSpritesMap"
 import { AuthSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/AuthSpritesMap"
+import { BrandSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/BrandSpritesMap"
 import { CommerceSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/CommerceSpritesMap"
 import { CommonUISpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/CommonUISpritesMap"
 import { CRUDSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/CRUDSpritesMap"
@@ -34,8 +35,8 @@ export default function Test() {
     useEffect(() => {
         const toJSX = (iconSprite: HTMLElement) => {
             let icons: Array<JSX.Element> = []
+            let ids: Array<string> = []
             let svgElements = iconSprite.querySelectorAll("symbol")
-            console.log(`${iconSprite.id} icons: ${svgElements.length}`);
             svgElements.forEach(i => {
                 icons.push(
                     <div key={`${i.id}`} className="icon test" style={{ display: "inline-block", verticalAlign: "top", width: "70px", margin: "10px" }}>
@@ -50,7 +51,10 @@ export default function Test() {
                         </div>
                     </div>
                 )
+                ids.push(`"${i.id}"`)
             })
+            console.log(`${iconSprite.id} icons: ${svgElements.length}`);
+            console.log(`${iconSprite.id} ids: ${ids}`)
             return icons
         }
 
@@ -77,8 +81,9 @@ export default function Test() {
         crudIconsMap && setCRUDIcons(toJSX(crudIconsMap))
         layoutIconsMap && setLayoutIcons(toJSX(layoutIconsMap))
         currencyIconsMap && setCurrencyIcons(toJSX(currencyIconsMap))
-        brandIconsMap && setBrandIcons(toJSX(brandIconsMap))
         miscIconsMap && setMiscIcons(toJSX(miscIconsMap))
+        brandIconsMap && setBrandIcons(toJSX(brandIconsMap))
+
     }, []
     )
 
@@ -90,15 +95,18 @@ export default function Test() {
                 let names: Array<string> = []
                 let svgElements = iconSprite.querySelectorAll("symbol")
                 console.log(`${iconSprite.id} icons: ${svgElements.length}`);
+                console.log(`excluding brand icons!`);
                 let alreadyNested = document.getElementsByTagName("use")
-                console.log(alreadyNested);
+                //let alreadyNested = document.getElementsByTagName("symbol")
+                console.log("--------------------------------")
+                console.log("already nested:")
 
                 svgElements.forEach(i => {
                     let nestedFlag = false
 
                     for (let j = 0; j < alreadyNested.length; j++) {
                         if (i.id === alreadyNested[j].id) {
-                            console.log(`${i.id} ${alreadyNested[j].id}`);
+                            console.log(`${i.id}`);
                             nestedFlag = true
                         }
                     }
@@ -146,6 +154,7 @@ export default function Test() {
             <LayoutSpritesMap />
             <LocalizationSpritesMap />
             <MiscSpritesMap />
+            <BrandSpritesMap />
             <main>
                 <h2 style={{ textAlign: "center" }}>All</h2>
                 <div style={{ display: "flex", flexWrap: "wrap" }}>
@@ -195,6 +204,10 @@ export default function Test() {
                 <h2 style={{ textAlign: "center" }}>Miscellaneous Icons</h2>
                 <div style={{ display: "flex", flexWrap: "wrap" }}>
                     {miscIcons}
+                </div>
+                <h2 style={{ textAlign: "center" }}>Brand Icons</h2>
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    {brandIcons}
                 </div>
             </main>
         </LandingLayout>
