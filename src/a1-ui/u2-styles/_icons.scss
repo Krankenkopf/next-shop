@@ -66,6 +66,16 @@
 			--secondary: #00bb00;
 		}
 	}
+	&__chevron-btn {
+		transform: translateY(-5%);
+    	fieldset:hover & {
+        	animation: floatY 1s linear 10;
+    	}
+    	&._close {
+        top: 7%;
+   		}
+	}
+
 	&-magnifying-glass {
 		position: absolute;
 		top: 0;
@@ -85,7 +95,23 @@
 		--secondary-opacity: 1;
 	}
 	
-
+@keyframes floatY {
+    0% {
+        transform: translateY(-5%);
+    }
+    25% {
+        transform: translateY(0%);
+    }
+    50% {
+        transform: translateY(-5%);
+    }
+    75% {
+        transform: translateY(-10%);
+    }
+    100% {
+        transform: translateY(-5%);
+    }
+}
 
 
 

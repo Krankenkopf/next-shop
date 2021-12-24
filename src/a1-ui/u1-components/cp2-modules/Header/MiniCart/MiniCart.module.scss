@@ -90,26 +90,6 @@
         }
         
     }
-    &__total {
-        & > * {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 80%;
-        }
-        footer {
-            position: relative;
-            padding-top: 5px;
-        }
-        footer::before {
-            content: "";
-            position: absolute;
-            width: 100%;
-            top: -2px;
-            height: 2px;
-            background-color: #292825;
-        }
-    }
     &__actions {
         a {
             width: 100%;

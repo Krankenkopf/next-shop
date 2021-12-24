@@ -3,6 +3,7 @@ import { ArrowNavSpritesMap } from "./ArrowNavSpritesMap"
 import { AuthSpritesMap } from "./AuthSpritesMap"
 import { CommerceSpritesMap } from "./CommerceSpritesMap"
 import { CommonUISpritesMap } from "./CommonUISpritesMap"
+import { CRUDSpritesMap } from "./CRUDSpritesMap"
 import { FeatureSpritesMap } from "./FeatureSpritesMap"
 import { FilterSpritesMap } from "./FilterSpritesMap"
 import { LayoutSpritesMap } from "./LayoutSpritesMap"
@@ -16,5 +17,6 @@ export const SpritesMap = () => {
         <FeatureSpritesMap />
         <CommerceSpritesMap />
         <LayoutSpritesMap />
+        <CRUDSpritesMap />
     </>
 }

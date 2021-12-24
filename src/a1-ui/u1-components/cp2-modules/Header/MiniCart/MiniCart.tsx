@@ -5,6 +5,7 @@ import css from "./MiniCart.module.scss"
 import item from "../../../../../../public/images/carousel/1008.png"
 import Link from "next/link"
 import { TProduct } from "../../../../../a0-common/c1-types/t1-instance/TProduct"
+import { OrderTotals } from "../../Cart/OrderTotals"
 
 type TMiniCartProps = {
     items: Array<TProduct>
@@ -72,20 +73,9 @@ export const MiniCart: FC<TMiniCartProps> = ({ items }) => {
                         </div>}
                     </div>
                     <hr style={{ width: "100%", margin: "0 0 10px" }} />
-                    <table className={css.minicart__total}>
-                        <div>
-                            <span>Order value</span>
-                            <span>{`${currencySign}${orderValue}`}</span>
-                        </div>
-                        <div>
-                            <span>Delivery</span>
-                            <span>{deliveryCost}</span>
-                        </div>
-                        <footer>
-                            <span><strong>Total</strong></span>
-                            <span><strong>{`${currencySign}${orderValue + deliveryCost}`}</strong></span>
-                        </footer>
-                    </table>
+                    <OrderTotals orderValue={orderValue}
+                        deliveryCost={deliveryCost}
+                        currencySign={currencySign} />
                     <div className={css.minicart__actions}>
                         <div className="button-container">
                             <Link href="/checkout">
