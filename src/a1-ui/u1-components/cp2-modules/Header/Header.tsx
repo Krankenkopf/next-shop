@@ -20,7 +20,7 @@ export const Header: FC<THeaderProps> = React.memo(({}) => {
     const headerLinks = headerLinkNames.map((name, i, arr) => {
         if (name === "household") {
             return <h4 key={name} style={{width: `calc(100%/${arr.length})`, height: '30px', textAlign: 'center'}}>
-                <Link href="/household"><a>H&M Home</a></Link>
+                <Link href="/home"><a>H&M Home</a></Link>
             </h4>
         }
         else return <h4 key={name} style={{width: `calc(100%/${arr.length})`, height: '30px', textAlign: 'center'}}>

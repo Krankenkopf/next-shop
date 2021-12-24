@@ -10,6 +10,7 @@ export const selectSort = (state: TState) => state.sort
 export const selectModal = (state: TState) => state.app.modal
 export const selectItemsTotalCount = (state: TState) => state.navigation.totalNumberOfResults
 export const selectItemsTotalCountUnfiltered = (state: TState) => state.navigation.totalNumberOfResultsUnfiltered
+export const selectCartItems = (state: TState) => state.cart.products
 
 export const selectPageCategory = createSelector(
     [

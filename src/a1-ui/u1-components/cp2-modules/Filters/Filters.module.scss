@@ -257,7 +257,6 @@ $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
     .icon {
         cursor: pointer;
         transition: transform 4s ease-out 1s;
-        transform: translateX(0%);
         &:hover {
             animation: floatX 2s linear 10;
         }
