@@ -76,15 +76,18 @@
    		}
 	}
 
-	&-magnifying-glass {
-		position: absolute;
-		top: 0;
-		left: 0;
+	&-magnifying-glass, &-trash-can {
 		transform: translate(0, 0);
 		height: calc(100% / 1.2);
 		width: calc(100% / 1.2);
 		--primary-opacity: 0.5;
 		--secondary-opacity: 0.7;
+		
+	}
+	&-magnifying-glass {
+		position: absolute;
+		top: 0;
+		left: 0;
 	}
 	&.inactive {
 		--primary-opacity: 0.3;

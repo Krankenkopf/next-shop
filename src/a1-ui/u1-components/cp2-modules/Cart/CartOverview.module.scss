@@ -53,11 +53,29 @@
                 }
             }
             .delete {
+                cursor: pointer;
                 position: absolute;
                 top: 0;
                 right: 0;
                 height: 30px;
                 width: 30px;
+                &:hover {
+                    &::before {
+                    content: "";
+                    position: absolute;
+                    top: -3px;
+                    right: -3px;
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 50%;
+                    background-color: #0002;
+                }
+                    svg {
+                        --primary: #f00;
+			            --secondary: #e50010;
+                }
+                }
+                
             }
         }
     }
@@ -88,11 +106,15 @@
 }
 
 .sidebar__container {
-    padding: 15px;
-    background-color: #fdd6d6;
+    position: relative;
     .sidebar {
         text-align: left;
-        p, button {
+        padding: 15px;
+        margin-bottom: 90px;
+        position: sticky;
+        top: 0;
+        background-color: #fdd6d6;
+        p {
             width: 100%;
             font-size: 80%;
         }
@@ -102,8 +124,10 @@
             margin-bottom: 15px;
             button {
                 cursor: pointer;
+                font-size: 80%;
                 width: max-content;
                 white-space: nowrap;
+                text-decoration: underline;
                 &:hover {
                     color: #5555ff
                 }
@@ -118,8 +142,75 @@
         .button {
             display: flex;
             align-items: center;
+            
+            font-size: 80%;
             height: 38px;
+            margin-bottom: 5px;
+            button {
+                width: 100%;
+            }
         } 
+        .marketingMessage {
+            margin-bottom: 15px;
+            font-size: 70%;
+        }
+        .paymentModes {
+            margin-bottom: 25px;  
+            ul {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                li {
+                    padding-right: 10px;
+                }
+                li:last-child {
+                    padding-right: 0;
+                }
+            }
+            // .paymentModes__icon
+            &__icon {
+                position: relative;
+                height: 34px;
+                width: 34px;
+                svg {
+                    width: 34px;
+                }
+            }
+        }
+        .generalText {
+            margin-top: 15px;
+            font-size: 70%;
+            button {
+                cursor: pointer;
+                width: max-content;
+                white-space: nowrap;
+                text-decoration: underline;
+                &:hover {
+                    color: #5555ff
+                }
+            }
+        }
+       .deliveryInfo__container {
+           position: absolute;
+           left: 0;
+           bottom: -75px;
+           width: 100%;
+           background-color: #fdd6d6;
+           .deliveryInfo {
+               cursor: pointer;
+               position: relative;
+               display: flex;
+               align-items: center;
+               margin: 15px;
+               span {
+                    display: flex;
+                    align-items: center;
+                    height: 2em;
+                    font-size: 80%;
+                    padding: 0 35px;
+               }    
+           }
+       } 
     }
 }
 

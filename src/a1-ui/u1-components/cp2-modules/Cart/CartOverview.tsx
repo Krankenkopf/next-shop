@@ -9,6 +9,13 @@ import { DropMenuOnClick } from "../DropMenu/DropMenuOnClick"
 import { Icon } from "../../cp1-elements/el10-Icons/Icon"
 import Button from "../../cp1-elements/el02-Button/Button"
 import { OrderTotals } from "./OrderTotals"
+import { HMClarnaIcon } from "../../cp1-elements/el10-Icons/HMClarnaIcon"
+import { CCDiscoverIcon } from "../../cp1-elements/el10-Icons/Additional/CCDiscoverIcon"
+import { BrandIcon } from "../../cp1-elements/el10-Icons/BrandIcon"
+import { CCMastercardIcon } from "../../cp1-elements/el10-Icons/Additional/CCMastercardIcon"
+import { CCVisaElectronIcon } from "../../cp1-elements/el10-Icons/Additional/CCVisaElectronIcon"
+import { CCVisaIcon } from "../../cp1-elements/el10-Icons/Additional/CCVisaIcon"
+import { CCPayPalIcon } from "../../cp1-elements/el10-Icons/Additional/CCPayPalIcon"
 
 type TCartOverviewProps = {
     
@@ -73,7 +80,7 @@ export const CartOverview = () => {
                     <p>{`${currencySign}${totalPrice}`}</p>
                 </table>
                 <div className={css.delete}>
-                    <Icon name="trash-can" />
+                    <Icon name="trash-can" className="icon-trash-can"/>
                 </div>
             </div>
         </li>
@@ -110,29 +117,57 @@ export const CartOverview = () => {
                         <div className={css.button}>
                             <Button variant="ok__alt">CONTINUE TO CHECKOUT</Button>
                         </div>
-                        <p>
-                            or 4 easy payments of {currencySign}{(orderValue * 0.25).toFixed(2)} for members with
+                        <p className={css.marketingMessage}>
+                            or&nbsp;
+                            <strong>
+                                4 easy payments of {currencySign}{(orderValue * 0.25).toFixed(2)}
+                            </strong>
+                            &nbsp;for members with&nbsp;
+                            <HMClarnaIcon />
                         </p>
                         <div className={css.paymentModes}>
                             <p>We accept</p>
                             <ul>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
+                                <li>
+                                    <HMClarnaIcon />
+                                </li>
+                                <li>
+                                    <div className={css.paymentModes__icon}>
+                                        <BrandIcon name="cc-amex" title="Amex" color="#016cca"/>
+                                    </div> 
+                                </li>
+                                <li>
+                                    <CCDiscoverIcon />
+                                </li>
+                                <li>
+                                    <CCMastercardIcon />
+                                </li>
+                                <li>
+                                    <CCVisaElectronIcon />
+                                </li>
+                                <li>
+                                    <CCVisaIcon />
+                                </li>
+                                <li>
+                                    <CCPayPalIcon />
+                                </li>
                             </ul>
                         </div>
-                        <div>
-                            <p>
-                                The estimated tax will be confirmed once you added your shipping address in checkout.
-                            </p>
-                            <p>
-                                30-day returns. Read more about our return and refund policy.
-                            </p>
-                        </div>
-                        <div className={css.deliveryInfo}>
-                            
+                        <p className={css.generalText}>
+                            The estimated tax will be confirmed once you added your shipping address in checkout.
+                        </p>
+                        <p className={css.generalText}>
+                            30-day returns. Read more about our
+                            <button>
+                               return and refund policy 
+                            </button>   
+                        </p>
+                        <div className={css.deliveryInfo__container}>
+                            <div className={css.deliveryInfo}>
+                                <Icon name="truck" side="left"/>
+                                <span>Shipping & return options</span>
+                                <Icon name="chevron-right" side="right" className="icon__chevron-btn"/>
+                            </div>
                         </div>
                     </aside>
 
