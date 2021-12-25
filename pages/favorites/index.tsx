@@ -7,12 +7,7 @@ import { LandingLayout } from "../../src/a1-ui/u1-components/cp4-layouts/Landing
 export default function Favorites() {
     return (
         <LandingLayout title={"Favorites"}>
-            <Head>
-                <title>Favorites | Noname Shop</title>
-            </Head>
-            <main>
-                <UnderConstruction />
-            </main>
+            <UnderConstruction />
         </LandingLayout>
     )
 }

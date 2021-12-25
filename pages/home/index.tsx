@@ -16,9 +16,7 @@ export default function Home() {
             <Head>
                 <title>Household | Noname Shop</title>
             </Head>
-            <main>
-                <UnderConstruction />
-            </main>
+            <UnderConstruction />
         </ProductLayout>
     )
 }

@@ -12,9 +12,7 @@ export default function Ladies() {
         <ProductLayout title={pageMeta.title}
             category={category}
             rootCategoryName={pageMeta.path}>
-            <main>
-              <UnderConstruction />  
-            </main>
+            <UnderConstruction />  
         </ProductLayout>
     )
 }
