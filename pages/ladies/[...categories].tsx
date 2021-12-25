@@ -8,6 +8,7 @@ import { TAnyFacet, TPagination } from "../../src/a0-common/c1-types/t3-response
 import { useAppSelector } from "../../src/a0-common/c3-hooks"
 import { extractRelevantFacets, getRequestedCategory } from "../../src/a0-common/c4-utils/state"
 import { Timer } from "../../src/a1-ui/u1-components/cp1-elements/el20-Timer/Timer"
+import { Banner } from "../../src/a1-ui/u1-components/cp2-modules/Ads/Banner"
 import { ProductsContent } from "../../src/a1-ui/u1-components/cp2-modules/ProductModules/ProductsContent/ProductsContent"
 import { ProductLayout } from "../../src/a1-ui/u1-components/cp4-layouts/ProductLayout"
 import { setFacets } from "../../src/a2-bll/filters-reducer"
@@ -38,30 +39,22 @@ export default function LadiesCategory({categorySS, productsSS, history}: TLadie
             category={rootCategory}
             rootCategoryName={pageMeta.path}>
             <div className="page-content">
-                <section id="banner" className="section-container">
-                    <Link href="/">
-                        <a>
-                            <div>
-                                <h3 className="banner__title">
-                                    30% off sitewide for Cyber Monday!
-                                </h3>
-                                <div>
-                                    DON'T WAIT!
-                                </div>
-                                <div>
-                                    <Timer />
-                                </div>
-                            </div>
-                        </a>
-                    </Link>
-                </section>
+                <Banner title="30% off sitewide for Cyber Monday!">
+                    <div>
+                        DON'T WAIT!
+                    </div>
+                    <div>
+                        <Timer endDate="Jan 18, 2022 00:00:00"/>
+                    </div>
+                </Banner>
                 <ProductsContent productsSS={ productsSS }/>
             </div>
         </ProductLayout>
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps<TLadiesCategorySSProps>(store => async ({ req, query, resolvedUrl }) => {
+export const getServerSideProps = wrapper
+    .getServerSideProps<TLadiesCategorySSProps>(store => async ({ req, query, resolvedUrl }) => {
     console.log("ss request")
     if (!req || (req.url && req.url.startsWith('/_next/data'))) {
         console.log("ss request dumped");

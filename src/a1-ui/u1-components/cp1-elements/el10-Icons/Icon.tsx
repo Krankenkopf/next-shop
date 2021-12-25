@@ -5,7 +5,7 @@ type TDefaulSVGProps = DetailedHTMLProps<SVGAttributes<SVGSVGElement>, SVGSVGEle
 
 type TIconProps = TDefaulSVGProps & {
     name: TIconName
-    value?: string,
+    id?: string,
     className?: string // for colors
     containerClassName?: string // for transitions, rotating etc
     side?: "right" | "left"
@@ -21,6 +21,7 @@ type TIconProps = TDefaulSVGProps & {
 
 export const Icon: FC<TIconProps> = ({
     name,
+    id,
     className,
     containerClassName,
     side = "left",
@@ -67,9 +68,9 @@ export const Icon: FC<TIconProps> = ({
     }, [rotate])
 
     return (
-        <div className={`${getContainerStyle()}`} onClick={onClickHandler}>
+        <div id={id} className={`${getContainerStyle()}`} onClick={onClickHandler}>
             <div style={rotated()} className="icon__rotate">
-                <svg ref={ref}  className={`icon icon-${name} ${className} ${size}`}>
+                <svg ref={ref} className={`icon icon-${name} ${className} ${size}`}>
                 <use id={`${name}`} xlinkHref={`#${name}`}></use>
             </svg>
             </div>

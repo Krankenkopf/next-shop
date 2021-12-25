@@ -122,9 +122,11 @@ export const ProductItem: FC<TProductItems> = (props) => {
                     <div className={css.card__controls}>
                         <div className={css.card__button}>
                             {isInCart
-                                ? <Button variant="ok__alt">
+                                ? <Link href="/cart"><a>
+                                    <Button variant="ok__alt">
                                     {"Go to cart"}
                                 </Button>
+                                    </a></Link>
                                 : <Button variant={"ok"}
                                     onClick={onCartButtonClick}>
                                     {"Add to cart"}
@@ -133,14 +135,14 @@ export const ProductItem: FC<TProductItems> = (props) => {
                         <div className={css.card__button__favorites}>
                             {isFavorite
                                 && <Icon name="heart-solid"
-                                    value={code}
+                                    id={code}
                                     className={css.favoritesActive}
                                     containerClassName={css.favoritesActive__container}
                                     side="right"
                                     size="full"
                                     onClick={() => setIsFavorite(!isFavorite)} />}
                             <Icon name="heart"
-                                value={code}
+                                id={code}
                                 className={isFavorite
                                     ? css.favoritesClicked
                                     : css.favorites}

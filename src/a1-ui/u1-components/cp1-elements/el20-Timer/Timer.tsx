@@ -1,7 +1,7 @@
 import { useState, useEffect, FC } from "react";
 
 type TTimerProps = {
-    endDate: string
+    endDate: string //exm. "Jan 18, 2022 00:00:00"
 }
 
 export const Timer: FC<TTimerProps> = ({endDate}) => {
