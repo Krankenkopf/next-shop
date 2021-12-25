@@ -3,7 +3,9 @@ import { Concept, TColor } from "./TProductDetail"
 export type TProduct = {
     code: string;
     name: string;
-    stock: number;
+    stock: {
+        stockLevel: number
+    }
     price: Price;
     images: ImageSrc[];
     categories: any[];
