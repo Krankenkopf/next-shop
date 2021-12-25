@@ -9,25 +9,25 @@ export const CCDiscoverIcon = () => {
         <title id="id-discover">Discover</title>
         <defs>
             <linearGradient x1="75.599%" y1="89.221%" x2="40.959%" y2="36.168%" id="DiscoverIcon__1">
-                <stop stop-color="#F6A000" offset="0%"></stop>
-                <stop stop-color="#F59B00" offset="23%"></stop>
-                <stop stop-color="#F38E00" offset="49%"></stop>
-                <stop stop-color="#F18400" offset="62%"></stop>
-                <stop stop-color="#EF7902" offset="77%"></stop>
-                <stop stop-color="#ED6D05" offset="100%"></stop>
+                <stop stopColor="#F6A000" offset="0%"></stop>
+                <stop stopColor="#F59B00" offset="23%"></stop>
+                <stop stopColor="#F38E00" offset="49%"></stop>
+                <stop stopColor="#F18400" offset="62%"></stop>
+                <stop stopColor="#EF7902" offset="77%"></stop>
+                <stop stopColor="#ED6D05" offset="100%"></stop>
             </linearGradient>
             <linearGradient x1="70.116%" y1="88.51%" x2="19.535%" y2="-8.316%" id="DiscoverIcon__2">
-                <stop stop-color="#F18400" offset="0%"></stop>
-                <stop stop-color="#EB7C07" offset="11%"></stop>
-                <stop stop-color="#E16E12" offset="31%"></stop>
-                <stop stop-color="#D9641A" offset="50%"></stop>
-                <stop stop-color="#D45C20" offset="68%"></stop>
-                <stop stop-color="#D05824" offset="85%"></stop>
-                <stop stop-color="#CF5625" offset="98%"></stop>
+                <stop stopColor="#F18400" offset="0%"></stop>
+                <stop stopColor="#EB7C07" offset="11%"></stop>
+                <stop stopColor="#E16E12" offset="31%"></stop>
+                <stop stopColor="#D9641A" offset="50%"></stop>
+                <stop stopColor="#D45C20" offset="68%"></stop>
+                <stop stopColor="#D05824" offset="85%"></stop>
+                <stop stopColor="#CF5625" offset="98%"></stop>
             </linearGradient>
         </defs>
-        <g fill="none" fill-rule="evenodd">
-            <g fill-rule="nonzero">
+        <g fill="none" fillRule="evenodd">
+            <g fillRule="nonzero">
                 <path fill="#FFF" d="M1.134 2.179l31.212-.002v19.672H1.139z"></path>
                 <path d="M32.237 13.117s-8.53 5.956-24.15 8.62h24.15v-8.62z" fill="#EF7D00"></path>
                 <path d="M32.346 2.064H1.025v19.898h31.433V2.064h-.112zm-.113.225v19.447H1.251V2.29l30.982-.001z" fill="#1D1D1B"></path>

@@ -7,8 +7,8 @@ type TOrderTotalsProps = {
     currencySign: string
 }
 
-export const OrderTotals: FC<TOrderTotalsProps> = ({orderValue, deliveryCost, currencySign}) => {
-    return <table className={css.total}>
+export const OrderTotals: FC<TOrderTotalsProps> = ({ orderValue, deliveryCost, currencySign }) => {
+    return <div className={css.total}>
         {orderValue ? <>
             <div>
                 <span>Order value</span>
@@ -19,17 +19,16 @@ export const OrderTotals: FC<TOrderTotalsProps> = ({orderValue, deliveryCost, cu
                 <span>{deliveryCost}</span>
             </div>
         </>
-        : <div style={{height: "10px"}}></div>}
-        <footer>
+            : <div style={{ height: "10px" }}></div>}
+        <footer className={css.total__footer}>
             <span><strong>Total</strong></span>
             <span>
                 <strong>
                     {orderValue
                         ? `${currencySign}${typeof deliveryCost === "number" ? orderValue + deliveryCost : orderValue}`
                         : `${currencySign}0.00`}
-                    
                 </strong>
             </span>
         </footer>
-    </table>
+    </div>
 }

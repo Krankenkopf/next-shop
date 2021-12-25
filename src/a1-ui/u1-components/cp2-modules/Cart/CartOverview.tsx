@@ -41,13 +41,14 @@ export const CartOverview = () => {
                     : "icon__chevron-btn"} />
             <span>{1}</span>
         </div>,
-        menu: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(option => {
-            return (
-                <li key={option} className={`${css.menuoption}`}>
-                    {option}
-                </li>
-            )
-        }),
+        menu: <ul>
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(option => {
+                return (
+                    <li key={option} className={`${css.menuoption}`}>
+                        {option}
+                    </li>)
+            })}
+        </ul>,
     }), [])
     const orderValue = items.length
         && Math.round(items
@@ -68,7 +69,7 @@ export const CartOverview = () => {
             <div className={css.item__desc}>
                 <h4>{product.name}</h4>
                 <p>{product.price.formattedValue}</p>
-                <table>
+                <div className={css.table}>
                     <div>Art.no.:</div>
                     <p>{product.articles[0].code}</p>
                     <div>Color:</div>
@@ -82,7 +83,7 @@ export const CartOverview = () => {
                         menuClassName={css.quantityMenu} />
                     <div>Total:</div>
                     <p>{`${currencySign}${totalPrice}`}</p>
-                </table>
+                </div>
                 <div className={css.delete}>
                     <Icon name="trash-can"
                         id={product.code}
@@ -144,7 +145,7 @@ export const CartOverview = () => {
                                     <strong>
                                         pay in 30 days.&nbsp;
                                     </strong>
-                                    For members with
+                                    For members with&nbsp;
                                 </>}
                             <HMClarnaIcon />
                         </p>
