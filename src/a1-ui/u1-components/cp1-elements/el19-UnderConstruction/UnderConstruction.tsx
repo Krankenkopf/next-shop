@@ -5,14 +5,14 @@ import css from "./UnderConstruction.module.scss"
 
 export const UnderConstruction = React.memo(() => {
     if (typeof window !== 'object') {
-        return <></>
+        return null
     }
     const windowSize = useWindowSize()
     const getStrokes = useCallback(() => {
         const quantity = +(windowSize.width / 50).toFixed(0)
         let arr = []
         for (let i = 0; i < quantity; i++) {
-            arr.push(<li></li>)
+            arr.push(<li key={i}></li>)
         }
         return arr
     }, [windowSize])

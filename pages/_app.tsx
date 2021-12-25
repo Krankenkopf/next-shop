@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { SpritesMap } from "../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/SpritesMap";
 import { TCategoriesResponse } from "../src/a0-common/c1-types/t3-response/TCategoriesResponse";
 import { setCategories } from "../src/a2-bll/categories-reducer";
+import { DebugContainer } from "../src/a1-ui/u1-components/cp1-elements/el18-DebugPanel/DebugContainer";
 
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -20,6 +21,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   
   return <>
     <SpritesMap />
+    <DebugContainer />
     <Component history={history} {...pageProps} />
   </>
 }
