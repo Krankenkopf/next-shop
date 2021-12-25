@@ -6,7 +6,7 @@ export const handleServerNetworkError = (e: any, dispatch: ErrorUtilsDispatchTyp
     const error = e.response ? e.response.data.error : (e.message);
     dispatch(setError(error))
     dispatch(setAppStatus("failed"))
-    console.log('Error: ', {...e})
+    console.log('Error: ', e.message)
 }
 
 type ErrorUtilsDispatchType = Dispatch<TAppActions>
