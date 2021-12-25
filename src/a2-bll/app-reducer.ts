@@ -42,7 +42,7 @@ export const closeModal = () => (
 // thunks
 
 // types
-export type TRequestStatus = "idle" | "loading" | "succeeded" | "failed"
+export type TRequestStatus = "idle" | "auth loading" | "content loading" | "succeeded" | "failed"
 export type TAppState = typeof initialState
 export type TAppActions =
     ReturnType<typeof setAppStatus>

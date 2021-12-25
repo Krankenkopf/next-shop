@@ -63,7 +63,7 @@ export const setIsLoggedIn = (status: boolean) =>
 
 export const login = (): AppThunk => async (dispatch, getState) => {
     try {
-        dispatch(setAppStatus('loading'))
+        dispatch(setAppStatus('auth loading'))
         const loginData = getState().auth.loginUserData as TLoginData
         const response = await authAPI.login(loginData)
         const {accessLevel}  = response.data
@@ -79,7 +79,7 @@ export const login = (): AppThunk => async (dispatch, getState) => {
 
 export const logout = (): AppThunk => async dispatch => {
     try {
-        dispatch(setAppStatus('loading'))
+        dispatch(setAppStatus('auth loading'))
         const response = await authAPI.logout()
         dispatch(setUserData(response.data))
         batch(() => {
@@ -95,7 +95,7 @@ export const logout = (): AppThunk => async dispatch => {
 
 export const me = (): AppThunk => async dispatch => {
     try {
-        dispatch(setAppStatus('loading'))
+        dispatch(setAppStatus('auth loading'))
         const response = await authAPI.me()
         dispatch(setUserData(response.data))
         if (response.data.accessLevel >= AccessLevel.REGISTERED) {
@@ -111,7 +111,7 @@ export const me = (): AppThunk => async dispatch => {
 
 export const signup = (): AppThunk => async (dispatch, getState) => {
     try {
-        dispatch(setAppStatus('loading'))  
+        dispatch(setAppStatus('auth loading'))  
         const signupData = getState().auth.signupUserData as TSignupData
        /*  await new Promise((res) => {
             setTimeout(() => {

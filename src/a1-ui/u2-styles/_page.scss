@@ -1,7 +1,7 @@
 .page-content {
 	position: relative;
-	display: inline-block;
-	vertical-align: top;
+	display: flex;
+	flex-direction: column;
 	width: calc(100% - 250px - 0.01px);
 	min-height: 100%;
 	padding-right: 20px;
@@ -10,7 +10,7 @@
 .products-list {
 	&__container {
 		position: relative;
-		height: 100%;
+		flex: 1 0 auto;
 	}
 	//position: absolute;
 	//top: 0;

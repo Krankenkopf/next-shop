@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../../../../a0-common/c3-hook
 import { TRequestStatus } from "../../../../../a2-bll/app-reducer"
 import { TNavigationState } from "../../../../../a2-bll/navigation-reducer"
 import { clearProducts, getProducts } from "../../../../../a2-bll/products-reducer"
+import { selectAppStatus, selectCartItems } from "../../../../../a2-bll/selectors"
 import { Paginator } from "../../../cp1-elements/el08-Paginator/Paginator"
 import { Preloader } from "../../../cp1-elements/el11-Preloader/Preloader"
 import { Filters } from "../../Filters/Filters"
@@ -18,10 +19,10 @@ type TProductsContentProps = {
 export const ProductsContent: FC<TProductsContentProps> = ({ productsSS }) => {
     const dispatch = useAppDispatch()
     const { pathname, query, asPath } = useRouter()
-    const status = useAppSelector<TRequestStatus>(state => state.app.status)
+    const status = useAppSelector<TRequestStatus>(selectAppStatus)
     const { currentPage, category, pageSize, numberOfPages, totalNumberOfResults } = useAppSelector<TNavigationState>(state => state.navigation)
     const products = useAppSelector<Nullable<Array<TProduct>>>(state => state.products.products)
-    const cart = useAppSelector<Array<string>>(state => state.cart.products.map((product) => product.code))
+    const cart = useAppSelector<Array<TProduct>>(selectCartItems).map((product) => product.code)
     const [favorites, setFavorites] = useState<Array<string>>([]);
     
     useEffect(() => {
@@ -38,11 +39,13 @@ export const ProductsContent: FC<TProductsContentProps> = ({ productsSS }) => {
     //useEffect(() => , [])
 
     return <>
+        {products && <>
         <header style={{paddingLeft: "15px", marginBottom: "25px"}}>
             <h3>{category?.CatName}</h3>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque voluptate, veritatis exercitationem ipsam atque quos ut molestias id possimus dolores dicta nemo! Nemo, asperiores cumque. Optio quibusdam molestias reprehenderit explicabo?</p>
         </header>
-        <Filters />
+            <Filters />
+        </>}
         <div className="products-list__container">
             {products && <ProductsList products={products} favorites={favorites} cart={cart}/>}
             {products && <div className="products-list__paginator">
@@ -51,7 +54,7 @@ export const ProductsContent: FC<TProductsContentProps> = ({ productsSS }) => {
                 itemsTotalCount={totalNumberOfResults}
                 setCurrentPage={() => { }} />
             </div>}
-            <Preloader isVisible={status === "loading"} />
+            <Preloader isVisible={status === "content loading"} />   
         </div>
     </>
 }

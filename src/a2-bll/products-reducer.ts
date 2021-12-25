@@ -46,7 +46,7 @@ export const clearProducts = () => (
 export const getProducts = (path: string, queryCategories: Array<string>): AppThunk =>
     async (dispatch, getState) => {
     try {
-        dispatch(setAppStatus("loading"))
+        dispatch(setAppStatus("content loading"))
         const state = getState()
         const targetedCategory = getRequestedCategory(path, queryCategories, state.categories)
         const requiredParams: TGetProductsListRequestRequiredData = {

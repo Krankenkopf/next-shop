@@ -1,7 +1,11 @@
 
 import React, { FC, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { useAppSelector } from "../../../../a0-common/c3-hooks";
+import { TRequestStatus } from "../../../../a2-bll/app-reducer";
+import { selectAppStatus } from "../../../../a2-bll/selectors";
 import Button from "../../cp1-elements/el02-Button/Button";
+import { Preloader } from "../../cp1-elements/el11-Preloader/Preloader";
 import { TModal } from "../Modal/Modals";
 import { LoginForm } from "./Forms/LoginForm";
 
@@ -11,6 +15,7 @@ type TLoginProps = {
 }
 
 export const Login: FC<TLoginProps> = ({ revealModal }) => {
+    const status = useAppSelector<TRequestStatus>(selectAppStatus)
     const onButtonSignupClick = useCallback(() => {
         revealModal("signup")
     }, [])
@@ -29,6 +34,7 @@ export const Login: FC<TLoginProps> = ({ revealModal }) => {
                     Become a Member
                 </Button>
             </div>
+            {status === "auth loading" && <Preloader background="#ffccfc"/>}
         </div>
     )
 }

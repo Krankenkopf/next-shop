@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useAppSelector } from "../../../../a0-common/c3-hooks";
+import { TRequestStatus } from "../../../../a2-bll/app-reducer";
 import { TAuthState } from "../../../../a2-bll/auth-reducer";
+import { selectAppStatus } from "../../../../a2-bll/selectors";
 import { TState } from "../../../../a2-bll/store";
+import { Preloader } from "../../cp1-elements/el11-Preloader/Preloader";
 import { TModal, TRANSITION_TIME } from "../Modal/Modals";
 import { SignupForm } from "./Forms/SignupForm";
 
@@ -14,7 +18,8 @@ type TSignupProps = {
 
 export const Signup = ({revealModal, freezePrevious, closeModal}: TSignupProps) => {
     const { signupUserData, isSignupPassConfirmed, isLoggedIn } = useSelector<TState, TAuthState>((state) => state.auth)
-  
+    const status = useAppSelector<TRequestStatus>(selectAppStatus)
+    
     useEffect(() => {
         if (!isSignupPassConfirmed && signupUserData && !isLoggedIn) {
             // when user setted signupData to state
@@ -40,6 +45,7 @@ export const Signup = ({revealModal, freezePrevious, closeModal}: TSignupProps) 
                 <span>Already have an account? </span>
                 <a onClick={() => revealModal("login")}><strong>Sign In</strong></a>
             </div>
+            {status === "auth loading" && <Preloader background="#ffccfc" />}
         </div>
     )
 }

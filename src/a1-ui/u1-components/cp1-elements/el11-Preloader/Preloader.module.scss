@@ -2,21 +2,27 @@
     &__container {
         position: absolute;
         display: flex;
+        flex-direction: column;
+        align-items: center;
         top: 0;
         left: 0;
+        bottom: 0;
         width: 100%;
-        height: 100%;
-        background-color: rgba(200, 200, 200, 0.1);
+        //height: 100%;
         z-index: 20;
         & > * {
             position: relative;
             position: sticky;
             display: flex;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: 100%;
-            transform: translateY(-10px) rotate(-55deg);
+            margin-top: 20%;
+            margin-bottom: 20%;
+            top: 35%;
+            //left: 0;
+            width: 15vw;
+            height: 15vw;
+            //height: 100%;
+            //width: 100%;
+            transform: rotate(-55deg);
         }
     }   
 }
@@ -27,7 +33,7 @@
     width: 15vw;
     height: 15vw;
     margin: auto; 
-    animation: spin__slip  infinite 2s 1.5s running;
+    animation: spin__slip infinite 2s 0.5s running;
 }
 
 

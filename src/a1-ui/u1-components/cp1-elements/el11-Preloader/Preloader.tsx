@@ -5,13 +5,15 @@ import css from "./Preloader.module.scss"
 
 type TPreloaderProps = {
     isVisible?: boolean
+    background?: string
 }
 
-export const Preloader = ({isVisible = true}: TPreloaderProps) => {
-    return <div style={{visibility: isVisible ? "visible" : "hidden"}} className={css.preloader__container}>
+export const Preloader = ({ isVisible = true, background = "#c8c8c81a"}: TPreloaderProps) => {
+    return <div style={{ visibility: isVisible ? "visible" : "hidden", backgroundColor: background }}
+        className={css.preloader__container}>
         <div>
              <Icon name={'arrows-rotate'}
-            containerClassName={css.preloader__icon__container}
+            containerClassName={isVisible ? css.preloader__icon__container : ""}
             primaryColor={IconColor.OK}
             secondaryColor={IconColor.INFO}
             primaryOpacity="0.5"
