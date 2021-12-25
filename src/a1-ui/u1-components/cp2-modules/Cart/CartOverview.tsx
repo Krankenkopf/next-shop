@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useState, MouseEvent } from "react"
 import { TProduct } from "../../../../a0-common/c1-types/t1-instance/TProduct"
 import { useAppDispatch, useAppSelector } from "../../../../a0-common/c3-hooks"
 import { TAuthState } from "../../../../a2-bll/auth-reducer"
@@ -16,22 +16,19 @@ import { CCMastercardIcon } from "../../cp1-elements/el10-Icons/Additional/CCMas
 import { CCVisaElectronIcon } from "../../cp1-elements/el10-Icons/Additional/CCVisaElectronIcon"
 import { CCVisaIcon } from "../../cp1-elements/el10-Icons/Additional/CCVisaIcon"
 import { CCPayPalIcon } from "../../cp1-elements/el10-Icons/Additional/CCPayPalIcon"
-
-type TCartOverviewProps = {
-    
-}
+import { removeItem } from "../../../../a2-bll/cart-reducer"
+import { UnderConstructionSign } from "../../cp1-elements/el19-UnderConstruction/UnderConstructionSign"
 
 export const CartOverview = () => {
     const dispatch = useAppDispatch()
     const { userData } = useAppSelector<TAuthState>(state => state.auth)
-    //const items = useAppSelector<Array<TProduct>>(selectCartItems)
+    const items = useAppSelector<Array<TProduct>>(selectCartItems)
     const cartId = userData ? userData.id : ""
     // mock
     const [currencySign, setCurrencySign] = useState("£");
-    const items = [db.results[0], db.results[4], db.results[7], db.results[12], db.results[15]]
     // /mock
     const [isQuantityMenuVisible, setIsQuantityMenuVisible] = useState(false);
-    
+
     const getQuantityMenu = useCallback(() => ({
         toggle: <div className="span__decorated right" >
             <Icon name="chevron-right"
@@ -47,14 +44,21 @@ export const CartOverview = () => {
         menu: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(option => {
             return (
                 <li key={option} className={`${css.menuoption}`}>
-                    {option}     
+                    {option}
                 </li>
             )
         }),
     }), [])
     const orderValue = items.length
-        && items.map(product => product.price.value).reduce((acc, next) => acc + next)
+        && Math.round(items
+            .map(product => product.price.value) // [12.99, 3.99]
+            .reduce((acc, next) => acc + next) // [16.9799999] *facepalm*
+            * 100) / 100 // 1697.99999 => 16.98
     const deliveryCost = "FREE"
+
+    const onDeleteClick = useCallback((e: MouseEvent<HTMLElement | SVGSVGElement>) => {
+        dispatch(removeItem(e.currentTarget.id))
+    }, [dispatch])
     const mappedItems = items.map(product => {
         const totalPrice = product.price.value
         return <li key={product.code} className={css.item}>
@@ -66,12 +70,12 @@ export const CartOverview = () => {
                 <p>{product.price.formattedValue}</p>
                 <table>
                     <div>Art.no.:</div>
-                    <p>{product.articles[0].code}</p>  
+                    <p>{product.articles[0].code}</p>
                     <div>Color:</div>
                     <p>{product.articles[0].color.text}</p>
                     <div>Size:</div>
                     <p>XL</p>
-                    <div style={{ padding: "5px 0", marginBottom: "5px"}}>Quantity:</div>
+                    <div style={{ padding: "5px 0", marginBottom: "5px" }}>Quantity:</div>
                     <DropMenuOnClick toggle={getQuantityMenu().toggle}
                         menu={getQuantityMenu().menu}
                         className={css.quantityToggle}
@@ -80,7 +84,9 @@ export const CartOverview = () => {
                     <p>{`${currencySign}${totalPrice}`}</p>
                 </table>
                 <div className={css.delete}>
-                    <Icon name="trash-can" className="icon-trash-can"/>
+                    <Icon name="trash-can"
+                        id={product.code}
+                        className="icon-trash-can" onClick={onDeleteClick} />
                 </div>
             </div>
         </li>
@@ -89,13 +95,20 @@ export const CartOverview = () => {
         <>
             <header className={css.header}>
                 <h3>Shopping Cart</h3>
-                <p>{ cartId }</p>
+                <p>{cartId}</p>
             </header>
             <div className={css.cart}>
                 <section className={css.cartlist}>
-                    <ul>
-                        {mappedItems}
-                    </ul>
+                    {items.length > 0
+                        ? <ul>
+                            {mappedItems}
+                        </ul>
+                        : <div className={css.emptyCartPlaceholder}>
+                            <h4>YOUR SHOPPING BAG IS EMPTY!</h4>
+                            <p>Sign in to save or access already saved items in your shopping bag.</p>
+                            <button>Sign in</button>
+                        </div>}
+                    
                 </section>
                 <section className={css.sidebar__container}>
                     <aside className={css.sidebar}>
@@ -107,7 +120,7 @@ export const CartOverview = () => {
                             <p>Log in to use your member offers!</p>
                             <div className={css.button}>
                                 <Button variant="ok">LOG IN</Button>
-                            </div>   
+                            </div>
                         </div>
                         <hr style={{ width: "100%", margin: "0 0 10px" }} />
                         <OrderTotals
@@ -115,14 +128,24 @@ export const CartOverview = () => {
                             deliveryCost={deliveryCost}
                             currencySign={currencySign} />
                         <div className={css.button}>
-                            <Button variant="ok__alt">CONTINUE TO CHECKOUT</Button>
+                            <Button variant="ok__alt" disabled={!orderValue}>CONTINUE TO CHECKOUT</Button>
                         </div>
                         <p className={css.marketingMessage}>
-                            or&nbsp;
-                            <strong>
-                                4 easy payments of {currencySign}{(orderValue * 0.25).toFixed(2)}
-                            </strong>
-                            &nbsp;for members with&nbsp;
+                            {orderValue
+                                ? <>
+                                    or&nbsp;
+                                    <strong>
+                                        4 easy payments of {currencySign}{(orderValue * 0.25).toFixed(2)}
+                                    </strong>
+                                    &nbsp;for members with&nbsp;
+                                </>
+                                : <>
+                                    Shop now,&nbsp;
+                                    <strong>
+                                        pay in 30 days.&nbsp;
+                                    </strong>
+                                    For members with
+                                </>}
                             <HMClarnaIcon />
                         </p>
                         <div className={css.paymentModes}>
@@ -133,8 +156,8 @@ export const CartOverview = () => {
                                 </li>
                                 <li>
                                     <div className={css.paymentModes__icon}>
-                                        <BrandIcon name="cc-amex" title="Amex" color="#016cca"/>
-                                    </div> 
+                                        <BrandIcon name="cc-amex" title="Amex" color="#016cca" />
+                                    </div>
                                 </li>
                                 <li>
                                     <CCDiscoverIcon />
@@ -159,20 +182,27 @@ export const CartOverview = () => {
                         <p className={css.generalText}>
                             30-day returns. Read more about our
                             <button>
-                               return and refund policy 
-                            </button>   
+                                return and refund policy
+                            </button>
                         </p>
                         <div className={css.deliveryInfo__container}>
                             <div className={css.deliveryInfo}>
-                                <Icon name="truck" side="left"/>
+                                <Icon name="truck" side="left" />
                                 <span>Shipping & return options</span>
-                                <Icon name="chevron-right" side="right" className="icon__chevron-btn"/>
+                                <Icon name="chevron-right" side="right" className="icon__chevron-btn" />
                             </div>
                         </div>
                     </aside>
-
                 </section>
             </div>
-            
+            <div>
+                <header>You may also like</header>
+                <UnderConstructionSign />
+            </div>
+            <div>
+                <header>Recently viewed</header>
+                <UnderConstructionSign />
+            </div>
         </>
-    )}
+    )
+}

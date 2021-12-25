@@ -9,19 +9,25 @@ type TOrderTotalsProps = {
 
 export const OrderTotals: FC<TOrderTotalsProps> = ({orderValue, deliveryCost, currencySign}) => {
     return <table className={css.total}>
-        <div>
-            <span>Order value</span>
-            <span>{`${currencySign}${orderValue}`}</span>
-        </div>
-        <div>
-            <span>Delivery</span>
-            <span>{deliveryCost}</span>
-        </div>
+        {orderValue ? <>
+            <div>
+                <span>Order value</span>
+                <span>{`${currencySign}${orderValue}`}</span>
+            </div>
+            <div>
+                <span>Delivery</span>
+                <span>{deliveryCost}</span>
+            </div>
+        </>
+        : <div style={{height: "10px"}}></div>}
         <footer>
             <span><strong>Total</strong></span>
             <span>
                 <strong>
-                    {`${currencySign}${typeof deliveryCost === "number" ? orderValue + deliveryCost : orderValue}`}
+                    {orderValue
+                        ? `${currencySign}${typeof deliveryCost === "number" ? orderValue + deliveryCost : orderValue}`
+                        : `${currencySign}0.00`}
+                    
                 </strong>
             </span>
         </footer>

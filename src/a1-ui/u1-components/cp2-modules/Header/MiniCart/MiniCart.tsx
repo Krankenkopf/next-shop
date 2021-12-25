@@ -40,7 +40,10 @@ export const MiniCart: FC<TMiniCartProps> = ({ items }) => {
         setStage((prev) => prev + direction)
     }
     const orderValue = items.length
-        && items.map(product => product.price.value).reduce((acc, next) => acc + next)
+        && Math.round(items
+            .map(product => product.price.value)
+            .reduce((acc, next) => acc + next)
+            * 100) / 100
     const deliveryCost = 0
     return (
         <div className={css.minicart}>

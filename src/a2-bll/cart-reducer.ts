@@ -1,8 +1,14 @@
 import { TProduct } from "../a0-common/c1-types/t1-instance/TProduct"
+import db from "../../db.json"
+
+const items = [db.results[0], db.results[4], db.results[7], db.results[12], db.results[15]]
 
 const initialState = {
-    products: [] as Array<TProduct>,
+    //products: [] as Array<TProduct>,
+    products: items as Array<TProduct>,
 }
+
+
 
 export const cartReducer =
     (state: TCartState = initialState, action: TCartActions): TCartState => {

@@ -105,6 +105,23 @@
     }
 }
 
+.emptyCartPlaceholder {
+    text-align: left;
+    h4 {
+        margin-bottom: 10px;
+    }
+    p {
+        margin-bottom: 20px;
+    }
+    button {
+        cursor: pointer;
+        text-decoration: underline;
+        &:hover {
+            color: #5555ff
+        }
+    }
+}
+
 .sidebar__container {
     position: relative;
     .sidebar {
