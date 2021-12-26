@@ -7,6 +7,7 @@ import { selectAppStatus } from "../../../../a2-bll/selectors";
 import { TState } from "../../../../a2-bll/store";
 import { Preloader } from "../../cp1-elements/el11-Preloader/Preloader";
 import { TModal, TRANSITION_TIME } from "../Modal/Modals";
+import { ErrorMessage } from "./ErrorMessage";
 import { SignupForm } from "./Forms/SignupForm";
 
 
@@ -27,10 +28,8 @@ export const Signup = ({revealModal, freezePrevious, closeModal}: TSignupProps) 
             revealModal("signupPassUnconfirmed")
         }
         if (isLoggedIn) {
-            console.log(signupUserData, isSignupPassConfirmed, isLoggedIn)
             closeModal("signup")  
         }
-
     }, [signupUserData, isSignupPassConfirmed, isLoggedIn])
     return (
         <div className="signup">
@@ -46,6 +45,7 @@ export const Signup = ({revealModal, freezePrevious, closeModal}: TSignupProps) 
                 <a onClick={() => revealModal("login")}><strong>Sign In</strong></a>
             </div>
             {status === "auth loading" && <Preloader background="#ffccfc" />}
+            {status === "auth failed" && <ErrorMessage />}
         </div>
     )
 }

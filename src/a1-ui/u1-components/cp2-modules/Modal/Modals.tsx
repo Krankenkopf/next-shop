@@ -6,8 +6,6 @@ import css from "./Modal.module.scss"
 import { Popup } from "./Popup"
 import { SignupPassUnconfirmed } from "../AuthModules/SignupPassUnconfirmed";
 import { TAuthState } from "../../../../a2-bll/auth-reducer";
-import { TState } from "../../../../a2-bll/store";
-import { useSelector } from "react-redux";
 import { PassRecovery } from "../AuthModules/PassRecovery";
 import { SideMenu } from "./SideMenu";
 import { FiltersMenu } from "../Filters/FiltersMenu";

@@ -7,6 +7,7 @@ import { selectAppStatus } from "../../../../a2-bll/selectors";
 import Button from "../../cp1-elements/el02-Button/Button";
 import { Preloader } from "../../cp1-elements/el11-Preloader/Preloader";
 import { TModal } from "../Modal/Modals";
+import { ErrorMessage } from "./ErrorMessage";
 import { LoginForm } from "./Forms/LoginForm";
 
 
@@ -34,7 +35,8 @@ export const Login: FC<TLoginProps> = ({ revealModal }) => {
                     Become a Member
                 </Button>
             </div>
-            {status === "auth loading" && <Preloader background="#ffccfc"/>}
+            {status === "auth loading" && <Preloader background="#ffccfc" />}
+            {status === "auth failed" && <ErrorMessage />}
         </div>
     )
 }
