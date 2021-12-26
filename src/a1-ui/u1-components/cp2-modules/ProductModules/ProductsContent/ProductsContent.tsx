@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
 import React, { FC, useEffect, useState } from "react"
 import { Nullable } from "../../../../../a0-common/c1-types/t1-instance"
+import { TCheckedProduct } from "../../../../../a0-common/c1-types/t1-instance/TCheckedProduct"
 import { TProduct } from "../../../../../a0-common/c1-types/t1-instance/TProduct"
 import { useAppDispatch, useAppSelector } from "../../../../../a0-common/c3-hooks"
 import { TRequestStatus } from "../../../../../a2-bll/app-reducer"
@@ -22,7 +23,7 @@ export const ProductsContent: FC<TProductsContentProps> = ({ productsSS }) => {
     const status = useAppSelector<TRequestStatus>(selectAppStatus)
     const { currentPage, category, pageSize, numberOfPages, totalNumberOfResults } = useAppSelector<TNavigationState>(state => state.navigation)
     const products = useAppSelector<Nullable<Array<TProduct>>>(state => state.products.products)
-    const cart = useAppSelector<Array<TProduct>>(selectCartItems).map((product) => product.code)
+    const cart = useAppSelector<Array<TCheckedProduct>>(selectCartItems).map((product) => product.code)
     const [favorites, setFavorites] = useState<Array<string>>([]);
     
     useEffect(() => {

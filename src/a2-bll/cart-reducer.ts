@@ -1,60 +1,125 @@
+import { TCheckedProduct } from './../a0-common/c1-types/t1-instance/TCheckedProduct'
 import { TProduct } from "../a0-common/c1-types/t1-instance/TProduct"
 import db from "../../db.json"
-
-const items = [db.results[0], db.results[4], db.results[7], db.results[12], db.results[15]]
+import { AppThunk } from "./store"
+import { setAppStatus } from "./app-reducer"
+import { handleServerNetworkError } from "../a0-common/c4-utils/state/errorHandler"
+import { userAPI } from '../a3-dal/krank/user-api'
 
 const initialState = {
-    //products: [] as Array<TProduct>,
-    products: items as Array<TProduct>,
+    products: [] as Array<TCheckedProduct>,
+    recentlyRemoved: [] as Array<TCheckedProduct>,
 }
 
 
 
 export const cartReducer =
     (state: TCartState = initialState, action: TCartActions): TCartState => {
-switch (action.type) {
-    case cartActionVariables.ADD_ITEM:
-        return {
-            ...state,
-            products: [...state.products, action.payload.product]
+        switch (action.type) {
+            case cartActionVariables.SET_ITEMS:
+                return {
+                    ...state,
+                    ...action.payload
+                }
+            case cartActionVariables.ADD_ITEM:
+                return {
+                    ...state,
+                    products: [...state.products, action.payload.product]
+                }
+            case cartActionVariables.REMOVE_ITEM:
+
+                return {
+                    ...state,
+                    products: state.products.filter(product => product.code !== action.payload.product.code),
+                    recentlyRemoved: [ ...state.recentlyRemoved, action.payload.product]
+                }
+            case cartActionVariables.CLEAR_CART:
+                return {
+                    ...state,
+                    products: [],
+                    recentlyRemoved: [...state.recentlyRemoved, ...state.products]
+                }
+            default: return state
         }
-    case cartActionVariables.REMOVE_ITEM:
-        return {
-            ...state,
-            products: state.products.filter(product => product.code !== action.payload.code)
-        }
-    case cartActionVariables.CLEAR_CART:
-        return {
-            ...initialState
-        }
-    default: return state
     }
-}
 // actions
-export const addItem = (product: TProduct) => (
-{
-    type: cartActionVariables.ADD_ITEM,
-    payload: {product}
+export const setItems = (products: Array<TCheckedProduct>) => (
+    {
+        type: cartActionVariables.SET_ITEMS,
+        payload: { products }
     } as const)
-export const removeItem = (code: string) => (
+
+export const addItem = (product: TCheckedProduct) => (
+    {
+        type: cartActionVariables.ADD_ITEM,
+        payload: { product }
+    } as const)
+export const removeItem = (product: TCheckedProduct) => (
     {
         type: cartActionVariables.REMOVE_ITEM,
-        payload: { code }
+        payload: { product }
     } as const)
 export const clearCart = () => (
     {
         type: cartActionVariables.CLEAR_CART,
     } as const)
 
+//thunk
+
+export const getCartItems = (): AppThunk => async dispatch => {
+    try {
+        dispatch(setAppStatus("user data loading"))
+        const response = await userAPI.getCartItems()
+        dispatch(setItems(response.data))
+        dispatch(setAppStatus('succeeded'))
+    } catch (e) {
+        handleServerNetworkError(e, "user data", dispatch)
+    }
+}
+
+export const addCartItem = (product: TProduct): AppThunk => async dispatch => {
+    try {
+        dispatch(setAppStatus("user data loading"))
+        const productDTO = {
+            code: product.articles[0].code,
+            name: product.name,
+            color: product.articles[0].color.text,
+            size: "S",
+            quantity: 1,
+            price: product.price.value,
+            imgSrc: product.images[0].url,
+            imgSrcAlt: product.articles[0].normalPicture[0].url,
+        }
+        const response = await userAPI.addCartItem(productDTO)
+        dispatch(addItem(response.data))
+        dispatch(setAppStatus('succeeded'))
+    } catch (e) {
+        handleServerNetworkError(e, "user data", dispatch)
+    }
+}
+
+export const deleteCartItem = (code: string): AppThunk => async dispatch => {
+    try {
+        dispatch(setAppStatus("user data loading"))
+        const response = await userAPI.deleteCartItem(code)
+        dispatch(removeItem(response.data))
+        dispatch(setAppStatus('succeeded'))
+    } catch (e) {
+        handleServerNetworkError(e, "user data", dispatch)
+    }
+}
+
 // types
 export type TCartState = typeof initialState
 export type TCartActions =
+    ReturnType<typeof setItems> |
     ReturnType<typeof addItem> |
     ReturnType<typeof removeItem> |
     ReturnType<typeof clearCart>
 
 // variables
 const cartActionVariables = {
+    SET_ITEMS: "CART/SET-ITEMS" as const,
     ADD_ITEM: "CART/ADD-ITEM" as const,
     REMOVE_ITEM: "CART/REMOVE-ITEM" as const,
     CLEAR_CART: "CART/CLEAR-CART" as const,

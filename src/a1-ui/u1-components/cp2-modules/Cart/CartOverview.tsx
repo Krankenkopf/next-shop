@@ -16,13 +16,14 @@ import { CCMastercardIcon } from "../../cp1-elements/el10-Icons/Additional/CCMas
 import { CCVisaElectronIcon } from "../../cp1-elements/el10-Icons/Additional/CCVisaElectronIcon"
 import { CCVisaIcon } from "../../cp1-elements/el10-Icons/Additional/CCVisaIcon"
 import { CCPayPalIcon } from "../../cp1-elements/el10-Icons/Additional/CCPayPalIcon"
-import { removeItem } from "../../../../a2-bll/cart-reducer"
+import { deleteCartItem } from "../../../../a2-bll/cart-reducer"
 import { UnderConstructionSign } from "../../cp1-elements/el19-UnderConstruction/UnderConstructionSign"
+import { TCheckedProduct } from "../../../../a0-common/c1-types/t1-instance/TCheckedProduct"
 
 export const CartOverview = () => {
     const dispatch = useAppDispatch()
     const { userData } = useAppSelector<TAuthState>(state => state.auth)
-    const items = useAppSelector<Array<TProduct>>(selectCartItems)
+    const items = useAppSelector<Array<TCheckedProduct>>(selectCartItems)
     const cartId = userData ? userData.id : ""
     // mock
     const [currencySign, setCurrencySign] = useState("£");
@@ -52,28 +53,28 @@ export const CartOverview = () => {
     }), [])
     const orderValue = items.length
         && Math.round(items
-            .map(product => product.price.value) // [12.99, 3.99]
+            .map(product => product.price) // [12.99, 3.99]
             .reduce((acc, next) => acc + next) // [16.9799999] *facepalm*
             * 100) / 100 // 1697.99999 => 16.98
     const deliveryCost = "FREE"
 
     const onDeleteClick = useCallback((e: MouseEvent<HTMLElement | SVGSVGElement>) => {
-        dispatch(removeItem(e.currentTarget.id))
+        dispatch(deleteCartItem((e.currentTarget.id)))
     }, [dispatch])
     const mappedItems = items.map(product => {
-        const totalPrice = product.price.value
+        const totalPrice = product.price
         return <li key={product.code} className={css.item}>
             <figure className={css.item__imgContainer}>
-                <img src={product.images[0].url} alt="item" />
+                <img src={product.imgSrc} alt="item" />
             </figure>
             <div className={css.item__desc}>
                 <h4>{product.name}</h4>
-                <p>{product.price.formattedValue}</p>
+                <p>{product.price}</p>
                 <div className={css.table}>
                     <div>Art.no.:</div>
-                    <p>{product.articles[0].code}</p>
+                    <p>{product.code}</p>
                     <div>Color:</div>
-                    <p>{product.articles[0].color.text}</p>
+                    <p>{product.color}</p>
                     <div>Size:</div>
                     <p>XL</p>
                     <div style={{ padding: "5px 0", marginBottom: "5px" }}>Quantity:</div>

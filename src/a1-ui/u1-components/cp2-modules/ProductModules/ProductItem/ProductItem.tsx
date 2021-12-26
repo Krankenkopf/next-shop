@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import React, { FC, MouseEvent, useState } from "react"
 import { Marker, SellingAttribute, TProduct } from "../../../../../a0-common/c1-types/t1-instance/TProduct"
 import { useAppDispatch } from "../../../../../a0-common/c3-hooks"
-import { addItem, removeItem } from "../../../../../a2-bll/cart-reducer"
+import { addCartItem, deleteCartItem } from "../../../../../a2-bll/cart-reducer"
 import Button from "../../../cp1-elements/el02-Button/Button"
 import { Icon } from "../../../cp1-elements/el10-Icons/Icon"
 import css from "./ProductItem.module.scss"
@@ -42,8 +42,8 @@ export const ProductItem: FC<TProductItems> = (props) => {
     }
     const onCartButtonClick = () => {
         isInCart
-            ? dispatch(removeItem(product.code))
-            : dispatch(addItem(product))
+            ? dispatch(deleteCartItem((code)))
+            : dispatch(addCartItem(product))
     }
     const colorVariants = rgbColors && rgbColors.map((color: string, i: number) => {
         return (

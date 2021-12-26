@@ -2,13 +2,12 @@ import React, { FC, useState } from "react"
 import Button from "../../../cp1-elements/el02-Button/Button"
 import { Icon } from "../../../cp1-elements/el10-Icons/Icon"
 import css from "./MiniCart.module.scss"
-import item from "../../../../../../public/images/carousel/1008.png"
 import Link from "next/link"
-import { TProduct } from "../../../../../a0-common/c1-types/t1-instance/TProduct"
 import { OrderTotals } from "../../Cart/OrderTotals"
+import { TCheckedProduct } from "../../../../../a0-common/c1-types/t1-instance/TCheckedProduct"
 
 type TMiniCartProps = {
-    items: Array<TProduct>
+    items: Array<TCheckedProduct>
 }
 
 export const MiniCart: FC<TMiniCartProps> = ({ items }) => {
@@ -16,16 +15,16 @@ export const MiniCart: FC<TMiniCartProps> = ({ items }) => {
         return (
             <li key={product.code} className={css.minicart__item}>
                 <figure className={css.minicart__item__imgContainer}>
-                    <img src={product.images[0].url} alt="item" />
+                    <img src={product.imgSrc} alt="item" />
                 </figure>
                 <div className={css.minicart__item__desc}>
                     <h4>{product.name}</h4>
-                    <p>{product.price.formattedValue}</p>
+                    <p>{product.price}</p>
                     <table>
                         <div>Quantity:</div>
                         <div>1</div>
                         <div>Color:</div>
-                        <div>{product.articles[0].color.text}</div>
+                        <div>{product.color}</div>
                         <div>Size:</div>
                         <div>XL</div>
                     </table>
@@ -41,7 +40,7 @@ export const MiniCart: FC<TMiniCartProps> = ({ items }) => {
     }
     const orderValue = items.length
         && Math.round(items
-            .map(product => product.price.value)
+            .map(product => product.price)
             .reduce((acc, next) => acc + next)
             * 100) / 100
     const deliveryCost = 0
