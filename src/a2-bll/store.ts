@@ -1,3 +1,4 @@
+import { layoutReducer, TLayoutActions, TLayoutState } from './layout-reducer'
 import { sortReducer, TSortActions, TSortState } from './sort-reducer'
 import { TProductsActions, TProductsState, productsReducer } from './products-reducer'
 import { cartReducer, TCartActions, TCartState } from './cart-reducer'
@@ -39,6 +40,7 @@ const rootReducer = (state: TState | undefined, action: AnyAction): TState => {
                 cart: cartReducer,
                 categories: categoriesReducer,
                 filters: filtersReducer,
+                layout: layoutReducer,
                 navigation: navigationReducer,
                 products: productsReducer,
                 product: productReducer,
@@ -64,6 +66,7 @@ export type TState = {
     cart: TCartState
     categories: TCategoriesState
     filters: TFiltersState
+    layout: TLayoutState
     navigation: TNavigationState
     products: TProductsState
     product: TProductState
@@ -72,11 +75,6 @@ export type TState = {
 }
 export type TActions = TAppActions
     | TAuthActions | TCartActions | TCategoriesActions
-    | TFiltersActions | TNavigationActions
+    | TFiltersActions | TLayoutActions | TNavigationActions
     | TProductsActions | TProductActions
     | TRegionsActions  | TSortActions
-   
-    
-    
-
-
