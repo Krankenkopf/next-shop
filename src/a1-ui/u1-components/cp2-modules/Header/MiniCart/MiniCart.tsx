@@ -21,12 +21,20 @@ export const MiniCart: FC<TMiniCartProps> = ({ items }) => {
                     <h4>{product.name}</h4>
                     <p>{product.price}</p>
                     <table>
-                        <div>Quantity:</div>
-                        <div>1</div>
-                        <div>Color:</div>
-                        <div>{product.color}</div>
-                        <div>Size:</div>
-                        <div>XL</div>
+                        <tbody>
+                            <tr>
+                                <td>Quantity:</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>Color:</td>
+                                <td>{product.color}</td>
+                            </tr>
+                            <tr>
+                                <td>Size:</td>
+                                <td>XL</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </li>
@@ -58,7 +66,7 @@ export const MiniCart: FC<TMiniCartProps> = ({ items }) => {
                             />
                         </div>}
                         <div className={css.carousel__view}>
-                            <div style={{ transform: `translateY(${-100 * (+stage)}px)` }}
+                            <div style={{ transform: `translateY(${-7.2 * (+stage)}em)` }}
                                 className={css.minicart__items} >
                                 <ul>
                                     {mappedItems}
