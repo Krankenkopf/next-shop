@@ -30,10 +30,20 @@ $primary: #292825;
 
 .campaign {
 	position: relative;
-	& div:first-child {
-		min-height: 300px;
+	.imgBlankcover {
+		position: relative;
+		top: 0;
+		width: 100%;
+		padding-bottom: 100%/3*2;
+		background-color: #666;
 	}
-	& div:nth-child(2n) {
+	figure {
+		position: absolute;
+		top: 0;
+		height: 100%;
+		width: 100%;
+	}
+	.imgFog {
 		position: absolute;
 		top: 0;
 		height: 100%;
@@ -41,7 +51,7 @@ $primary: #292825;
 		background-color: rgba(255, 240, 240, 0.5);
 		transition: all .5s ease-out;
 	}
-	& a:hover div:nth-child(2n) {
+	& a:hover .imgFog {
 		background-color: transparent;
 		&::after {
 			bottom: 0;
@@ -60,8 +70,8 @@ $primary: #292825;
 	}
 	
 	a:hover h2, a:hover button, a:hover p{
-		color: $softRed;
-		border-color: $softRed;
+		color: #fff;
+		border-color: #fff;
 	}
 	.campaign__block {
 		position: absolute;
@@ -87,7 +97,7 @@ $primary: #292825;
 		}
 		div {
 			height: 40px;
-			margin-bottom: 30px;
+			margin-bottom: 5%;
 		}
 	}
 }

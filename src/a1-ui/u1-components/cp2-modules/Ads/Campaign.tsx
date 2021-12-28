@@ -15,17 +15,18 @@ export const Campaign: FC<TCampaignProps> = React.memo(({link = "/", title, text
     return <section className={css.campaign}>
         <Link href={link}>
             <a>
-                <div>
+                <div className={css.imgBlankcover}></div>
+                <figure>
                     <img src={img.src} alt="campaign01"></img>
-                </div>
-                <div></div>
-                <div className={css.campaign__block}>
+                </figure>
+                <div className={css.imgFog}></div>
+                <figcaption className={css.campaign__block}>
                     <h2>{title}</h2>
                     <p>{text}</p>
                     <div>
                         <Button>SHOP NOW!</Button>
                     </div>
-                </div>
+                </figcaption>
             </a>
         </Link>
     </section>
