@@ -10,7 +10,7 @@ type TBrandIconProps = TDefaulSVGProps & {
     className?: string // for colors
     containerClassName?: string // for transitions, rotating etc
     side?: "right" | "left"
-    size?: "normal" | "full" //normal is full divided by sqrt(2) for proper rotating anims and/or nesting
+    size?: "reduced" | "full" | "max" //reduced is full divided by sqrt(2) for proper rotating anims and/or nesting, max is full*1.05
     rotate?: 1 | 2 | 3 | 4 // 0 90 180 270 deg
     active?: boolean // for icon button variant
     color?: string
@@ -23,7 +23,7 @@ export const BrandIcon: FC<TBrandIconProps> = ({
     className,
     containerClassName,
     side = "left",
-    size = "normal",
+    size = "reduced",
     rotate = 1,
     active = true,
     color,

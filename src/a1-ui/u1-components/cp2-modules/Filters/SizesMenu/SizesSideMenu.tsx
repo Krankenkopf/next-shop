@@ -53,7 +53,7 @@ export const SizesSideMenu: FC<TSizesSideMenuProps> = ({sizes, selected, onOptio
             <li onClick={() => {onMenuToggle(title.code)}} className={gcss.menuTitle}>
                 <div className="span__decorated right" >
                     <Icon name="chevron-right"
-                        size="full"
+                    size="max"
                         side="right"
                         className={gcss.filter__btn__icon}
                         containerClassName={gcss.filter__btn} />

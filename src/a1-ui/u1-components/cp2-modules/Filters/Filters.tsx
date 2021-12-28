@@ -15,10 +15,7 @@ import { SizesMenu } from "./SizesMenu/SizesMenu"
 import css from "./Filters.module.scss"
 import { DefaultFilterMenu } from "./DefaultFilterMenu/DefaultFilterMenu"
 import { Toggle } from "../../cp1-elements/el06-Toggle/Toggle"
-
-type TFiltersProps = {
-
-}
+import { setProductsFirstImage, setProductsLayout, TLayoutState, TProductsLayout } from "../../../../a2-bll/layout-reducer"
 
 type TMenuFlags = {
     sort: boolean
@@ -29,13 +26,12 @@ type TMenuFlags = {
     fits: boolean
 }
 
-type TLayout = "list1" | "grid2" | "grid3" | "grid4"
-
 export const Filters = () => {
     const dispatch = useAppDispatch()
     // filters: sizes, collection, concepts, colorWithNames, contexts, fits, functions, qualities
     const { current, facets } = useAppSelector<TFiltersState>(selectFilters)
 
+    const {productsLayout, productsFirstImage} = useAppSelector<TLayoutState>(state => state.layout)
     const { sortBy, sortValues } = useAppSelector<TSortState>(selectSort)
     const totalCount = useAppSelector<number>(state => state.navigation.totalNumberOfResults)
 
@@ -56,15 +52,14 @@ export const Filters = () => {
     }
 
     //view toggler
-    const [view, setView] = useState<"Model" | "Product">("Model");
     const onViewToggle = (view: "Model" | "Product") => {
-        setView(view)
+        dispatch(setProductsFirstImage(view))
     }
 
     //layout toggler
-    const [layout, setLayout] = useState<TLayout>("grid3")
-    const onLayoutToggle = (layout: TLayout) => {
-        setLayout(layout)
+    //const [layout, setLayout] = useState<TProductsLayout>("grid3")
+    const onLayoutToggle = (layout: TProductsLayout) => {
+        dispatch(setProductsLayout(layout))
     }
 
     //sortDropmenu =======================================================================================
@@ -74,7 +69,7 @@ export const Filters = () => {
     const getSortMenu = useCallback(() => ({
         toggle: <div className="span__decorated right">
             <Icon name="chevron-right"
-                size="full"
+                size="max"
                 side="right"
                 rotate={isMenuVisible.sort ? 4 : 2}
                 className={css.filter__btn__icon}
@@ -89,7 +84,7 @@ export const Filters = () => {
             className={css.radio}
             onChangeOption={onSortOptionChange}>
             <Icon name="circle"
-                size="full"
+                size="max"
                 containerClassName={css.radioSplash__container}
                 className={css.radioSplash} />
         </Radio>
@@ -103,7 +98,7 @@ export const Filters = () => {
     const getColorMenu = useCallback(() => ({
         toggle: <div className="span__decorated right" >
             <Icon name="chevron-right"
-                size="full"
+                size="max"
                 side="right"
                 rotate={isMenuVisible.color ? 4 : 2}
                 className={css.filter__btn__icon}
@@ -128,7 +123,7 @@ export const Filters = () => {
     const getSustainMenu = useCallback(() => ({
         toggle: <div className="span__decorated right" >
             <Icon name="chevron-right"
-                size="full"
+                size="max"
                 side="right"
                 rotate={isMenuVisible.sustain ? 4 : 2}
                 className={css.filter__btn__icon}
@@ -162,7 +157,7 @@ export const Filters = () => {
     const getSizesMenu = useCallback(() => ({
         toggle: <div className="span__decorated right" >
             <Icon name="chevron-right"
-                size="full"
+                size="max"
                 side="right"
                 rotate={isMenuVisible.size ? 4 : 2}
                 className={css.filter__btn__icon}
@@ -184,7 +179,7 @@ export const Filters = () => {
     const getPatternsMenu = useCallback(() => ({
         toggle: <div className="span__decorated right" >
             <Icon name="chevron-right"
-                size="full"
+                size="max"
                 side="right"
                 rotate={isMenuVisible.pattern ? 4 : 2}
                 className={css.filter__btn__icon}
@@ -217,7 +212,7 @@ export const Filters = () => {
     const getFitsMenu = useCallback(() => ({
         toggle: <div className="span__decorated right" >
             <Icon name="chevron-right"
-                size="full"
+                size="max"
                 side="right"
                 rotate={isMenuVisible.fits ? 4 : 2}
                 className={css.filter__btn__icon}
@@ -298,7 +293,7 @@ export const Filters = () => {
                             <div className="span__decorated right"
                                 onClick={onFiltersMenuClick}>
                                 <Icon name="filters"
-                                    size="full"
+                                    size="max"
                                     side="right"
                                     className={css.filter__btn__icon} />
                                 <span>{FilterNames.ALLFILTERS}</span>
@@ -320,13 +315,13 @@ export const Filters = () => {
                         <Toggle options={["Model", "Product"]}
                             className={css.toggle}
                             frameClassName={css.toggle__frame__view}
-                            value={view}
+                            value={productsFirstImage}
                             onChangeOption={onViewToggle} />
                     </fieldset>
                     <fieldset className={css.block}>
                         <legend>Toggle Image Size</legend>
                             <Toggle options={["grid2", "grid3", "grid4", "list1"]}
-                                value={layout}
+                                value={productsLayout}
                                 className={css.layout__toggle}
                                 frameClassName={css.toggle__frame__layout}
                                 onChangeOption={onLayoutToggle}
@@ -334,25 +329,25 @@ export const Filters = () => {
                                     <div className="span__decorated right" >
                                         <Icon name="grid-2"
                                             side="right"
-                                            className={`icon__layout ${layout === "grid2" && "active"}`} />
+                                            className={`icon__layout ${productsLayout === "grid2" && "active"}`} />
                                         <span></span>
                                     </div>,
                                     <div className="span__decorated right" >
                                         <Icon name="grid"
                                             side="right"
-                                            className={`icon__layout ${layout === "grid3" && "active"}`} />
+                                            className={`icon__layout ${productsLayout === "grid3" && "active"}`} />
                                         <span></span>
                                     </div>,
                                     <div className="span__decorated right" >
                                         <Icon name="grid-4"
                                             side="right"
-                                            className={`icon__layout ${layout === "grid4" && "active"}`} />
+                                            className={`icon__layout ${productsLayout === "grid4" && "active"}`} />
                                         <span></span>
                                     </div>,
                                     <div className="span__decorated right" >
                                         <Icon name="list"
                                             side="right"
-                                            className={`icon__layout ${layout === "list1" && "active"}`} />
+                                            className={`icon__layout ${productsLayout === "list1" && "active"}`} />
                                         <span></span>
                                     </div>,
                                 ]} />

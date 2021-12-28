@@ -43,7 +43,7 @@ export const FiltersMenu = () => {
         <li key={title.code} onClick={() => onMenuToggle(title.code)} className={css.menuTitle}>
             <div className="span__decorated right" >
                 <Icon name="chevron-right"
-                    size="full"
+                    size="max"
                     side="right"
                     className={css.filter__btn__icon}
                     containerClassName={css.filter__btn} />
@@ -72,7 +72,7 @@ export const FiltersMenu = () => {
                     className={css.radio}
                     onChangeOption={onSortOptionChange}>
                     <Icon name="circle"
-                        size="full"
+                        size="max"
                         containerClassName={css.radioSplash__container}
                         className={css.radioSplash} />
                 </Radio>

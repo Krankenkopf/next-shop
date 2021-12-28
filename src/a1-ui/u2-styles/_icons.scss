@@ -5,9 +5,6 @@
 		//display: flex;
 		//flex-direction: column;
 		//align-items: center;
-		.icon.full {
-			transform: scale(1.05);
-		}
 		&._left {
 			left: 0;	
 		}
@@ -31,10 +28,15 @@
 .icon {
 	position: relative;
 	margin: auto;
-	height: calc(100% / 1.415); //sqrt(2) =)
-	width: calc(100% / 1.415);
+	height: 100%;
+	width: 100%;
 	z-index: 2;
-	&.full {
+	&.reduced {
+		height: calc(100% / 1.415); //sqrt(2) =)
+		width: calc(100% / 1.415);
+	}
+	&.max {
+		transform: scale(1.05);
 		height: 100%;
 		width: 100%;
 	}

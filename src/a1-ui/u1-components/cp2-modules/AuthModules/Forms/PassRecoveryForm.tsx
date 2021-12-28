@@ -77,9 +77,9 @@ export const PassRecoveryForm: FC<TPassRecoveryFormProps> = ({revealModal, close
                         : <Icon name="envelope" primaryOpacity="1" secondaryOpacity="1" primaryColor={IconColor.INITIAL} secondaryColor={IconColor.INITIAL} />
                     : null}
                 {errors.email && helperState.email && <Icon name="envelope" primaryOpacity="0.5" secondaryOpacity="0.5" />}
-                {errors.email && helperState.email && <Icon name="circle" size="full" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />}
+                {errors.email && helperState.email && <Icon name="circle" size="max" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />}
                 {errors.email && helperState.email && <Icon name="exclamation" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />}
-                {(!errors.email && dirtyFields.email) && <Icon name="check" side="right" size="full" primaryColor={IconColor.OK} secondaryColor={IconColor.OK} />}
+                {(!errors.email && dirtyFields.email) && <Icon name="check" side="right" size="max" primaryColor={IconColor.OK} secondaryColor={IconColor.OK} />}
                 <div className="field__input">
                     <Input {...register("email", { value: "test@test.com" })}
                         onChangeFocus={(state) => { changeFocusHandler("email", state) }}
