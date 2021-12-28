@@ -5,6 +5,7 @@ import { TCheckedProduct } from "../../../../../a0-common/c1-types/t1-instance/T
 import { TProduct } from "../../../../../a0-common/c1-types/t1-instance/TProduct"
 import { useAppDispatch, useAppSelector } from "../../../../../a0-common/c3-hooks"
 import { TRequestStatus } from "../../../../../a2-bll/app-reducer"
+import { TLayoutState } from "../../../../../a2-bll/layout-reducer"
 import { TNavigationState } from "../../../../../a2-bll/navigation-reducer"
 import { clearProducts, getProducts } from "../../../../../a2-bll/products-reducer"
 import { selectAppStatus, selectCartItems } from "../../../../../a2-bll/selectors"
@@ -22,6 +23,7 @@ export const ProductsContent: FC<TProductsContentProps> = ({ productsSS }) => {
     const { pathname, query, asPath } = useRouter()
     const status = useAppSelector<TRequestStatus>(selectAppStatus)
     const { currentPage, category, pageSize, numberOfPages, totalNumberOfResults } = useAppSelector<TNavigationState>(state => state.navigation)
+    const { device, productsLayout, productsFirstImage } = useAppSelector<TLayoutState>(state => state.layout)
     const products = useAppSelector<Nullable<Array<TProduct>>>(state => state.products.products)
     const cart = useAppSelector<Array<TCheckedProduct>>(selectCartItems).map((product) => product.code)
     const [favorites, setFavorites] = useState<Array<string>>([]);
@@ -48,7 +50,7 @@ export const ProductsContent: FC<TProductsContentProps> = ({ productsSS }) => {
             <Filters />
         </>}
         <div className="products-list__container">
-            {products && <ProductsList products={products} favorites={favorites} cart={cart}/>}
+            {products && <ProductsList products={products} favorites={favorites} cart={cart} device={device} layout={productsLayout} firstImg={productsFirstImage}/>}
             {products && <div className="products-list__paginator">
             <Paginator currentPage={currentPage+1}
                 itemsPerPage={pageSize}

@@ -61,6 +61,7 @@ main {
   // align-items: center;
   flex-direction: column;
   &.wrapper__products {
+    margin: auto;
     flex-direction: row;
   }
   &._loaded {

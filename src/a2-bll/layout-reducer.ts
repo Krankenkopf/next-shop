@@ -1,11 +1,11 @@
-export type TProductsLayout = "grid2" | "grid3" | "grid4" | "list"
+export type TProductsLayout = "list1" | "grid2" | "grid3" | "grid4"
 export type TDevice = "mobile" | "tablet" | "laptop" | "desktop"
 
 const initialState = {
     device: "desktop" as TDevice,
     theme: "light" as "light" | "dark",
     productsLayout: "grid3" as TProductsLayout,
-    productsFirstImage: "model" as "model" | "product",
+    productsFirstImage: "Model" as "Model" | "Product",
 }
 
 export const layoutReducer =
@@ -34,7 +34,7 @@ export const setProductsLayout = (productsLayout: TProductsLayout) => (
     payload: {productsLayout}
     } as const)
 
-export const setProductsFirstImage = (productsFirstImage: "model" | "product") => (
+export const setProductsFirstImage = (productsFirstImage: "Model" | "Product") => (
     {
         type: layoutActionVariables.SET_PRODUCTS_FIRST_IMAGE,
         payload: { productsFirstImage }

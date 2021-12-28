@@ -1,8 +1,9 @@
+$md4: 479.98;
 .card__cell {
-    width: calc(100% / 3 - 0.01px);
+    //width: calc(100% / 3 - 0.01px);
     display: inline-block;
     vertical-align: top;
-   //margin-bottom: 4px;
+    //margin-bottom: 4px;
 }
 .card {
     position: relative;
@@ -11,13 +12,69 @@
     &:hover {
         z-index: 2;
     }
-    
+
     .card__item {
         position: relative;
-        
+
         font-size: 70%;
         //padding-bottom: 20px;
         z-index: 1;
+        .imgContainer {
+            position: relative;
+            width: 100%;
+            padding-bottom: 150%;
+            img {
+                position: absolute;
+                width: 100%;
+                transition: opacity 0.2s ease;
+                //z-index: -1;
+            }
+            .img:hover {
+                opacity: 0;
+            }
+            .imgAlt {
+                opacity: 0;
+                &:hover {
+                    opacity: 1;
+                }
+            }
+            .imgBlankcover {
+                position: absolute;
+                width: 100%;
+                padding-bottom: 150%;
+                background-color: #ecfaf5;
+                border-radius: 5%;
+                z-index: -1;
+            }
+        }
+        &.listItem {
+            @media (min-width: ($md4 + px)) {
+                display: flex;
+                .imgContainer {
+                    @media (max-width: ($md4 + px)) {
+                        padding: 0 10px;
+                    }
+                    width: 30%;
+                    padding-bottom: 45%;
+                    margin-right: 15px;
+                }
+                .colorVariant {
+                    width: calc(100% / 10 - 1.5% - 0.01px);
+                }
+                & + .card__overlay {
+                    bottom: -15px;
+                }
+                .card__controls {
+                    top: auto;
+                    bottom: 0;
+                    right: -15px;
+                    box-shadow: none;
+                    padding: 0 15px 0 0;
+                    z-index: 0;
+                    font-size: 150%;
+                }
+            }
+        }
     }
     .card__controls {
         position: absolute;
@@ -45,7 +102,8 @@
             background-color: #ffffeb;
             content: "";
         }
-        .card__button, .card__button__favorites {
+        .card__button,
+        .card__button__favorites {
             position: relative;
             display: flex;
             align-items: center;
@@ -73,25 +131,25 @@
                 --primary: #e50010;
                 --secondary: #e50010;
                 --primary-opacity: 0.8;
-		        --secondary-opacity: 0.8;
+                --secondary-opacity: 0.8;
                 &__container {
                     width: 30px;
                     margin-right: 3px;
                 }
-                
             }
-            &:hover .favorites, &:hover .favoritesActive {
+            &:hover .favorites,
+            &:hover .favoritesActive {
                 --primary: #e50010;
                 --secondary: #e50010;
                 --primary-opacity: 1;
-		        --secondary-opacity: 1;
+                --secondary-opacity: 1;
             }
             .favorites {
                 cursor: pointer;
                 --primary: #292825;
                 --secondary: #292825;
                 --primary-opacity: 0.6;
-		        --secondary-opacity: 0.6;
+                --secondary-opacity: 0.6;
                 &__container {
                     width: 36px;
                 }
@@ -101,7 +159,7 @@
                 --primary: #e50010;
                 --secondary: #e50010;
                 --primary-opacity: 1;
-		        --secondary-opacity: 1;
+                --secondary-opacity: 1;
                 &__container {
                     pointer-events: none;
                     width: 36px;
@@ -111,7 +169,6 @@
                 }
             }
         }
-        
     }
     .card__overlay {
         position: absolute;
@@ -126,7 +183,7 @@
         height: 0;
         opacity: 0;
         box-shadow: 0 0 15px 1px #595855;
-        transition: all .3s ease;
+        transition: all 0.3s ease;
     }
     &:hover .card__overlay {
         overflow: visible;
@@ -134,54 +191,27 @@
         height: auto;
         opacity: 1;
     }
-    &:hover .card__button, &:hover .card__button__favorites {
+    &:hover .card__button,
+    &:hover .card__button__favorites {
         transform: translateY(0);
         opacity: 1;
     }
-    .imgContainer {
-        position: relative;
-        width: 100%;
-        padding-bottom: 150%;
-        img {
-        position: absolute;
-        width: 100%;
-        transition: opacity 0.2s ease;
-        //z-index: -1;
-        }
-        .img:hover {
-            opacity: 0;  
-        }
-        .imgAlt {
-            opacity: 0;
-            &:hover {
-            opacity: 1;
-            }
-        }
-        .imgBlankcover {
-            position: absolute;
-            width: 100%;
-            padding-bottom: 150%;
-            background-color: #ecfaf5;
-            border-radius: 5%;
-            z-index: -1;
-        }
-    }
-    
-    
 }
 
 .productDesc {
+    position: relative;
     margin-top: 0;
     padding-top: 5px;
-    &>* {
+    flex: 1 0 auto;
+    & > * {
         overflow: hidden;
         text-overflow: ellipsis;
         //text-transform: none;
         white-space: nowrap;
     }
     .marketingMarker {
-            color: #000b;
-        &+h4 {
+        color: #000b;
+        & + h4 {
             padding-top: 0;
         }
     }
@@ -200,31 +230,28 @@
             margin-right: 5px;
             color: #f11;
         }
-        
-        
     }
-    
 }
 
 .colorVariant {
     display: inline-block;
-    width: calc(100%/6 - 1.5% - 0.01px);
+    width: calc(100% / 6 - 1.5% - 0.01px);
     margin-right: 1.5%;
-        &:first-child {
-            margin-left: 2px;
-        }
+    &:first-child {
+        margin-left: 2px;
+    }
     &:before {
         content: "";
         float: left;
-          //essentially the aspect ratio. 100% means the
-          //div will remain 100% as tall as it is wide, or
-          //square in other words.
+        //essentially the aspect ratio. 100% means the
+        //div will remain 100% as tall as it is wide, or
+        //square in other words.
         padding-bottom: 100%;
     }
-        //this is a clearfix. you can use whatever
-        //clearfix you usually use, add
-        //overflow:hidden to the parent element,
-        //or simply float the parent container.
+    //this is a clearfix. you can use whatever
+    //clearfix you usually use, add
+    //overflow:hidden to the parent element,
+    //or simply float the parent container.
     &:after {
         content: "";
         display: table;
@@ -238,6 +265,5 @@
         border-radius: 50%;
         box-shadow: 0 0 15px 3px #595855;
         transform: scale(0.25, 0.25) translateX(-150%);
-        
     }
 }
