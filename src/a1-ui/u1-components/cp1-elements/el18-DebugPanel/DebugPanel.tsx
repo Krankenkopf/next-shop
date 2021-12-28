@@ -15,7 +15,7 @@ export const DebugPanel: FC<TDebugPanelProps> = ({ keys, values }) => {
             <div>:&nbsp;{values[i] ? values[i].toString() : "null"}</div>
         </div>
     ))
-    return <div>
+    return <>
         <div className={css.button} onClick={() => setIsRevealed(!isRevealed)}>
             <Icon name="chevron-right"
                 rotate={isRevealed ? 4 : 2}
@@ -27,5 +27,5 @@ export const DebugPanel: FC<TDebugPanelProps> = ({ keys, values }) => {
                 <h4>DEBUG PANEL</h4>
                 {mappedCells}
             </div>}
-    </div>
+    </>
 }

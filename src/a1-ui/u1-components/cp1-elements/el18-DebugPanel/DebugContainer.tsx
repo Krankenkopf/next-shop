@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { Nullable } from "../../../../a0-common/c1-types/t1-instance"
 import { useAppSelector } from "../../../../a0-common/c3-hooks"
 import { TAppState } from "../../../../a2-bll/app-reducer"
@@ -9,9 +9,6 @@ import { getKeys } from "../../../../a0-common/c4-utils/state"
 
 
 export const DebugContainer = () => {
-    if (typeof window !== 'object') {
-        return null
-    }
     const userData = useAppSelector<Nullable<TUserData>>(state => state.auth.userData)
     const appData = useAppSelector<Nullable<TAppState>>(state => state.app)
     const cartItemsCount = useAppSelector(state => state.cart.products.length)
@@ -20,8 +17,9 @@ export const DebugContainer = () => {
     ], [])
     
     const getTokens = () => {
-        let accessToken = localStorage.getItem("NonameShopAccessToken")?.split(".")[2]
-        let refreshToken = localStorage.getItem("NonameShopRefreshToken")?.split(".")[2]
+        let isCSR = typeof window === 'object'
+        let accessToken = isCSR && localStorage.getItem("NonameShopAccessToken")?.split(".")[2]
+        let refreshToken = isCSR && localStorage.getItem("NonameShopRefreshToken")?.split(".")[2]
         return {accessToken, refreshToken}
     }
     
@@ -29,14 +27,17 @@ export const DebugContainer = () => {
         userData?.id, userData?.email,
         userData?.accessLevel, getTokens().accessToken, getTokens().refreshToken
     ], [userData])
-    const cookies = parseCookies()
-    const cookiesKeys = getKeys(cookies)
-    const cookiesValues = Object.values(cookies)
+    const [parsedCookies, setParsedCookies] = useState({});
+    useEffect(() => {
+        const cookies = parseCookies()
+        setParsedCookies(cookies)
+    }, [])
+    const cookiesKeys = getKeys(parsedCookies)
+    const cookiesValues = Object.values(parsedCookies)
     const appKeys = useMemo(() => ["status", "error", "initialization complete", "need update"], [])
     const appValues = useMemo(() => [appData?.status, appData?.error, appData?.isInitialized, appData?.isNeedUpdate], [appData])
     const cartKey = "cart items count"
     const cartValue = cartItemsCount
-
     return <DebugPanel keys={[...userKeys, ...cookiesKeys, ...appKeys, cartKey]}
         values={[...userValues, ...cookiesValues, ...appValues, cartValue]} />
 }
