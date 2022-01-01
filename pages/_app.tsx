@@ -1,7 +1,7 @@
 import "../src/a1-ui/u2-styles/style.scss"
 import React, { useEffect, useState } from 'react';
 import type { AppProps } from 'next/app'
-import {wrapper} from '../src/a2-bll/store'
+import { wrapper } from '../src/a2-bll/store'
 import { useRouter } from "next/router";
 import { SpritesMap } from "../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/SpritesMap";
 import { TCategoriesResponse } from "../src/a0-common/c1-types/t3-response/TCategoriesResponse";
@@ -11,21 +11,38 @@ import { useWindowSize } from "../src/a0-common/c3-hooks/useWindowSize";
 import { useAppDispatch, useAppSelector } from "../src/a0-common/c3-hooks";
 import { setDeviceType } from "../src/a2-bll/layout-reducer";
 import { me } from "../src/a2-bll/auth-reducer";
+import { LoadingScreen } from "../src/a1-ui/u1-components/cp1-elements/el11-Preloader/LoadingScreen";
 
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useAppDispatch()
-  const [history, setHistory] = useState<Array<string>>([]);
   const router = useRouter()
   const { asPath } = router;
-  useEffect(() => {
-    if (history[history.length - 1] !== asPath) {
-      setHistory((prev) => ([...prev, asPath] ));
-    }
-  }, [asPath])
+  const isInitialized = useAppSelector(state => state.app.isInitialized)
+  const [loadingStage, setLoadingStage] = useState<"loading" | "initialization" | "complete">("loading");
+  const [isLoadingScreenVisible, setisLoadingScreenVisible] = useState(true);
   
   useEffect(() => {
-      dispatch(me())
+    setTimeout(() => {
+      setLoadingStage("initialization")
+    }, 1000)
+  }, [])
+  useEffect(() => {
+    isInitialized && setLoadingStage("complete");
+    /* setTimeout(() => {
+      setisLoadingScreenVisible(false)
+    }, 10000) */
+  }, [isInitialized])
+
+  const [history, setHistory] = useState<Array<string>>([]);
+  useEffect(() => {
+    if (history[history.length - 1] !== asPath) {
+      setHistory((prev) => ([...prev, asPath]));
+    }
+  }, [asPath])
+
+  useEffect(() => {
+    dispatch(me())
   }, [dispatch])
 
   const device = useAppSelector(state => state.layout.device)
@@ -52,9 +69,13 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [width])
 
   return <>
-    <SpritesMap />
-    <DebugContainer />
-    <Component history={history} {...pageProps} />
+    {/* <DebugContainer /> */}
+    {/* <Component history={history} {...pageProps} /> */}
+    {loadingStage === "complete" && <>
+      <SpritesMap />
+      <Component history={history} {...pageProps} />
+    </>}
+    {isLoadingScreenVisible && <LoadingScreen stage={loadingStage}/>}
   </>
 }
 
@@ -62,7 +83,7 @@ App.getInitialProps = wrapper.getInitialAppProps(store => async ({ Component, ct
   const response = await fetch("http://localhost:4200/categories")
   const categories = await response.json() as TCategoriesResponse
   store.dispatch(setCategories(categories))
-  
+
   return {
     pageProps: {
       categories
