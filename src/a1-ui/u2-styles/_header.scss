@@ -1,32 +1,42 @@
 header#header {
   position: relative;
   top: 0;
-  left: 0;
-  padding: 20px 25px;
+  margin: 0 auto;
+  max-width: 1400px;
   nav {
     display: grid;
     position: relative;
+    padding: 20px 25px;
     grid-template-columns: 1fr 80px 1fr;
     grid-template-rows: 25px 25px 25px 30px;
-    grid-template-areas: 
-    "services logo session"
-    "services logo search"
-    "services space search" 
-    "primary primary primary";
+    grid-template-areas:
+      "services logo session"
+      "services logo search"
+      "services space search"
+      "catlinks catlinks catlinks";
     & > ul > li {
-    padding-right: 10px;
-    &:last-child {
-      padding-right: 0px;
+      padding-right: 10px;
+      &:last-child {
+        padding-right: 0px;
+      }
+    }
+    &.nav-mobile {
+      padding: 15px 20px;
+      grid-template-columns: 60px 50px 1fr;
+      grid-template-rows: 50px;
+      grid-template-areas: "menu logo session";
     }
   }
-  }
-  
+
   a {
     font-weight: bold;
-	  font-variant-caps: all-small-caps;
+    font-variant-caps: all-small-caps;
   }
   .header-menu-services {
     grid-area: services;
+    li {
+      display: inline-block;
+    }
     a {
       display: flex;
       height: 25px;
@@ -35,16 +45,23 @@ header#header {
       }
     }
   }
-  .header-logo {
+  .header-menu-mobile {
+    position: relative;
+    margin: -3px 0 0 -3px;
+  }
+  .header-logo,
+  .header-logo-mobile {
     grid-area: logo;
-    svg {
-      transition: all .5s ease-out;
-    }
-    div#logo {
+    position: relative;
+    .icon-container {
       cursor: pointer;
+      width: 100%;
+      &:hover svg {
+        fill: #ff0000;
+      }
     }
-    div#logo:hover svg {
-      fill: #ff0000;
+    svg {
+      transition: all 0.5s ease-out;
     }
   }
   .header-menu-session {
@@ -52,7 +69,6 @@ header#header {
     text-align: right;
     span {
       margin-top: auto;
-      
     }
     svg {
       height: 80%;
@@ -61,10 +77,19 @@ header#header {
     .link__decorated {
       height: 25px;
     }
-      
+    &-mobile {
+      grid-area: session;
+      font-size: 1.8em;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      & > * {
+        padding-left: 0.2em;
+      }
+    }
   }
   .header-menu-primary {
-    grid-area: primary;
+    grid-area: catlinks;
     display: flex;
     justify-content: space-around;
     margin: 0 5% 0;
@@ -77,33 +102,53 @@ header#header {
     margin: auto 0 auto auto;
     position: relative;
     min-width: 100px;
-    height: 30px;
+    .icon {
+      --primary-opacity: 0.5;
+      --secondary-opacity: 0.7;
+    }
+    input:focus + .input__dash + * .icon {
+      --primary-opacity: 1;
+      --secondary-opacity: 1;
+    }
+  }
+  @media screen and (max-width: ($md2 + px)) {
+    .header-menu-services {
+      display: flex;
+      flex-direction: column;
+      font-size: 90%;
+      a {
+          height: 1.25em;
+      }
+    }
+  }
+  @media screen and (max-width: ($md4 + px)) {
+    nav.nav-mobile {
+      grid-template-columns: 50px 40px 1fr;
+      grid-template-rows: 34px;
+      font-size: 80%;
+    }
   }
 }
 
-
-  .session-auth {
-    position: relative;
-    min-width: 250px;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    button {
-      margin: 0 auto 10px;
-    }
-    ul.logged-in {
-      li {
-        text-align: left;
-      }
-    }
+.session-auth {
+  position: relative;
+  min-width: 250px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  button {
+    margin: 0 auto 10px;
+  }
+  ul.logged-in {
     li {
-      text-align: center;
-      margin-bottom: 10px;
-      &:last-child {
-      margin-bottom: 0;
-      }
+      text-align: left;
     }
+  }
+  li {
+    text-align: center;
+    margin-bottom: 10px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
-
-
-

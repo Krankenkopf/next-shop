@@ -7,14 +7,13 @@ type TSearchProps = {
 }
 
 export const Search = () => {
-    const [focused, setFocused] = useState(false);
-    const className = focused ? "focused" : ""
+
     return <div className="header-search">
-        <Icon name={"magnifying-glass"} className={className} />
-        <div className="field iconized__L">
+        <div className="field iconized">
             <Input placeholder={"Search products"}
-                onChangeFocus={(state) => {setFocused(state)}}
-                onChangeText={() => { }} />
+                onChangeText={() => { }} /> 
+            <div className="input__dash" /> 
+            <Icon name={"magnifying-glass"} size="full"/>
         </div>
         
     </div>
