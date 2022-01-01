@@ -19,10 +19,11 @@ import { CCPayPalIcon } from "../../cp1-elements/el10-Icons/Additional/CCPayPalI
 import { deleteCartItem } from "../../../../a2-bll/cart-reducer"
 import { UnderConstructionSign } from "../../cp1-elements/el19-UnderConstruction/UnderConstructionSign"
 import { TCheckedProduct } from "../../../../a0-common/c1-types/t1-instance/TCheckedProduct"
+import { setModal } from "../../../../a2-bll/app-reducer"
 
 export const CartOverview = () => {
     const dispatch = useAppDispatch()
-    const { userData } = useAppSelector<TAuthState>(state => state.auth)
+    const { userData, isLoggedIn } = useAppSelector<TAuthState>(state => state.auth)
     const items = useAppSelector<Array<TCheckedProduct>>(selectCartItems)
     const cartId = userData ? userData.id : ""
     // mock
@@ -30,10 +31,13 @@ export const CartOverview = () => {
     // /mock
     const [isQuantityMenuVisible, setIsQuantityMenuVisible] = useState(false);
 
+    const onLoginClick = useCallback(() => {
+        dispatch(setModal("login"))
+    }, [dispatch])
     const getQuantityMenu = useCallback(() => ({
-        toggle: <div className="span__decorated right" >
+        toggle: <div className="iconized right" >
             <Icon name="chevron-right"
-                size="full"
+                size="max"
                 side="right"
                 rotate={isQuantityMenuVisible ? 4 : 2}
                 className={css.icon}
@@ -106,9 +110,11 @@ export const CartOverview = () => {
                             {mappedItems}
                         </ul>
                         : <div className={css.emptyCartPlaceholder}>
-                            <h4>YOUR SHOPPING BAG IS EMPTY!</h4>
-                            <p>Sign in to save or access already saved items in your shopping bag.</p>
-                            <button>Sign in</button>
+                            <h4>YOUR SHOPPING CART IS EMPTY!</h4>
+                            {!isLoggedIn && <>
+                                <p>Sign in to save or access already saved items in your shopping cart.</p>
+                                <button onClick={onLoginClick}>Sign in</button>
+                            </>}
                         </div>}
                     
                 </section>
@@ -118,12 +124,12 @@ export const CartOverview = () => {
                             <p>Discounts</p>
                             <button>Apply discount</button>
                         </div>
-                        <div className={css.login}>
+                        {!isLoggedIn && <div className={css.login}>
                             <p>Log in to use your member offers!</p>
                             <div className={css.button}>
-                                <Button variant="ok">LOG IN</Button>
+                                <Button variant="ok" onClick={onLoginClick}>LOG IN</Button>
                             </div>
-                        </div>
+                        </div>}
                         <hr style={{ width: "100%", margin: "0 0 10px" }} />
                         <OrderTotals
                             orderValue={orderValue}
@@ -182,7 +188,7 @@ export const CartOverview = () => {
                             The estimated tax will be confirmed once you added your shipping address in checkout.
                         </p>
                         <p className={css.generalText}>
-                            30-day returns. Read more about our
+                            30-day returns. Read more about our&nbsp;
                             <button>
                                 return and refund policy
                             </button>
