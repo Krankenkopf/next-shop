@@ -1,0 +1,17 @@
+.accordeon {
+    .toggle {
+        cursor: pointer;
+    }
+    ul {
+        & > li {
+            transition: all 0.2s linear;
+        }
+        &.collapsed {
+            & > li {
+                height: 0 !important;
+                opacity: 0;
+                overflow: hidden;
+            }
+        }
+    }
+}
