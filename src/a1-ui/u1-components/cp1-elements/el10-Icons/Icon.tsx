@@ -10,6 +10,7 @@ type TIconProps = TDefaulSVGProps & {
     containerClassName?: string // for transitions, rotating etc
     side?: "right" | "left"
     size?: "reduced" | "full" | "max" //reduced is full divided by sqrt(2) for proper rotating anims and/or nesting, max is full*1.05
+    width?: "normal" | "wide" | "narrow"
     rotate?: 1 | 2 | 3 | 4 // 0 90 180 270 deg
     active?: boolean // for icon button variant
     primaryColor?: string
@@ -26,6 +27,7 @@ export const Icon: FC<TIconProps> = ({
     containerClassName,
     side = "left",
     size = "reduced",
+    width = "normal",
     rotate = 1,
     active = true,
     primaryColor,
@@ -37,10 +39,16 @@ export const Icon: FC<TIconProps> = ({
     const getContainerStyle = useCallback(() => {
         let style = `icon-container ${containerClassName ? containerClassName : ""}`
         switch (side) {
-            case "right": return `${style} _right`
-            case "left": return `${style} _left`
+            case "right": style = `${style} _right`; break
+            case "left": style = `${style} _left`; break
         }
-    }, [side, containerClassName])
+        switch (width) {
+            case "wide": style = `${style} _wide`; break
+            case "narrow": style = `${style} _narrow`; break
+            default: style
+        }
+        return style
+    }, [side, width, containerClassName])
 
     const onClickHandler = (e: MouseEvent<HTMLElement>) => {
         active && onClick && onClick(e)

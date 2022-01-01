@@ -166,6 +166,7 @@ export const ProductItem: FC<TProductItems> = (props) => {
                                         ? css.favoritesClicked__container
                                         : css.favorites__container}
                                     side="right"
+                                    size="full"
                                     onClick={() => setIsFavorite(!isFavorite)} />
                             </div>
                             {isInCart && <div className={css.card__button}>
@@ -212,6 +213,7 @@ export const ProductItem: FC<TProductItems> = (props) => {
                                     ? css.favoritesClicked__container
                                     : css.favorites__container}
                                 side="right"
+                                size="full"
                                 onClick={() => setIsFavorite(!isFavorite)} />
                         </div>
                         {isInCart && <div className={css.card__button}>

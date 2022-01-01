@@ -31,7 +31,7 @@ export const SessionMenu: FC<TSessionMenuProps> = ({}) => {
         ? {
             toggle: <Link href="/account">
                 <a>
-                    <div className="span__decorated">
+                    <div className="iconized">
                         <Icon name="user-check" className="icon__session" />
                         <span>My Account</span>
                     </div>
@@ -55,7 +55,7 @@ export const SessionMenu: FC<TSessionMenuProps> = ({}) => {
         }
         : {
             toggle: <a onClick={onLoginClick}>
-                <div className="span__decorated">
+                <div className="iconized">
                     <Icon name="user" className="icon__session" />
                     <span>Sign In</span>
                 </div>
@@ -81,7 +81,7 @@ export const SessionMenu: FC<TSessionMenuProps> = ({}) => {
     const minicartMenu = {
         toggle: <Link href="/cart">
             <a>
-                <div className="span__decorated">
+                <div className="iconized">
                     {isLoggedIn
                         ? <Icon name="cart-shopping" className="icon__session" />
                         : <Icon name="cart-shopping-fast" className="icon__session" />}
@@ -99,7 +99,7 @@ export const SessionMenu: FC<TSessionMenuProps> = ({}) => {
             <li style={{ display: "inline-block" }}>
                 <Link href="/favorites">
                     <a>
-                        <div className="span__decorated" >
+                        <div className="iconized" >
                             <Icon name="heart-solid" className="icon__session" />
                             <span>Favorites</span>
                         </div>

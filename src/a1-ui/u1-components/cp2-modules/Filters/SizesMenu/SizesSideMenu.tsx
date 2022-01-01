@@ -51,7 +51,7 @@ export const SizesSideMenu: FC<TSizesSideMenuProps> = ({sizes, selected, onOptio
 
     const mappedTitles = SIZETITLES.map((title) => ((
             <li onClick={() => {onMenuToggle(title.code)}} className={gcss.menuTitle}>
-                <div className="span__decorated right" >
+                <div className="iconized right" >
                     <Icon name="chevron-right"
                     size="max"
                         side="right"

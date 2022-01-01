@@ -41,7 +41,7 @@ export const FiltersMenu = () => {
 
     const mappedFilters = FILTERSSORTTITLES.map((title) => ((
         <li key={title.code} onClick={() => onMenuToggle(title.code)} className={css.menuTitle}>
-            <div className="span__decorated right" >
+            <div className="iconized right" >
                 <Icon name="chevron-right"
                     size="max"
                     side="right"
@@ -148,9 +148,10 @@ export const FiltersMenu = () => {
         <header>
             {title !== rootTitle
                 ?
-                <div className="span__decorated left" >
+                <div className="iconized left" >
                     <Icon name="chevron-right"
                         side="left"
+                        size="full"
                         rotate={3}
                         className={css.filter__btn__icon}
                         containerClassName={css.icon}

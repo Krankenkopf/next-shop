@@ -166,7 +166,7 @@ export const SignupForm = ({ revealModal}: TSignupFormProps) => {
                 
                 {passwordShown
                     ? <Icon name="eye" onClick={togglePasswordVisibility} side="right" size="full" primaryColor={IconColor.INITIAL} secondaryColor={IconColor.INITIAL} primaryOpacity="1" secondaryOpacity="1"/>
-                    : <Icon name="eye-slash" onClick={togglePasswordVisibility} side="right" size="max" primaryColor={IconColor.INITIAL} secondaryColor={IconColor.INITIAL} primaryOpacity="0.5" secondaryOpacity="0.5"/>}
+                    : <Icon name="eye-slash" onClick={togglePasswordVisibility} side="right" size="full" primaryColor={IconColor.INITIAL} secondaryColor={IconColor.INITIAL} primaryOpacity="0.5" secondaryOpacity="0.5"/>}
                 
                 <div className="field__input">
                     <Input {...register("password", { value: "test1" })}

@@ -7,14 +7,14 @@
   font-size: 20px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  line-height: calc(29/20*100%);
+  line-height: calc(29 / 20 * 100%);
   height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 0 20px;
-  transition: background-color .3s ease-out;
+  transition: background-color 0.3s ease-out;
   z-index: 10;
   &:hover {
     background-color: #ff0000;
@@ -23,64 +23,79 @@
     background-color: #fff000;
   }
   &._fw {
-    width: 100%
+    width: 100%;
   }
 }
 
 .iconized {
-    &__LR {
-      position: relative;
-      &:not(.field) {
-        padding: 5px 2.4em 0 2.4em;
-      }
-      &.field {
-        input {
+  &__LR {
+    position: relative;
+    .icon-container {
+      width: 1.8em;
+    }
+    &:not(.field) {
+      padding: 5px 2.4em 0 2.4em;
+    }
+    &.field {
+      input {
         padding: 0.2em 2em 0.2em 2em;
       }
-      //label {
-      //  padding: 0 1.8em 0 1.8em;
-      //}
+    }
+  }
+  &__L {
+    .icon-container {
+      width: 1.8em;
+    }
+    &:not(.field) {
+      padding: 5px 0 0 2.4em;
+    }
+    &.field {
+      input {
+        padding: 0.2em 0.8em 0.2em 1.8em;
       }
     }
-    &__L {
-      &:not(.field) {
-        padding: 5px 0 0 2.4em;
-      }
-      &.field {
-        input {
-          padding: 0.2em 0.8em 0.2em 1.8em;
-        }
-        //label {
-        //  padding: 0 0.8em 0 1.8em;
-        //}
-      } 
+  }
+  &__R {
+    .icon-container {
+      width: 1.8em;
     }
-    &__R {
-      &:not(.field) {
-        padding: 5px 2.4em 0 0;
-      }
-      &.field {
-        input {
+    &:not(.field) {
+      padding: 5px 2.4em 0 0;
+    }
+    &.field {
+      input {
         padding: 0.2em 1.8em 0.2em 0.8em;
       }
-      //label {
-      //  padding: 0 1.8em 0 0.8em;
-      //}
-      }
     }
+  }
+  &.field {
+    .input__dash {
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 1px;
+      background-color: #292825;
+    }  
+    input:focus+.input__dash {
+        height: 3px;
+        bottom: -3px;
+    }  
+  }
 }
 
-.signup, .login {
+.signup,
+.login {
   width: 350px;
   & header {
     margin-bottom: 25px;
     padding: 0;
   }
-	&__form form {
-			display: flex;
-			flex-direction: column;
-			flex: 1 1 auto;
-    }
+  &__form form {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+  }
   &__submit {
     height: 50px;
     display: flex;
@@ -109,77 +124,81 @@ form {
     text-align: initial;
   }
   .field {
-  display: grid;
-  grid-template-rows: 1em 2em 1em;
-  grid-template-columns: 2em 1fr;
-  grid-template-areas: 
-  "space label"
-  "input input"
-  "error error";
-  //height: 75px;
-  font-size: 100%;
-  margin-bottom: 5px;
-  &:last-child {
-    margin-bottom: 15px;
-  }
-  &__label {
-    height: 1em;
-    grid-area: label;
-    font-size: calc(1em / 1.2);
-    &.filled, &.focused {
+    display: grid;
+    grid-template-rows: 1em 2em 1em;
+    grid-template-columns: 2em 1fr;
+    grid-template-areas:
+      "space label"
+      "input input"
+      "error error";
+    //height: 75px;
+    font-size: 100%;
+    margin-bottom: 5px;
+    &:last-child {
+      margin-bottom: 15px;
+    }
+    &::after {
+      display: none;
+    }
+    &__label {
+      height: 1em;
+      grid-area: label;
+      font-size: calc(1em / 1.2);
+      &.filled,
+      &.focused {
+        transform: translate(0, 0);
+      }
+      //font-size: 75%;
       transform: translate(0, 0);
     }
-    //font-size: 75%;
-    transform: translate(0, 0);
-  }
-  .icon-container {
-    grid-area: input;
-    height: calc(100% - 2px);
-  }
-  .field__input {
-    grid-area: input;
-    input, input:focus {
-      border: none;
+    .icon-container {
+      position: absolute;
+      grid-area: input;
       height: calc(100% - 2px);
-    }   
-  }
-  .field__dash {
-    grid-area: input;
-    height: 0.5px;
-    margin-top: auto;
-    margin-bottom: 1px;
-    background-color: $primary;
-    &.thick {
-      height: 2px;
-      margin-bottom: 0;
     }
-  }
-  .field__error {
-  grid-area: error;
-  height: 1em;
-  font-size: calc(1em / 1.2);
-  color: $secondary;
-  font-weight: bold;
-} 
-}
-}
-
-
-
-ul.password-tips {
-    font-size: 80%;
-    margin-bottom: 20px;
-    li {
-      position: relative;
-      display: block;
-      padding: 0 0 0 1.8em;
-      margin-bottom: 2px;
-      .icon-container {
-        top: 0;
-        width: 1.5em;
-        height: 1.2em;
+    .field__input {
+      grid-area: input;
+      input,
+      input:focus {
+        height: calc(100% - 2px);
       }
     }
+    .field__dash {
+      grid-area: input;
+      height: 0.5px;
+      margin-top: auto;
+      margin-bottom: 2px;
+      background-color: $primary;
+      &.thick {
+        height: 2px;
+        margin-bottom: 1px;
+      }
+    }
+    .field__error {
+      grid-area: error;
+      height: 1em;
+      font-size: calc(1em / 1.2);
+      color: $secondary;
+      font-weight: bold;
+    }
+  }
+}
+
+ul.password-tips {
+  font-size: 80%;
+  margin-bottom: 20px;
+  li {
+    position: relative;
+    display: block;
+    padding: 0 0 0 1.8em;
+    margin-bottom: 2px;
+    .icon-container {
+      position: absolute;
+      top: 0;
+      width: 1.5em;
+      height: 1.2em;
+    }
+  }
 }
 
 .info {
@@ -190,16 +209,15 @@ ul.password-tips {
   }
   &__signup {
     height: 50px;
-		display: flex;
+    display: flex;
     &__container {
       width: 50%;
       display: flex;
       align-items: center;
-		  justify-content: center;
+      justify-content: center;
       button {
         height: 40px;
       }
     }
-    
   }
 }
