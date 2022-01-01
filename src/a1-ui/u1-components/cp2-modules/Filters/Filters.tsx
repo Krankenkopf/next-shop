@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react"
+import React, { ReactElement, useCallback, useEffect, useMemo, useState } from "react"
 import { TSortValue } from "../../../../a0-common/c1-types/t2-request"
 import { FilterNames, SORTTITLES } from "../../../../a0-common/c2-constants"
 import { useAppDispatch, useAppSelector } from "../../../../a0-common/c3-hooks"
@@ -31,7 +31,8 @@ export const Filters = () => {
     // filters: sizes, collection, concepts, colorWithNames, contexts, fits, functions, qualities
     const { current, facets } = useAppSelector<TFiltersState>(selectFilters)
 
-    const {productsLayout, productsFirstImage} = useAppSelector<TLayoutState>(state => state.layout)
+    const { productsLayout, productsFirstImage } = useAppSelector<TLayoutState>(state => state.layout)
+    const device = useAppSelector(state => state.layout.device)
     const { sortBy, sortValues } = useAppSelector<TSortState>(selectSort)
     const totalCount = useAppSelector<number>(state => state.navigation.totalNumberOfResults)
 
@@ -57,17 +58,90 @@ export const Filters = () => {
     }
 
     //layout toggler
-    //const [layout, setLayout] = useState<TProductsLayout>("grid3")
+    const layoutTogglers = useMemo(() => {
+        return [<div className="iconized narrow" >
+            <Icon name="list"
+                side="right"
+                width="narrow"
+                className={`icon__layout ${productsLayout === "list1" && "active"}`} />
+        </div>,
+        <div className="iconized narrow" >
+            <Icon name="grid-2"
+                side="right"
+                width="narrow"
+                className={`icon__layout ${productsLayout === "grid2" && "active"}`} />
+        </div>,
+        <div className="iconized narrow" >
+            <Icon name="grid"
+                side="right"
+                width="narrow"
+                className={`icon__layout ${productsLayout === "grid3" && "active"}`} />
+        </div>,
+        <div className="iconized narrow" >
+            <Icon name="grid-4"
+                side="right"
+                width="narrow"
+                className={`icon__layout ${productsLayout === "grid4" && "active"}`} />
+        </div>,]
+    }, [productsLayout])
+    const [layoutVariants, setLayoutVariants] = useState<Array<ReactElement>>(() => {
+        switch (device) {
+            case ("mobile"): {
+                return [layoutTogglers[0]]
+            }
+            case ("tablet"): {
+                return [layoutTogglers[0], layoutTogglers[1],]
+            }
+            case ("laptop"): {
+                return [layoutTogglers[0], layoutTogglers[1], layoutTogglers[3],]
+            }
+            case ("desktop"): {
+                return layoutTogglers
+            }
+        }
+    })
     const onLayoutToggle = (layout: TProductsLayout) => {
         dispatch(setProductsLayout(layout))
     }
+    useEffect(() => {
+        switch (device) {
+            case ("mobile"): {
+                setLayoutVariants([layoutTogglers[0]])
+                if (productsLayout !== "list1") {
+                    dispatch(setProductsLayout("list1"))
+                }
+                break
+            }
+            case ("tablet"): {
+                setLayoutVariants([layoutTogglers[0], layoutTogglers[1],])
+                if (productsLayout !== "grid2") {
+                    dispatch(setProductsLayout("grid2"))
+                }
+                break
+            }
+            case ("laptop"): {
+                setLayoutVariants([layoutTogglers[0], layoutTogglers[1], layoutTogglers[2],])
+                if (productsLayout !== "grid3") {
+                    dispatch(setProductsLayout("grid3"))
+                }
+                break
+            }
+            case ("desktop"): {
+                setLayoutVariants(layoutTogglers)
+                if (productsLayout !== "grid4") {
+                    dispatch(setProductsLayout("grid4"))
+                }
+                break
+            }
+        }
+    }, [device])
 
     //sortDropmenu =======================================================================================
     const onSortOptionChange = (value: TSortValue) => {
         dispatch(setSortBy(value))
     }
     const getSortMenu = useCallback(() => ({
-        toggle: <div className="span__decorated right">
+        toggle: <div className="iconized wide right">
             <Icon name="chevron-right"
                 size="max"
                 side="right"
@@ -96,7 +170,7 @@ export const Filters = () => {
             : dispatch(setFilter({ colorWithNames: [...current.colorWithNames.filter((color) => color !== value)] }))
     }
     const getColorMenu = useCallback(() => ({
-        toggle: <div className="span__decorated right" >
+        toggle: <div className="iconized wide right" >
             <Icon name="chevron-right"
                 size="max"
                 side="right"
@@ -121,7 +195,7 @@ export const Filters = () => {
         console.log("Not implemented")
     }
     const getSustainMenu = useCallback(() => ({
-        toggle: <div className="span__decorated right" >
+        toggle: <div className="iconized wide right" >
             <Icon name="chevron-right"
                 size="max"
                 side="right"
@@ -155,7 +229,7 @@ export const Filters = () => {
             : dispatch(setFilter({ sizes: [...current.sizes.filter((size) => size !== value)] }))
     }
     const getSizesMenu = useCallback(() => ({
-        toggle: <div className="span__decorated right" >
+        toggle: <div className="iconized wide right" >
             <Icon name="chevron-right"
                 size="max"
                 side="right"
@@ -177,7 +251,7 @@ export const Filters = () => {
         console.log("Not implemented");
     }
     const getPatternsMenu = useCallback(() => ({
-        toggle: <div className="span__decorated right" >
+        toggle: <div className="iconized wide right" >
             <Icon name="chevron-right"
                 size="max"
                 side="right"
@@ -210,7 +284,7 @@ export const Filters = () => {
             : dispatch(setFilter({ fits: [...current.fits.filter((fit) => fit !== value)] }))
     }
     const getFitsMenu = useCallback(() => ({
-        toggle: <div className="span__decorated right" >
+        toggle: <div className="iconized wide right" >
             <Icon name="chevron-right"
                 size="max"
                 side="right"
@@ -290,7 +364,7 @@ export const Filters = () => {
                     <fieldset className={css.block}>
                         <legend>{FilterNames.ALLFILTERS}</legend>
                         <div>
-                            <div className="span__decorated right"
+                            <div className="iconized wide right"
                                 onClick={onFiltersMenuClick}>
                                 <Icon name="filters"
                                     size="max"
@@ -318,43 +392,17 @@ export const Filters = () => {
                             value={productsFirstImage}
                             onChangeOption={onViewToggle} />
                     </fieldset>
-                    <fieldset className={css.block}>
+                    {device !== "mobile" && <fieldset className={css.block}>
                         <legend>Toggle Image Size</legend>
-                            <Toggle options={["grid2", "grid3", "grid4", "list1"]}
-                                value={productsLayout}
-                                className={css.layout__toggle}
-                                frameClassName={css.toggle__frame__layout}
-                                onChangeOption={onLayoutToggle}
-                                titles={[
-                                    <div className="span__decorated right" >
-                                        <Icon name="grid-2"
-                                            side="right"
-                                            className={`icon__layout ${productsLayout === "grid2" && "active"}`} />
-                                        <span></span>
-                                    </div>,
-                                    <div className="span__decorated right" >
-                                        <Icon name="grid"
-                                            side="right"
-                                            className={`icon__layout ${productsLayout === "grid3" && "active"}`} />
-                                        <span></span>
-                                    </div>,
-                                    <div className="span__decorated right" >
-                                        <Icon name="grid-4"
-                                            side="right"
-                                            className={`icon__layout ${productsLayout === "grid4" && "active"}`} />
-                                        <span></span>
-                                    </div>,
-                                    <div className="span__decorated right" >
-                                        <Icon name="list"
-                                            side="right"
-                                            className={`icon__layout ${productsLayout === "list1" && "active"}`} />
-                                        <span></span>
-                                    </div>,
-                                ]} />
-                    </fieldset>
+                        <Toggle options={["list1", "grid2", "grid3", "grid4",]}
+                            value={productsLayout}
+                            className={css.layout__toggle}
+                            frameClassName={css.toggle__frame__layout}
+                            onChangeOption={onLayoutToggle}
+                            titles={layoutVariants} />
+                    </fieldset>}                
                 </section>
             </div>
-
         </form>
     </section>
 }

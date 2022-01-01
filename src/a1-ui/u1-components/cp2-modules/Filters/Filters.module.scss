@@ -1,8 +1,7 @@
 $colorOptional: #5555ff;
 
 .sortfilterviewControls {
-    padding-left: 15px;
-    margin-bottom: 35px;
+    margin-bottom: 2em;
     form {
         display: flex;
         justify-content: space-between;
@@ -13,11 +12,13 @@ $colorOptional: #5555ff;
                 margin-right: 0;
             }
             .block {
-                margin: auto 10px auto 0;
+                margin: auto 0 auto 10px;
                 .textBlock {
                     display: flex;
+                    font-size: 70%;
+                    margin: auto 10px auto 10px;
                 }
-                &:last-child {
+                &:first-child {
                     margin: auto 0;
                 }
             }
@@ -26,23 +27,24 @@ $colorOptional: #5555ff;
             display: flex;
         }
     }
-    span {
-        font-size: 75%;
-    }
     fieldset {
+        cursor: pointer;
         border: none;
         margin: 0;
         padding: 0;
-        cursor: pointer;
+        font-size: 70%;
     }
     .sortfilters {
+        span {
+            white-space: nowrap;
+        }
         .sort {
             position: relative;
         }
         .filters {
             position: relative;
             display: flex;
-            @media (max-width: 1170px) {
+            @media (max-width: 1182px) {
                 display: none;
             }
             li.menuoption {
@@ -67,6 +69,8 @@ $colorOptional: #5555ff;
     .view {
         position: relative;
         display: flex;
+        flex-wrap: wrap-reverse;
+        justify-content: flex-end;
         fieldset > * {
             display: flex;
         }
@@ -83,9 +87,7 @@ $colorOptional: #5555ff;
 }
 
 .toggle {
-    font-size: 75%;
     font-weight: bold;
-
     color: inherit;
     label {
         height: 100%;
@@ -111,11 +113,12 @@ $colorOptional: #5555ff;
     label {
         cursor: pointer;
         margin-right: 5px;
+        padding: 3px 0;
         &:last-child {
             margin-right: 0;
         }
         & > div {
-            font-size: 48px;
+            font-size: 1.5em;
         }
     }
     .toggle__frame__layout {
@@ -197,7 +200,7 @@ $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
 }
 
 .filter__btn {
-    transform: translateY(-5%);
+    transform: translateY(-9%);
     fieldset:hover & {
         animation: floatY 1s linear 10;
     }
@@ -265,19 +268,19 @@ $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
 
 @keyframes floatX {
     0% {
-        transform: translateX(0%);
+        transform: translateX(-9%);
     }
     25% {
-        transform: translateX(-5%);
+        transform: translateX(-4%);
     }
     50% {
-        transform: translateX(0%);
+        transform: translateX(-9%);
     }
     75% {
-        transform: translateX(5%);
+        transform: translateX(-14%);
     }
     100% {
-        transform: translateX(0%);
+        transform: translateX(-9%);
     }
 }
 @keyframes floatY {
