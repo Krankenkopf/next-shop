@@ -8,9 +8,10 @@ import { useAppDispatch, useAppSelector } from "../../../../a0-common/c3-hooks"
 import BurgerMenu from "../../cp1-elements/el12-BurgerMenu/BurgerMenu"
 import { setModal } from "../../../../a2-bll/app-reducer"
 import { Icon } from "../../cp1-elements/el10-Icons/Icon"
+import { TCategoriesState } from "../../../../a2-bll/categories-reducer"
 
 type THeaderProps = {
-
+    categories: TCategoriesState
 }
 
 export const Header: FC<THeaderProps> = () => {
@@ -29,6 +30,11 @@ export const Header: FC<THeaderProps> = () => {
     const [categoriesLinks, setCategoriesLinks] = useState(() => {
         const headerLinkNames = ["ladies", "divided", "men", "baby", "kids", "home", "sale"]
         return headerLinkNames.map((name, i, arr) => {
+            if (name === "ladies") {
+                return <h4 key={name} style={{ width: `calc(100%/${arr.length})`, height: '30px', textAlign: 'center' }}>
+                    <Link href="/ladies"><a>Women</a></Link>
+                </h4>
+            }
             if (name === "home") {
                 return <h4 key={name} style={{ width: `calc(100%/${arr.length})`, height: '30px', textAlign: 'center' }}>
                     <Link href="/home"><a>H&M Home</a></Link>

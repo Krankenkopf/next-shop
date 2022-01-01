@@ -55,8 +55,7 @@ export const DropMenuOnClick = <TMenu extends string>(
     // 
     return <div className={box}>
         <div onClick={onToggleClick}
-            onMouseDown={onToggleMouseDown}
-            style={{padding: "5px"}}>
+            onMouseDown={onToggleMouseDown}>
             {toggle}
         </div>
         <div ref={dropmenu}

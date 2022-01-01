@@ -42,10 +42,10 @@
     //transition: transform 0.3s ease-out;
     //border-bottom: 2px solid #292825;
     &.toLeft {
-        transform: translateX(-101%);
+        transform: translateX(-102%);
     }
     &.toRight {
-        transform: translateX(101%);
+        transform: translateX(102%);
     }
 }
 

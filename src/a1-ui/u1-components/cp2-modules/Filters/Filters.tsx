@@ -93,7 +93,7 @@ export const Filters = () => {
                 return [layoutTogglers[0], layoutTogglers[1],]
             }
             case ("laptop"): {
-                return [layoutTogglers[0], layoutTogglers[1], layoutTogglers[3],]
+                return [layoutTogglers[0], layoutTogglers[1], layoutTogglers[2],]
             }
             case ("desktop"): {
                 return layoutTogglers
