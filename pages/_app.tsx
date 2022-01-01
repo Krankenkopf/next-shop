@@ -7,9 +7,14 @@ import { SpritesMap } from "../src/a1-ui/u1-components/cp2-modules/IconSpritesMa
 import { TCategoriesResponse } from "../src/a0-common/c1-types/t3-response/TCategoriesResponse";
 import { setCategories } from "../src/a2-bll/categories-reducer";
 import { DebugContainer } from "../src/a1-ui/u1-components/cp1-elements/el18-DebugPanel/DebugContainer";
+import { useWindowSize } from "../src/a0-common/c3-hooks/useWindowSize";
+import { useAppDispatch, useAppSelector } from "../src/a0-common/c3-hooks";
+import { setDeviceType } from "../src/a2-bll/layout-reducer";
+import { me } from "../src/a2-bll/auth-reducer";
 
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const dispatch = useAppDispatch()
   const [history, setHistory] = useState<Array<string>>([]);
   const router = useRouter()
   const { asPath } = router;
@@ -19,6 +24,33 @@ const App = ({ Component, pageProps }: AppProps) => {
     }
   }, [asPath])
   
+  useEffect(() => {
+      dispatch(me())
+  }, [dispatch])
+
+  const device = useAppSelector(state => state.layout.device)
+  const { width } = useWindowSize()
+  useEffect(() => {
+    //$md1: 1182;
+    //$md2: 991.98;
+    //$md3: 767.98;
+    //$md4: 479.98;
+    switch (true) {
+      case (width <= 479.98): {
+        device !== "mobile" && dispatch(setDeviceType("mobile")); break
+      }
+      case (width > 479.98 && width <= 767.98): {
+        device !== "tablet" && dispatch(setDeviceType("tablet")); break
+      }
+      case (width > 767.98 && width <= 991.98): {
+        device !== "laptop" && dispatch(setDeviceType("laptop")); break
+      }
+      case (width > 991.98): {
+        device !== "desktop" && dispatch(setDeviceType("desktop")); break
+      }
+    }
+  }, [width])
+
   return <>
     <SpritesMap />
     <DebugContainer />
