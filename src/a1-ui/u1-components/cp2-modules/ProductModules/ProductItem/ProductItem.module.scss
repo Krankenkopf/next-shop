@@ -71,7 +71,8 @@ $md4: 479.98;
                     box-shadow: none;
                     padding: 0 15px 0 0;
                     z-index: 0;
-                    font-size: 150%;
+                    font-size: 110%;
+                    overflow: visible;
                 }
             }
         }
@@ -79,8 +80,8 @@ $md4: 479.98;
     .card__controls {
         position: absolute;
         display: grid;
-        grid-template-columns: 1fr 40px;
-        grid-template-rows: 40px;
+        grid-template-columns: 1fr 2.5em;
+        grid-template-rows: 2.5em;
         grid-template-areas: "button1 fav" "button2 button2";
         //display: flex;
         //justify-content: space-between;
@@ -90,7 +91,8 @@ $md4: 479.98;
         padding: 10px 15px 15px;
         margin-top: -1px;
         box-shadow: 0 0 15px 1px #595855;
-        //height: 64px;
+        //height: 1.25em;
+        font-size: .7em;
         z-index: -1;
         background-color: #ffffeb;
         &::before {
@@ -107,8 +109,6 @@ $md4: 479.98;
             position: relative;
             display: flex;
             align-items: center;
-            font-size: 70%;
-            //height: 44px;
             opacity: 0;
             transition: all 0.2s ease-out;
         }
@@ -126,6 +126,8 @@ $md4: 479.98;
             transform: translateY(-20px);
         }
         .card__button__favorites {
+            grid-area: fav;
+            width: 100%;
             .favoritesActive {
                 cursor: pointer;
                 --primary: #e50010;
@@ -133,8 +135,10 @@ $md4: 479.98;
                 --primary-opacity: 0.8;
                 --secondary-opacity: 0.8;
                 &__container {
-                    width: 30px;
-                    margin-right: 3px;
+                    position: relative;
+                    width: 90%;
+                    height: 90%;
+                    margin: 5%;
                 }
             }
             &:hover .favorites,
@@ -151,7 +155,10 @@ $md4: 479.98;
                 --primary-opacity: 0.6;
                 --secondary-opacity: 0.6;
                 &__container {
-                    width: 36px;
+                    position: relative;
+                    width: 70%;
+                    height: 70%;
+                    margin: 15%;
                 }
             }
             .favoritesClicked {
@@ -161,11 +168,14 @@ $md4: 479.98;
                 --primary-opacity: 1;
                 --secondary-opacity: 1;
                 &__container {
+                    position: absolute;
                     pointer-events: none;
-                    width: 36px;
+                    width: 70%;
+                    height: 70%;
+                    margin: 15% 15% 15% 15%;
                     opacity: 0;
                     transform: scale(2);
-                    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+                    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
                 }
             }
         }
@@ -206,7 +216,6 @@ $md4: 479.98;
     & > * {
         overflow: hidden;
         text-overflow: ellipsis;
-        //text-transform: none;
         white-space: nowrap;
     }
     .marketingMarker {
