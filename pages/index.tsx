@@ -110,7 +110,7 @@ export default function Index({ history, props }: any) {
                 imgAltText="campaign03" />
             <section id="magazine">
                 <div>
-                    <h2>MAGAZINE</h2>
+                    <h3>MAGAZINE</h3>
                     <h6>A WORLD OF INSPIRATION</h6>
                     <Link href="/">
                         <a className="dashed">READ H&M MAGAZINE</a>

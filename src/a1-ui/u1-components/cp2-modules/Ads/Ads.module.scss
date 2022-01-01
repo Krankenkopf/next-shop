@@ -1,5 +1,7 @@
 $softRed: #ffcccc;
 $primary: #292825;
+$md3: 767.98;
+$md4: 479.98;
 
 .unique_propositions {
 	min-height: 60px;
@@ -17,14 +19,73 @@ $primary: #292825;
 	}
 }
 
-
 .banner {
-    padding: 2%;
-    background-color: #ffcccc;
+	position: relative;
+	padding: 2% 12%;
+	background-color: #ffcccc;
 	font-size: 80%;
+	&.red {
+		background-color: #cc0000;
+		color: #fff;
+		.icon svg {
+			pointer-events: none;
+			--primary: #fff;
+			--secondary: #fff;
+			a:hover & {
+				--primary: #fff;
+				--secondary: #fff;
+			}
+		}
+	}
 	.banner__title {
 		letter-spacing: 1px;
 		margin-bottom: 5px;
+	}
+	.icon {
+		position: absolute;
+		top: 0;
+		right: 2%;
+		height: 100%;
+		padding-left: 30px;
+		&::after {
+			content: "i";
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			position: absolute;
+			font-weight: bold;
+			font-size: 18px;
+			top: 0;
+			right: 2%;
+			height: 100%;
+			width: 29px;
+		}
+		svg {
+			--primary: #292825;
+			--secondary: #292825;
+		}
+		a:hover & svg {
+			--primary: #e50010;
+			--secondary: #e50010;
+		}
+	}
+}
+@media (max-width: ($md3 + px)) {
+	.banner {
+		font-size: 70%;
+		.icon {
+			padding-left: 22px;
+			&::after {
+				top: 1px;
+				font-size: 12px;
+				width: 21px;
+			}
+		}
+	}
+}
+@media (max-width: ($md4 + px)) {
+	.banner {
+		margin: 0 -10px;
 	}
 }
 
@@ -34,7 +95,7 @@ $primary: #292825;
 		position: relative;
 		top: 0;
 		width: 100%;
-		padding-bottom: 100%/3*2;
+		padding-bottom: 100%/3 * 2;
 		background-color: #666;
 	}
 	figure {
@@ -42,6 +103,7 @@ $primary: #292825;
 		top: 0;
 		height: 100%;
 		width: 100%;
+		z-index: 1;
 	}
 	.imgFog {
 		position: absolute;
@@ -49,27 +111,31 @@ $primary: #292825;
 		height: 100%;
 		width: 100%;
 		background-color: rgba(255, 240, 240, 0.5);
-		transition: all .5s ease-out;
+		transition: all 0.5s ease-out;
+		z-index: 2;
 	}
 	& a:hover .imgFog {
 		background-color: transparent;
 		&::after {
 			bottom: 0;
-    		content: "";
-    		display: block;
-    		left: 0;
-    		position: absolute;
-    		right: 0;
-    		top: 0;
-    		//z-index: 1;
+			content: "";
+			display: block;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+			//z-index: 1;
 			background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.35) 100%);
 		}
 	}
 	img {
 		width: 100%;
 	}
-	
-	a:hover h2, a:hover button, a:hover p{
+
+	a:hover h2,
+	a:hover h4,
+	a:hover button,
+	a:hover p {
 		color: #fff;
 		border-color: #fff;
 	}
@@ -78,26 +144,67 @@ $primary: #292825;
 		width: 100%;
 		bottom: 0;
 		left: 50%;
+		padding: 0 2em;
 		transform: translate(-50%, 0);
 		text-align: center;
+		z-index: 3;
 		button {
 			color: $primary;
 			border-color: $primary;
 		}
 		p {
 			color: $primary;
-			margin-bottom: 10px;
-			transition: all .5s ease-out;
+			margin-bottom: 0.7em;
+			transition: all 0.5s ease-out;
 			letter-spacing: 1px;
 		}
-		h2 {
-			margin-bottom: 10px;
-			transition: all .5s ease-out;
+		h2,
+		h4 {
+			margin-bottom: 0.1em;
+			transition: all 0.5s ease-out;
 			letter-spacing: 1px;
+		}
+		h4 {
+			letter-spacing: 3px;
 		}
 		div {
 			height: 40px;
-			margin-bottom: 5%;
+			margin-bottom: 2em;
+		}
+	}
+	@media (max-width: ($md3 + px)) {
+		.campaign__block {
+			font-size: 80%;
+			h2,
+			h4,
+			p,
+			button {
+				color: #fff;
+				border-color: #fff;
+			}
+		}
+		.imgFog {
+			display: none;
+		}
+		.imgBlankcover::after {
+			content: "";
+			bottom: 0;
+			display: block;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+			z-index: 2;
+			background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.35) 100%);
+		}
+	}
+	@media (max-width: ($md4 + px)) {
+		.campaign__block {
+			font-size: 60%;
+			div {
+				height: 35px;
+				margin-bottom: 1em;
+			}
 		}
 	}
 }

@@ -5,13 +5,17 @@ import css from "./Ads.module.scss"
 
 type TCampaignProps = {
     link?: string
+    preTitle?: string
     title: string
     text: string
+    buttonTitle?: string
     img: StaticImageData
     imgAltText: string
 }
 
-export const Campaign: FC<TCampaignProps> = React.memo(({link = "/", title, text, img, imgAltText}) => {
+export const Campaign: FC<TCampaignProps> = React.memo(({
+    link = "/", preTitle, title, text, buttonTitle = "SHOP NOW!", img, imgAltText
+}) => {
     return <section className={css.campaign}>
         <Link href={link}>
             <a>
@@ -21,10 +25,11 @@ export const Campaign: FC<TCampaignProps> = React.memo(({link = "/", title, text
                 </figure>
                 <div className={css.imgFog}></div>
                 <figcaption className={css.campaign__block}>
+                    {preTitle && <h4>{preTitle}</h4>}
                     <h2>{title}</h2>
                     <p>{text}</p>
                     <div>
-                        <Button>SHOP NOW!</Button>
+                        <Button>{buttonTitle}</Button>
                     </div>
                 </figcaption>
             </a>
