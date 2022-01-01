@@ -1,10 +1,10 @@
-import React, { ChangeEvent, FocusEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, forwardRef} from 'react'
+import React, { ChangeEvent, FocusEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, forwardRef } from 'react'
 import css from './Input.module.scss'
 
 type TDefaultInputProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 /*type TDefaultLabelProps = DetailedHTMLProps<LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>*/
 
-type TInputTextProps = TDefaultInputProps  & {
+type TInputTextProps = TDefaultInputProps & {
     onChangeText?: (value: string) => void
     onChangeFocus?: (value: boolean) => void
     onEnter?: () => void
@@ -46,23 +46,19 @@ export const Input = forwardRef<HTMLInputElement, TInputTextProps>((
         onBlur && onBlur(e)
         onChangeFocus && onChangeFocus(state)
     }
-    
+
     const finalInputClassName = `${css.input} ${error ? css.error : ''}`
 
-    return (
-        <>
-            <input
-                ref={ref}
-                placeholder={placeholder}
-                type={type}
-                name={name}
-                onFocus={(e) => onFocusCallback(e, true)}
-                onBlur={(e) => onBlurCallback(e, false)}
-                onChange={onChangeCallback}
-                onKeyPress={onKeyPressCallback}
-                className={`${className} ${finalInputClassName} `} 
-                {...restProps}
-            />
-        </>
-    )
+    return <input
+        ref={ref}
+        placeholder={placeholder}
+        type={type}
+        name={name}
+        onFocus={(e) => onFocusCallback(e, true)}
+        onBlur={(e) => onBlurCallback(e, false)}
+        onChange={onChangeCallback}
+        onKeyPress={onKeyPressCallback}
+        className={`${className} ${finalInputClassName} `}
+        {...restProps}
+    />
 })
