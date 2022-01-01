@@ -9,7 +9,9 @@ export const UnderConstruction = React.memo(() => {
     }
     const windowSize = useWindowSize()
     const getStrokes = useCallback(() => {
-        const quantity = +(windowSize.width / 50).toFixed(0)
+        const quantity = windowSize.width > 767.98
+            ? +(windowSize.width / 50).toFixed(0)
+            : +(windowSize.width / 35).toFixed(0)
         let arr = []
         for (let i = 0; i < quantity; i++) {
             arr.push(<li key={i}></li>)
