@@ -5,6 +5,7 @@ import icon_tw from "../../../../../public/images/socials/icon_tw.svg"
 import icon_ig from "../../../../../public/images/socials/icon_ig.svg"
 import icon_yt from "../../../../../public/images/socials/icon_yt.svg"
 import icon_pi from "../../../../../public/images/socials/icon_pi.svg"
+import { Accordeon } from "../../cp1-elements/el05-Accordeon/Accordeon"
 
 export const Footer = React.memo(() => {
     const corporateTitles = ["Career at H&M", "About H&M", "Sustainability", "Press", "Investor Relations", "Corporate Governance"]
@@ -42,9 +43,9 @@ export const Footer = React.memo(() => {
         { href: "/ladies", title: "Ladies" },
         { href: "/divided", title: "Divided" },
         { href: "/men", title: "Men" },
-        { href: "/babies", title: "Babies" },
+        { href: "/baby", title: "Babies" },
         { href: "/kids", title: "Kids" },
-        { href: "/household", title: "H&M HOME" },
+        { href: "/home", title: "H&M HOME" },
         { href: "/unidays", title: "Student Discount" },
     ]
     const shopLinks = shopCategories.map((item, i, arr) => {
@@ -74,6 +75,35 @@ export const Footer = React.memo(() => {
                     <ul>
                         {helpMenu}
                     </ul>
+                </nav>
+                <section className="footer-newsletter">
+                    <h4>Become a member</h4>
+                    <p>
+                        Join now and get 10% off your next purchase!
+                    </p>
+                    <Link href="/"><a>
+                        READ MORE →
+                    </a></Link>
+                </section>
+            </div>
+            <div className="footer-content-mobile">
+                <nav>
+                    <Accordeon toggle={<h4>SHOP</h4>}>
+                        {shopLinks}
+                        <li className="dash"></li>
+                    </Accordeon>
+                </nav>
+                <nav>
+                    <Accordeon toggle={<h4>CORPORATE INFO</h4>}>
+                        {corporateMenu}
+                        <li className="dash"></li>
+                    </Accordeon>
+                </nav>
+                <nav>
+                    <Accordeon toggle={<h4>HELP</h4>}>
+                        {helpMenu}
+                        <li className="dash"></li>
+                    </Accordeon>
                 </nav>
                 <section className="footer-newsletter">
                     <h4>Become a member</h4>
