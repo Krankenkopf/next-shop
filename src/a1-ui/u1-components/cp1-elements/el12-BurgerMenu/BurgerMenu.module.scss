@@ -1,0 +1,119 @@
+$md3: 767.98;
+$md4: 479.98;
+
+.burger {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 16px 16px;
+    border-radius: 50%;
+    border: none;
+    //background-color: rgb(255, 37, 37);
+    cursor: none;
+    transition: transform 250ms 0s;
+    &:hover {
+        transform: rotate(180deg);
+        &.active {
+            transform: rotate(315deg);
+        }
+        .burgerInner::before {
+            transform: rotate(90deg) translateX(9px);
+        }
+        .burgerInner::after {
+            opacity: 0;
+            transform: rotate(90deg) translateX(-9px);
+        }
+    }
+}
+
+.burger.active {
+    transform: rotate(315deg);
+    & > .burgerInner::before {
+        transform: rotate(90deg) translateX(9px);
+    }
+    & > .burgerInner::after {
+        opacity: 0;
+    }
+}
+
+.burgerInner {
+    position: relative;
+    z-index: 5;
+    width: 24px;
+    height: 4px;
+    margin: 10px 0;
+    background-color: #111;
+    &::before {
+        content: "";
+        position: absolute;
+        z-index: 5;
+        width: 24px;
+        height: 4px;
+        left: 0;
+        top: -9px;
+        background-color: #111;
+        transition: all 200ms 0s;
+    }
+    &::after {
+        content: "";
+        position: absolute;
+        z-index: 5;
+        width: 24px;
+        height: 4px;
+        left: 0;
+        bottom: -9px;
+        background-color: #111;
+        transition: transform 200ms 0s, opacity 100ms 10ms;
+    }
+}
+
+@media screen and (max-width: ($md3 + px)) {
+    .burger {
+        display: block;
+    }
+}
+
+@media screen and (max-width: ($md4 + px)) {
+    .burger {
+        display: block;
+        padding: 9px 10px;
+        cursor: pointer;
+    }
+    .burger:hover {
+        transform: none;
+    }
+    .burger:hover .burgerInner::before {
+        transform: none;
+    }
+    .burger.active > .burgerInner::before {
+        transform: rotate(90deg) translateX(8px);
+    }
+    .burger.active > .burgerInner::after {
+        transform: rotate(90deg) translateX(-8px);
+        opacity: 0;
+    }
+    .burger:hover.active > .burgerInner::after {
+        opacity: 0;
+    }
+
+    .burgerInner {
+        width: 20px;
+        height: 2px;
+        &::before {
+            width: 20px;
+            height: 2px;
+            top: -8px
+        }
+        &::after {
+            width: 20px;
+            height: 2px;
+            bottom: -8px;
+        }
+    }
+    .burger:hover .burgerInner::after {
+        opacity: 1;
+        transform: none;
+    }
+}
