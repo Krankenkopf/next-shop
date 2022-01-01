@@ -1,3 +1,4 @@
+import { getCartItems } from './cart-reducer'
 
 import {AppThunk} from './store';
 import {setAppStatus, setInitialized} from "./app-reducer";
@@ -73,23 +74,24 @@ export const login = (): AppThunk => async (dispatch, getState) => {
         }
         dispatch(setAppStatus('succeeded'))
     } catch (e) {
-        handleServerNetworkError(e, dispatch)
+        handleServerNetworkError(e, "auth", dispatch)
     }
 }
 
 export const logout = (): AppThunk => async dispatch => {
     try {
         dispatch(setAppStatus('auth loading'))
-        const response = await authAPI.logout()
-        dispatch(setUserData(response.data))
         batch(() => {
             dispatch(setIsLoggedIn(false))
             dispatch(setIsSignupPassConfirmed(null))
             dispatch(setSignupUserData(null))
-        })   
+        })
+        const response = await authAPI.logout()
+        dispatch(setUserData(response.data))
+        dispatch(getCartItems())
         dispatch(setAppStatus('succeeded'))
     } catch (e) {
-        handleServerNetworkError(e, dispatch)
+        handleServerNetworkError(e, "auth", dispatch)
     }
 }
 
@@ -101,10 +103,11 @@ export const me = (): AppThunk => async dispatch => {
         if (response.data.accessLevel >= AccessLevel.REGISTERED) {
             dispatch(setIsLoggedIn(true))
         }
+        dispatch(getCartItems())
         dispatch(setInitialized())
         dispatch(setAppStatus('succeeded'))
     } catch (e) {
-        handleServerNetworkError(e, dispatch)
+        handleServerNetworkError(e, "auth", dispatch)
         dispatch(setInitialized())
     }
 }
@@ -131,7 +134,7 @@ export const signup = (): AppThunk => async (dispatch, getState) => {
         dispatch(setAppStatus('succeeded'))
     }
     catch (e) {
-        handleServerNetworkError(e, dispatch)
+        handleServerNetworkError(e, "auth", dispatch)
     }
 }
 

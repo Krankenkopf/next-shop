@@ -89,7 +89,7 @@ export const getProducts = (path: string, queryCategories: Array<string>): AppTh
         dispatch(setError(null))
         dispatch(setAppStatus("succeeded"))
     } catch (e) {
-        handleServerNetworkError(e, dispatch)
+        handleServerNetworkError(e, "content", dispatch)
     }
 }
 

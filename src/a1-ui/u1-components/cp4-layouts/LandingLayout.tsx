@@ -1,8 +1,6 @@
 import { useRouter } from "next/dist/client/router"
 import Head from "next/head"
-import { useCallback, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { me } from "../../../a2-bll/auth-reducer"
 import { TState } from "../../../a2-bll/store"
 import { Preloader } from "../cp1-elements/el11-Preloader/Preloader"
 import { Footer } from "../cp2-modules/Footer/Footer"
@@ -13,10 +11,6 @@ export const LandingLayout = ({ children, title = 'Noname Shop' }: any) => {
     const router = useRouter()
     const dispatch = useDispatch()
     const isInitialized = useSelector<TState, boolean>(state => state.app.isInitialized)
-
-    useEffect(() => {
-        dispatch(me())
-    }, [dispatch])
 
     return (
         <>
