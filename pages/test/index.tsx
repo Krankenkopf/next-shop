@@ -1,5 +1,6 @@
 import Head from "next/head"
 import React, { useEffect, useRef, useState } from "react"
+import { useAppSelector } from "../../src/a0-common/c3-hooks"
 import { LoginForm } from "../../src/a1-ui/u1-components/cp2-modules/AuthModules/Forms/LoginForm"
 import { ArrowNavSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/ArrowNavSpritesMap"
 import { AuthSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/AuthSpritesMap"
@@ -14,9 +15,11 @@ import { IconSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSp
 import { LayoutSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/LayoutSpritesMap"
 import { LocalizationSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/LocalizationSpritesMap"
 import { MiscSpritesMap } from "../../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/MiscSpritesMap"
-import { LandingLayout } from "../../src/a1-ui/u1-components/cp4-layouts/LandingLayout"
+import { MainLayout } from "../../src/a1-ui/u1-components/cp4-layouts/MainLayout"
 
-export default function Test() {
+export default function Test({ history }: any) {
+    const categories = useAppSelector(state => state.categories)
+
     const [icons, setIcons] = useState<Array<JSX.Element>>([])
     const [navIcons, setNavIcons] = useState<Array<JSX.Element>>([])
     const [authIcons, setAuthIcons] = useState<Array<JSX.Element>>([])
@@ -138,7 +141,7 @@ export default function Test() {
         }
     }, [navIcons])
     return (
-        <LandingLayout>
+        <MainLayout title="Test Page" categories={categories} history={history}>
             <Head>
                 <title>Test Page| Noname Shop</title>
             </Head>
@@ -210,6 +213,6 @@ export default function Test() {
                     {brandIcons}
                 </div>
             </main>
-        </LandingLayout>
+        </MainLayout>
     )
 }

@@ -11,29 +11,17 @@ import { useAppDispatch, useAppSelector } from "../../../a0-common/c3-hooks"
 import { setDeviceType } from "../../../a2-bll/layout-reducer"
 
 type TProductLayoutProps = {
-    title: string
     category?: TCategory
     rootCategoryName?: string
 }
 
 export const ProductLayout: FC<TProductLayoutProps> =
-    ({ children, title = 'Noname Shop', category, rootCategoryName }) => {
+    ({ children, category, rootCategoryName }) => {
     const router = useRouter()
     return (
-        <>
-            <Head>
-                <title>{title} | Noname Shop</title>
-                <meta name="keywords" content="some_keyword,another_keyword"></meta>
-                <meta name="description" content="some description"></meta>
-                <meta charSet="utf-8" />
-            </Head>
-            <Header />
-            <main className="wrapper__products _container">
+            <div className="wrapper__products _container">
                 <Sidebar rootCategoryName={rootCategoryName} category={category}/>
                 {children}
-            </main>
-            <Modals />
-            <Footer />
-        </>
+            </div>
     )
 }

@@ -2,7 +2,7 @@ import Link from "next/link"
 import React, { MouseEventHandler, useState } from "react";
 import Button from "../src/a1-ui/u1-components/cp1-elements/el02-Button/Button";
 import { Timer } from "../src/a1-ui/u1-components/cp1-elements/el20-Timer/Timer";
-import { LandingLayout } from "../src/a1-ui/u1-components/cp4-layouts/LandingLayout";
+import { MainLayout } from "../src/a1-ui/u1-components/cp4-layouts/MainLayout";
 import campaign01 from "../public/images/campaign01.jpg"
 import campaign02 from "../public/images/campaign02.jpg"
 import campaign03 from "../public/images/campaign03.jpg"
@@ -13,9 +13,10 @@ import magazine03 from "../public/images/magazine03.jpg"
 import { Usp } from "../src/a1-ui/u1-components/cp2-modules/Ads/Usp";
 import { Banner } from "../src/a1-ui/u1-components/cp2-modules/Ads/Banner";
 import { Campaign } from "../src/a1-ui/u1-components/cp2-modules/Ads/Campaign";
+import { useAppSelector } from "../src/a0-common/c3-hooks";
 
 export default function Index({ history, props }: any) {
-    console.log(history);
+    const categories = useAppSelector(state => state.categories)
     const carouselSources = [
         { title: "", p: "", src: images[0] },
         { title: "", p: "", src: images[1] },
@@ -57,7 +58,7 @@ export default function Index({ history, props }: any) {
         )
     })
     return (
-        <LandingLayout>
+        <MainLayout title="H&M" categories={categories} history={history}>
             <Usp />
             <Banner title="Member perk: 20% off $75 + free shipping">
                 <div>
@@ -151,6 +152,6 @@ export default function Index({ history, props }: any) {
                     </div>
                 </div>
             </section>
-        </LandingLayout>
+        </MainLayout>
     )
 }

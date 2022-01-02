@@ -8,12 +8,15 @@ import { selectPageCategory, selectPageMeta } from "../../src/a2-bll/selectors"
 import campaignladies01 from "../../public/images/campaignladies01.jpg"
 import campaignladies02 from "../../public/images/campaignladies02.jpg"
 import campaignladies03 from "../../public/images/campaignladies03.jpg"
+import { MainLayout } from "../../src/a1-ui/u1-components/cp4-layouts/MainLayout"
 
-export default function Ladies() {
+export default function Ladies({history}: any) {
+    const categories = useAppSelector(state => state.categories)
     const category = useAppSelector<TCategory>(state => selectPageCategory(state, "ladies"))
     const pageMeta = useAppSelector<TPageMeta>(state => selectPageMeta(state, "ladies"))
     return (
-        <ProductLayout title={pageMeta.title}
+        <MainLayout title={pageMeta.title} categories={categories} history={history}>
+            <ProductLayout 
             category={category}
             rootCategoryName={pageMeta.path}>
             <div className="page-content">
@@ -41,5 +44,7 @@ export default function Ladies() {
                 </p>
             </div>
         </ProductLayout>
+        </MainLayout>
+        
     )
 }

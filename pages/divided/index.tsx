@@ -10,12 +10,15 @@ import campaigndivided01 from "../../public/images/campaigndivided01.jpg"
 import campaigndivided02 from "../../public/images/campaigndivided02.jpg"
 import campaigndivided03 from "../../public/images/campaigndivided03.jpg"
 import { Campaign } from "../../src/a1-ui/u1-components/cp2-modules/Ads/Campaign"
+import { MainLayout } from "../../src/a1-ui/u1-components/cp4-layouts/MainLayout"
 
-export default function Divided() {
+export default function Divided({history}: any) {
+    const categories = useAppSelector(state => state.categories)
     const category = useAppSelector<TCategory>(state => selectPageCategory(state, "divided"))
     const pageMeta = useAppSelector<TPageMeta>(state => selectPageMeta(state, "divided"))
     return (
-        <ProductLayout title={pageMeta.title}
+        <MainLayout title={pageMeta.title} categories={categories} history={history}>
+            <ProductLayout
             category={category}
             rootCategoryName={pageMeta.path}>
             <div className="page-content">
@@ -41,5 +44,7 @@ export default function Divided() {
                     imgAltText="campaigndivided03" />
             </div>
         </ProductLayout>
+        </MainLayout>
+        
     )
 }

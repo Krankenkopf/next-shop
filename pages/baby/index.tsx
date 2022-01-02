@@ -9,12 +9,15 @@ import { selectPageCategory, selectPageMeta } from "../../src/a2-bll/selectors"
 import campaignbaby01 from "../../public/images/campaignbaby01.jpg"
 import campaignbaby02 from "../../public/images/campaignbaby02.jpg"
 import campaignbaby03 from "../../public/images/campaignbaby03.jpg"
+import { MainLayout } from "../../src/a1-ui/u1-components/cp4-layouts/MainLayout"
 
-export default function Baby() {
+export default function Baby({ history }: any) {
+    const categories = useAppSelector(state => state.categories)
     const category = useAppSelector<TCategory>(state => selectPageCategory(state, "baby"))
     const pageMeta = useAppSelector<TPageMeta>(state => selectPageMeta(state, "baby"))
     return (
-        <ProductLayout title={pageMeta.title}
+        <MainLayout title={pageMeta.title} categories={categories} history={history}>
+            <ProductLayout
             category={category}
             rootCategoryName={pageMeta.path}>
             <div className="page-content">
@@ -41,5 +44,7 @@ export default function Baby() {
                     imgAltText="campaignbaby03" />
             </div>
         </ProductLayout>
+        </MainLayout>
+        
     )
 }

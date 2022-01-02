@@ -10,6 +10,7 @@ import { extractRelevantFacets, getRequestedCategory } from "../../src/a0-common
 import { Timer } from "../../src/a1-ui/u1-components/cp1-elements/el20-Timer/Timer"
 import { Banner } from "../../src/a1-ui/u1-components/cp2-modules/Ads/Banner"
 import { ProductsContent } from "../../src/a1-ui/u1-components/cp2-modules/ProductModules/ProductsContent/ProductsContent"
+import { MainLayout } from "../../src/a1-ui/u1-components/cp4-layouts/MainLayout"
 import { ProductLayout } from "../../src/a1-ui/u1-components/cp4-layouts/ProductLayout"
 import { setFacets } from "../../src/a2-bll/filters-reducer"
 import { setCategory, setCurrentPage, setPageSize, setTotalNumbers } from "../../src/a2-bll/navigation-reducer"
@@ -29,13 +30,14 @@ type TLadiesCategoryProps = {
 
 export default function LadiesCategory({categorySS, productsSS, history}: TLadiesCategorySSProps & TLadiesCategoryProps) {
     
-    
+    const categories = useAppSelector(state => state.categories)
     const rootCategory = useAppSelector<TCategory>(state => selectPageCategory(state, "ladies"))
     const pageMeta = useAppSelector<TPageMeta>(state => selectPageMeta(state, "ladies"))
     
     
     return (
-        <ProductLayout title={pageMeta.title}
+        <MainLayout title={pageMeta.title} categories={categories} history={history}>
+            <ProductLayout 
             category={rootCategory}
             rootCategoryName={pageMeta.path}>
             <div className="page-content">
@@ -50,6 +52,8 @@ export default function LadiesCategory({categorySS, productsSS, history}: TLadie
                 <ProductsContent productsSS={ productsSS }/>
             </div>
         </ProductLayout>
+        </MainLayout>
+        
     )
 }
 

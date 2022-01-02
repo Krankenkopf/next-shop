@@ -9,6 +9,7 @@ import { selectPageCategory, selectPageMeta } from "../../src/a2-bll/selectors"
 import campaignmen01 from "../../public/images/campaignmen01.jpg"
 import campaignmen02 from "../../public/images/campaignmen02.jpg"
 import campaignmen03 from "../../public/images/campaignmen03.jpg"
+import { MainLayout } from "../../src/a1-ui/u1-components/cp4-layouts/MainLayout"
 
 type TMenSSProps = {
     products: Nullable<Array<TProduct>>
@@ -18,10 +19,12 @@ type TMenProps = {
 }
 
 export default function Men(props: TMenSSProps & TMenProps) {
+    const categories = useAppSelector(state => state.categories)
     const category = useAppSelector<TCategory>(state => selectPageCategory(state, "men"))
     const pageMeta = useAppSelector<TPageMeta>(state => selectPageMeta(state, "men"))   
     return (
-        <ProductLayout title={pageMeta.title}
+        <MainLayout title={pageMeta.title} categories={categories} history={props.history}>
+            <ProductLayout 
                 category={category}
                 rootCategoryName={pageMeta.path}>
             <div className="page-content">
@@ -49,5 +52,7 @@ export default function Men(props: TMenSSProps & TMenProps) {
                 </p>
             </div>   
         </ProductLayout>
+        </MainLayout>
+        
     )
 }

@@ -60,8 +60,9 @@ main {
   display: flex;
   // align-items: center;
   flex-direction: column;
-  &.wrapper__products {
+  .wrapper__products {
     margin: auto;
+    display: flex;
     flex-direction: row;
   }
   &._loaded {

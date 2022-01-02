@@ -7,7 +7,9 @@ import { TGetProductsListRequestRequiredData, TGetProductsListRequestOptionalDat
 import { useAppSelector } from "../../src/a0-common/c3-hooks"
 import { getRequestedCategory } from "../../src/a0-common/c4-utils/state"
 import { Timer } from "../../src/a1-ui/u1-components/cp1-elements/el20-Timer/Timer"
+import { Banner } from "../../src/a1-ui/u1-components/cp2-modules/Ads/Banner"
 import { ProductsContent } from "../../src/a1-ui/u1-components/cp2-modules/ProductModules/ProductsContent/ProductsContent"
+import { MainLayout } from "../../src/a1-ui/u1-components/cp4-layouts/MainLayout"
 import { ProductLayout } from "../../src/a1-ui/u1-components/cp4-layouts/ProductLayout"
 import { setCategory } from "../../src/a2-bll/navigation-reducer"
 import { setProducts } from "../../src/a2-bll/products-reducer"
@@ -25,36 +27,29 @@ type TMenCategoryProps = {
 
 export default function MenCategory({ categorySS, productsSS, history }: TMenCategorySSProps & TMenCategoryProps) {
 
-
+    const categories = useAppSelector(state => state.categories)
     const rootCategory = useAppSelector<TCategory>(state => selectPageCategory(state, "men"))
     const pageMeta = useAppSelector<TPageMeta>(state => selectPageMeta(state, "men"))
 
-
     return (
-        <ProductLayout title={pageMeta.title}
-            category={rootCategory}
-            rootCategoryName={pageMeta.path}>
-            <div className="page-content">
-                <section id="banner" className="section-container">
-                    <Link href="/">
-                        <a>
-                            <div>
-                                <h3 className="banner__title">
-                                    30% off sitewide for Cyber Monday!
-                                </h3>
-                                <div>
-                                    DON'T WAIT!
-                                </div>
-                                <div>
-                                    <Timer />
-                                </div>
-                            </div>
-                        </a>
-                    </Link>
-                </section>
-                <ProductsContent productsSS={productsSS} />
-            </div>
-        </ProductLayout>
+        <MainLayout title={pageMeta.title} categories={categories} history={history}>
+            <ProductLayout
+                category={rootCategory}
+                rootCategoryName={pageMeta.path}>
+                <div className="page-content">
+                    <Banner title="30% off sitewide for Cyber Monday!">
+                        <div>
+                            DON'T WAIT!
+                        </div>
+                        <div>
+                            <Timer endDate="Jan 18, 2022 00:00:00" />
+                        </div>
+                    </Banner>
+                    <ProductsContent productsSS={productsSS} />
+                </div>
+            </ProductLayout>
+        </MainLayout>
+
     )
 }
 

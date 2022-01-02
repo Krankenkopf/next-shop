@@ -1,23 +1,18 @@
 import Head from "next/head"
 import Router from "next/router"
 import React from "react"
-import { useSelector } from "react-redux"
+import { useAppSelector } from "../../src/a0-common/c3-hooks"
 import { Usp } from "../../src/a1-ui/u1-components/cp2-modules/Ads/Usp"
 import { CartOverview } from "../../src/a1-ui/u1-components/cp2-modules/Cart/CartOverview"
-import { LandingLayout } from "../../src/a1-ui/u1-components/cp4-layouts/LandingLayout"
-import { TAuthState } from "../../src/a2-bll/auth-reducer"
-import { TState } from "../../src/a2-bll/store"
+import { MainLayout } from "../../src/a1-ui/u1-components/cp4-layouts/MainLayout"
 
-export default function Cart() {
+
+export default function Cart({history}: any) {
+    const categories = useAppSelector(state => state.categories)
     return (
-        <LandingLayout title={"Cart"}>
-            <Head>
-                <title>Cart | Noname Shop</title>
-            </Head>
-            <main>
-                <Usp />
-                <CartOverview />
-            </main>
-        </LandingLayout>
+        <MainLayout title={"Cart"} categories={categories} history={history}>
+            <Usp />
+            <CartOverview />
+        </MainLayout>
     )
 }
