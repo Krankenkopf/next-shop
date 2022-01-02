@@ -11,8 +11,15 @@ const BurgerMenu: FC<TBurgerMenuProps> = ({toggleMenu, menuStatus}) => {
     const toggleActive = () => {
         setStatus(!status)
         toggleMenu(!status)
+        // project modification
+        setTimeout(() => {
+            setStatus(false)
+        }, 500)
+        //
     }
-    const burgerStyle = `${css.burger} ${status ? css.active : null}`
+    //const burgerStyle = `${css.burger} ${status ? css.active : null}`
+    // project modification
+    const burgerStyle = `${css.burger} ${status ? css.freezed : null}`
 
     return <button className={burgerStyle} onClick={toggleActive}  style={menuStatus
         ? {right: '28px',}
