@@ -4,6 +4,7 @@ import Button from "../../cp1-elements/el02-Button/Button"
 import { TModal } from "./Modals"
 
 type TSideMenuProps = {
+    side: "left" | "right"
     isOpen: boolean
     modalType: TModal
     current: TModal
@@ -13,7 +14,7 @@ type TSideMenuProps = {
     onClose?: (modalType: TModal) => void
 }
 
-export const SideMenu: FC<TSideMenuProps> = ({ isOpen, modalType, current, scrollLock, layout, onClose, children }) => {
+export const SideMenu: FC<TSideMenuProps> = ({ side, isOpen, modalType, current, scrollLock, layout, onClose, children }) => {
 
     const handleCloseClick = (e: MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
         onClose && onClose(modalType)
@@ -55,12 +56,12 @@ export const SideMenu: FC<TSideMenuProps> = ({ isOpen, modalType, current, scrol
     currentStyle = `${currentStyle} ${(current === modalType && !isOpen) && css._closing}` //closing transition
     currentStyle = `${currentStyle} ${scrollLock && css._scrollLock}`
 
-    let paperStyle = `${css.modal__paper} ${css.side} ${css.left} ${layout === 2 && css._upper}`
+    let paperStyle = `${css.modal__paper} ${css.side} ${css[side]} ${layout === 2 && css._upper}`
 
     return (
         <div className={css.modal__area}>
             <div ref={body} onClick={handleCloseClick}
-                className={`${css.modal__body} ${css.side} ${currentStyle}`}>
+                className={`${css.modal__body} ${css.side} ${css[side]} ${currentStyle}`}>
                 <div className={`${paperStyle} ${currentStyle}`} onClick={(e) => e.stopPropagation()}>
                     {onClose && <Button
                         mode="icon"
@@ -69,7 +70,8 @@ export const SideMenu: FC<TSideMenuProps> = ({ isOpen, modalType, current, scrol
                             position: "absolute",
                             top: "0",
                             right: "0",
-                            fontSize: "40px"
+                            fontSize: "40px",
+                            zIndex: 100,
                         }}
                         onClick={handleCloseClick}>&times;</Button>}
                     {children}
