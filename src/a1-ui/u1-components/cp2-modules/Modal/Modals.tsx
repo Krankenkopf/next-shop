@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../../../a0-common/c3-hooks";
 import { selectModal } from "../../../../a2-bll/selectors";
 import { Nullable } from "../../../../a0-common/c1-types/t1-instance";
 import { closeModal, setModal } from "../../../../a2-bll/app-reducer";
+import { MainMenu } from "../Header/Menu/MainMenu";
 
 export type TModal = 
     "signup" | "signupPassUnconfirmed" | "login" | "passRecovery" | "cart"
@@ -187,11 +188,20 @@ export const Modals: FC<TModalsProps> = ({ }) => {
                 </Popup>
 
                 <SideMenu modalType="filtersMenu"
+                    side="right"
                     scrollLock={scrollLock}
                     current={current}
                     isOpen={modalsState.filtersMenu}
                     onClose={handleCloseModal}>
                     <FiltersMenu />
+                </SideMenu>
+                <SideMenu modalType="mainMenu"
+                    side="left"
+                    scrollLock={scrollLock}
+                    current={current}
+                    isOpen={modalsState.mainMenu}
+                    onClose={handleCloseModal}>
+                    <MainMenu />
                 </SideMenu>
             </div>
         )
