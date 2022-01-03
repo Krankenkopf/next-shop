@@ -1,4 +1,4 @@
-import React, {ButtonHTMLAttributes, CSSProperties, DetailedHTMLProps} from 'react'
+import React, { ButtonHTMLAttributes, CSSProperties, DetailedHTMLProps } from 'react'
 import css from './Button.module.scss'
 
 type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
@@ -8,15 +8,16 @@ type ExtraButtonPropsType = DefaultButtonPropsType & {
     style?: CSSProperties
     variant?: "ok" | "ok__alt" | "cancel" | "active" | "inactive" | "disabled"
     backgroundImage?: boolean
+    orientation?: "left" | "center" | "right"
 }
 
 const Button: React.FC<ExtraButtonPropsType> = (
     {
-        mode = "text", variant, style, backgroundImage,
+        mode = "text", variant, style, backgroundImage, orientation = "center",
         ...restProps
     }
 ) => {
-    let className = mode ==="text" ? css.button : css.iconButton
+    let className = mode === "text" ? css.button : css.iconButton
     switch (variant) {
         case "active": className = `${css.active} ${className}`; break
         case "inactive": className = `${css.inactive} ${className}`; break
@@ -30,12 +31,15 @@ const Button: React.FC<ExtraButtonPropsType> = (
     if (backgroundImage) {
         className = `${"backgroundImage"} ${className}`
     }
-    return (
-            <button style={style && style}
-                className={className}
-                {...restProps}
-            />
-    )
+    switch (mode) {
+        case "text": return (<div style={style && style} className={`${css.container} ${css[orientation]}`}>
+            <button className={className} {...restProps} />
+        </div>
+        )
+        case "icon": return (
+            <button style={style && style} className={className} {...restProps} />
+        )
+    }
 }
 
 export default Button
