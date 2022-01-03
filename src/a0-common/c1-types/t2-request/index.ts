@@ -46,3 +46,16 @@ export type TGetProductsListRequestOptionalData =
     & TGetProductsListRequestOptionalFilters
 
 export type TSortValue = "ascPrice" | "descPrice" | "stock" | "newProduct"
+
+//===============================================================================
+
+export type TGetProductDetailRequestRequiredData = {
+    country: CountryCodes,
+    lang: LanguageCodes,
+    productcode: number,
+}
+
+export type TGetCategoriesListRequestRequiredData = {
+    country: CountryCodes,
+    lang: LanguageCodes,
+}
