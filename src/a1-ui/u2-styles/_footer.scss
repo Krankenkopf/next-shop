@@ -89,15 +89,22 @@
 	//.footer-copyright
 	&-copyright {
 		text-align: center;
-		margin: 0 auto 20px;
+		margin: 0 auto;
 		max-width: 60%;
 	}
 	//.footer-logo
 	&-logo {
-		text-align: center;
-		margin-bottom: 20px;
+		font-size: 400%;
+		width: 5em;
+		margin: 0 auto;
+		.iconized {
+			padding-left: 5em;
+			.icon-container {
+				width: 5em;
+			}
+		}
 		svg {
-			width: 100%;
+			fill: #222;
 		}
 	}
 	.country-info {
