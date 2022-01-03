@@ -5,7 +5,7 @@ import { TCheckedProduct } from "../../../../../a0-common/c1-types/t1-instance/T
 import { TProduct } from "../../../../../a0-common/c1-types/t1-instance/TProduct"
 import { useAppDispatch, useAppSelector } from "../../../../../a0-common/c3-hooks"
 import { TRequestStatus } from "../../../../../a2-bll/app-reducer"
-import { TLayoutState } from "../../../../../a2-bll/layout-reducer"
+import { setProductsLayout, TLayoutState } from "../../../../../a2-bll/layout-reducer"
 import { TNavigationState } from "../../../../../a2-bll/navigation-reducer"
 import { clearProducts, getProducts } from "../../../../../a2-bll/products-reducer"
 import { selectAppStatus, selectCartItems } from "../../../../../a2-bll/selectors"
@@ -37,9 +37,36 @@ export const ProductsContent: FC<TProductsContentProps> = ({ productsSS }) => {
             console.log("client");
             onLoad()
         }
-        return () => { dispatch(clearProducts()) }
     }, [asPath])
-    //useEffect(() => , [])
+    
+    useEffect(() => {
+        switch (device) {
+            case ("mobile"): {
+                if (productsLayout !== "list1") {
+                    dispatch(setProductsLayout("list1"))
+                }
+                break
+            }
+            case ("tablet"): {
+                if (productsLayout !== "grid2") {
+                    dispatch(setProductsLayout("grid2"))
+                }
+                break
+            }
+            case ("laptop"): {
+                if (productsLayout !== "grid3") {
+                    dispatch(setProductsLayout("grid3"))
+                }
+                break
+            }
+            case ("desktop"): {
+                if (productsLayout !== "grid4") {
+                    dispatch(setProductsLayout("grid4"))
+                }
+                break
+            }
+        }
+    }, [device])
 
     return <>
         {products && <>

@@ -103,38 +103,27 @@ export const Filters = () => {
     const onLayoutToggle = (layout: TProductsLayout) => {
         dispatch(setProductsLayout(layout))
     }
+
     useEffect(() => {
         switch (device) {
             case ("mobile"): {
                 setLayoutVariants([layoutTogglers[0]])
-                if (productsLayout !== "list1") {
-                    dispatch(setProductsLayout("list1"))
-                }
                 break
             }
             case ("tablet"): {
                 setLayoutVariants([layoutTogglers[0], layoutTogglers[1],])
-                if (productsLayout !== "grid2") {
-                    dispatch(setProductsLayout("grid2"))
-                }
                 break
             }
             case ("laptop"): {
                 setLayoutVariants([layoutTogglers[0], layoutTogglers[1], layoutTogglers[2],])
-                if (productsLayout !== "grid3") {
-                    dispatch(setProductsLayout("grid3"))
-                }
                 break
             }
             case ("desktop"): {
                 setLayoutVariants(layoutTogglers)
-                if (productsLayout !== "grid4") {
-                    dispatch(setProductsLayout("grid4"))
-                }
                 break
             }
         }
-    }, [device])
+    }, [productsLayout])
 
     //sortDropmenu =======================================================================================
     const onSortOptionChange = (value: TSortValue) => {

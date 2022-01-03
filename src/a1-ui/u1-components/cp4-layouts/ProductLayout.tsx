@@ -19,7 +19,7 @@ export const ProductLayout: FC<TProductLayoutProps> =
     ({ children, category, rootCategoryName }) => {
     const router = useRouter()
     return (
-            <div className="wrapper__products _container">
+            <div className="wrapper__products">
                 <Sidebar rootCategoryName={rootCategoryName} category={category}/>
                 {children}
             </div>
