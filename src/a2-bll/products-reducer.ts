@@ -49,6 +49,9 @@ export const getProducts = (path: string, queryCategories: Array<string>): AppTh
         dispatch(setAppStatus("content loading"))
         const state = getState()
         const targetedCategory = getRequestedCategory(path, queryCategories, state.categories)
+        if (!targetedCategory) {
+            throw new Error("not found")
+        }
         const requiredParams: TGetProductsListRequestRequiredData = {
             country: state.regions.country,
             lang: state.regions.lang,

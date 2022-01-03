@@ -7,7 +7,9 @@ const initialState = {
     isInitialized: false,
     isNeedUpdate: true,
 
-    modal: null as TModal
+    modal: null as TModal,
+
+    isCSR: false 
 }
 
 export const appReducer = (state: TAppState = initialState, action: TAppActions): TAppState => {
@@ -16,6 +18,7 @@ export const appReducer = (state: TAppState = initialState, action: TAppActions)
         case appActionVariables.SET_STATUS:
         case appActionVariables.SER_ERROR:
         case appActionVariables.SET_NEED_UPDATE:
+        case appActionVariables.SET_CSR:
         case appActionVariables.SET_MODAL:
         case appActionVariables.CLOSE_MODAL:
             return {
@@ -35,6 +38,8 @@ export const setInitialized = () => (
     { type: appActionVariables.SET_INITIALIZED, payload: { isInitialized: true } } as const)
 export const setNeedUpdate = (isNeedUpdate: boolean) => (
     { type: appActionVariables.SET_NEED_UPDATE, payload: { isNeedUpdate } }) as const
+export const setCSR = () => (
+    { type: appActionVariables.SET_CSR, payload: { isCSR: true } }) as const
 export const setModal = (modal: TModal) => (
     { type: appActionVariables.SET_MODAL, payload: { modal } }) as const
 export const closeModal = () => (
@@ -51,6 +56,7 @@ export type TAppActions =
     | ReturnType<typeof setError>
     | ReturnType<typeof setInitialized>
     | ReturnType<typeof setNeedUpdate>
+    | ReturnType<typeof setCSR>
     | ReturnType<typeof setModal>
     | ReturnType<typeof closeModal>
 
@@ -60,6 +66,7 @@ const appActionVariables = {
     SER_ERROR: "APP/SET-ERROR" as const,
     SET_INITIALIZED: "APP/SET-INITIALIZED" as const,
     SET_NEED_UPDATE: "APP/SET-NEED-UPDATE" as const,
+    SET_CSR: "APP/SET-CSR" as const,
     SET_MODAL: "APP/SET-MODAL" as const,
     CLOSE_MODAL: "APP/CLOSE-MODAL" as const,
 }

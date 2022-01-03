@@ -31,6 +31,11 @@ const rootReducer = (state: TState | undefined, action: AnyAction): TState => {
             }
             //if (state?.products.products) nextState.products.products = state.products.products // preserve value on client side navigation
             //if (state?.navigation.category) nextState.navigation.category = state.navigation.category // preserve value on client side navigation
+            if (state?.app) {
+                nextState.app.isInitialized = state.app.isInitialized
+                nextState.app.isCSR = state.app.isCSR
+            }
+            if (state?.layout) nextState.layout = state.layout
             return nextState
 
         default: {
