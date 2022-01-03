@@ -20,7 +20,7 @@ export default function Ladies({history}: any) {
             category={category}
             rootCategoryName={pageMeta.path}>
             <div className="page-content">
-                <Banner title="Up to 60% off new-to-sale styles" red />
+                <Banner title="Up to 60% off new-to-sale styles" link="/wrong" red />
                 <Campaign
                     title="Varsity chic"
                     text="Sporty pieces with a Parisian touch"

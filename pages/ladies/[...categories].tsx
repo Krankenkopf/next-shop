@@ -6,7 +6,7 @@ import { TProduct } from "../../src/a0-common/c1-types/t1-instance/TProduct"
 import { TGetProductsListRequestRequiredData, TGetProductsListRequestOptionalData } from "../../src/a0-common/c1-types/t2-request"
 import { TAnyFacet, TPagination } from "../../src/a0-common/c1-types/t3-response/TProductsResponse"
 import { useAppSelector } from "../../src/a0-common/c3-hooks"
-import { extractRelevantFacets, getRequestedCategory } from "../../src/a0-common/c4-utils/state"
+import { extractRelevantFacets, getKeys, getRequestedCategory } from "../../src/a0-common/c4-utils/state"
 import { Timer } from "../../src/a1-ui/u1-components/cp1-elements/el20-Timer/Timer"
 import { Banner } from "../../src/a1-ui/u1-components/cp2-modules/Ads/Banner"
 import { ProductsContent } from "../../src/a1-ui/u1-components/cp2-modules/ProductModules/ProductsContent/ProductsContent"
@@ -29,19 +29,29 @@ type TLadiesCategoryProps = {
 }
 
 export default function LadiesCategory({categorySS, productsSS, history}: TLadiesCategorySSProps & TLadiesCategoryProps) {
-    
+    const router = useRouter()
+    console.log(router);
+    const appError = useAppSelector(state => state.app.error)
+    const currentCategory = router.asPath.split("/")[1]
     const categories = useAppSelector(state => state.categories)
+   
     const rootCategory = useAppSelector<TCategory>(state => selectPageCategory(state, "ladies"))
     const pageMeta = useAppSelector<TPageMeta>(state => selectPageMeta(state, "ladies"))
     
+    useEffect(() => {
+        console.log(appError);
+        if (appError === "not found") {
+            router.push("/404", router.asPath)
+        }
+    }, [appError])
     
     return (
         <MainLayout title={pageMeta.title} categories={categories} history={history}>
             <ProductLayout 
             category={rootCategory}
             rootCategoryName={pageMeta.path}>
-            <div className="page-content">
-                <Banner title="30% off sitewide for Cyber Monday!">
+                <div className="page-content">
+                    <Banner title="30% off sitewide for Cyber Monday!" link="/ladies/f">
                     <div>
                         DON'T WAIT!
                     </div>
@@ -52,8 +62,7 @@ export default function LadiesCategory({categorySS, productsSS, history}: TLadie
                 <ProductsContent productsSS={ productsSS }/>
             </div>
         </ProductLayout>
-        </MainLayout>
-        
+        </MainLayout>    
     )
 }
 
@@ -68,6 +77,10 @@ export const getServerSideProps = wrapper
         const state = store.getState()
         const queryCategories = query.categories as Array<string>
         const targetedCategory = getRequestedCategory(resolvedUrl, queryCategories, state.categories)
+        if (!targetedCategory) {
+            return { notFound: true }
+            //return { props: { productsSS: null } }
+        } 
         const region = state.regions
         const navigation = state.navigation
 

@@ -5,6 +5,7 @@ import Router from "next/router";
 import { TProduct } from "../../src/a0-common/c1-types/t1-instance/TProduct";
 import { jsonParser } from "../../src/a0-common/c4-utils/jsonParser";
 import { ProductDetail } from "../../src/a1-ui/u1-components/cp2-modules/ProductModules/ProductDetail/ProductDetail";
+import { MainLayout } from "../../src/a1-ui/u1-components/cp4-layouts/MainLayout";
 import { ProductLayout } from "../../src/a1-ui/u1-components/cp4-layouts/ProductLayout";
 
 type TProductPage = {
@@ -25,7 +26,8 @@ export default function ProductPage({ history, product }: TProductPage)  {
         }
     }
     return (
-        <ProductLayout title={product.name}>
+        <MainLayout title={pageMeta.title} categories={categories} history={history}>
+<ProductLayout>
             <h1>{`Product ${router.query.id}`}</h1>
             <button onClick={backHadler}>Go back</button>
             <ProductDetail code={product.articles[0].code}
@@ -33,6 +35,8 @@ export default function ProductPage({ history, product }: TProductPage)  {
             price={product.price.formattedValue}
             imgSrc={product.images[0].url}/>
         </ProductLayout>
+        </MainLayout>
+        
     )
 }
 

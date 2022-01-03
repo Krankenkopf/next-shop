@@ -28,9 +28,7 @@ export const Campaign: FC<TCampaignProps> = React.memo(({
                     {preTitle && <h4>{preTitle}</h4>}
                     <h2>{title}</h2>
                     <p>{text}</p>
-                    <div>
                         <Button>{buttonTitle}</Button>
-                    </div>
                 </figcaption>
             </a>
         </Link>
