@@ -12,33 +12,34 @@ import { useAppDispatch, useAppSelector } from "../src/a0-common/c3-hooks";
 import { setDeviceType } from "../src/a2-bll/layout-reducer";
 import { me } from "../src/a2-bll/auth-reducer";
 import { LoadingScreen } from "../src/a1-ui/u1-components/cp1-elements/el11-Preloader/LoadingScreen";
+import { setCSR } from "../src/a2-bll/app-reducer";
+import { pagesUri } from "../src/a0-common/c4-utils/pages-uri";
 
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const { asPath } = router;
-  const isInitialized = useAppSelector(state => state.app.isInitialized)
+  const {isInitialized, isCSR} = useAppSelector(state => state.app)
   const [loadingStage, setLoadingStage] = useState<"loading" | "initialization" | "complete">("loading");
   const [isLoadingScreenVisible, setisLoadingScreenVisible] = useState(true);
+  console.log("app");
   
   useEffect(() => {
     setTimeout(() => {
       setLoadingStage("initialization")
+      dispatch(setCSR())
     }, 1000)
   }, [])
   useEffect(() => {
     isInitialized && setLoadingStage("complete");
-    /* setTimeout(() => {
-      setisLoadingScreenVisible(false)
-    }, 10000) */
   }, [isInitialized])
 
   const [history, setHistory] = useState<Array<string>>([]);
   useEffect(() => {
     if (history[history.length - 1] !== asPath) {
       setHistory((prev) => ([...prev, asPath]));
-    }
+    }  
   }, [asPath])
 
   useEffect(() => {
@@ -68,22 +69,28 @@ const App = ({ Component, pageProps }: AppProps) => {
     }
   }, [width])
 
-  return <>
-    {/* <DebugContainer /> */}
+  return <div suppressHydrationWarning>
+    {typeof window === 'undefined' && isCSR
+      ? null
+      : <>
+      {/* <DebugContainer /> */}
     {/* <Component history={history} {...pageProps} /> */}
     {loadingStage === "complete" && <>
       <SpritesMap />
       <Component history={history} {...pageProps} />
     </>}
     {isLoadingScreenVisible && <LoadingScreen stage={loadingStage}/>}
-  </>
+      </>}
+  </div>
 }
-
+let counter = 0
 App.getInitialProps = wrapper.getInitialAppProps(store => async ({ Component, ctx }) => {
   const response = await fetch("http://localhost:4200/categories")
   const categories = await response.json() as TCategoriesResponse
   store.dispatch(setCategories(categories))
-
+  counter+=1
+  console.log(counter);
+  
   return {
     pageProps: {
       categories
@@ -95,6 +102,5 @@ App.getInitialProps = wrapper.getInitialAppProps(store => async ({ Component, ct
     },
   }
 })
+
 export default wrapper.withRedux(App)
-
-
