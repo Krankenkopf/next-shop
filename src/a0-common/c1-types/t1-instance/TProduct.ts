@@ -94,7 +94,14 @@ export interface Price {
 }
 
 export enum CurrencyISO {
-    Gbp = "GBP",
+    BYN = "BYN",
+    CAD = "CAD",
+    EUR = "EUR",
+    GBP = "GBP",
+    PLN = "PLN",
+    RUB = "RUB",
+    UAH = "UAH",
+    USD = "USD",
 }
 
 export enum PriceType {

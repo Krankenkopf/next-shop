@@ -25,11 +25,12 @@ $md1: $maxWidthContainer + 12;
 $md2: 991.98;
 $md3: 767.98;
 $md4: 479.98;
-$bg: #aa0000;
 $mainBgc: #ffffeb;
+$altBgc: #fdd6d6;
 $softRed: #ffcccc;
 $primary: #292825;
 $secondary: #E50010;
+$colorOptional: #5555ff;
 // </VARIABLES> ====================================================================================================
 
 // <NULLIFICATION> =================================================================================================
@@ -62,7 +63,6 @@ main {
   // align-items: center;
   flex-direction: column;
   .wrapper__products {
-    margin: auto;
     display: flex;
     flex-direction: row;
   }

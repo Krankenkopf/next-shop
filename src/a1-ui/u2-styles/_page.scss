@@ -6,12 +6,12 @@
 	min-height: 100%;
 	padding-right: 20px;
 	@media (max-width: ($md3 + px)) {
-        width: 100%; 
-		padding: 0 20px;   
-    }
+		width: 100%;
+		padding: 0 20px;
+	}
 	@media (max-width: ($md4 + px)) {
-		padding: 0;   
-    }
+		padding: 0;
+	}
 }
 
 .products-list {
@@ -19,15 +19,11 @@
 		position: relative;
 		flex: 1 0 auto;
 	}
-	//position: absolute;
-	//top: 0;
-	//left: 0;
-	//width: 100%;
 	&__paginator {
 		height: 40px;
 		margin-bottom: 20px;
 		display: flex;
-		
+
 		& > * {
 			margin: auto 0;
 			justify-content: flex-end;
@@ -36,5 +32,235 @@
 				//transform: scale(0.95, 0.95);
 			}
 		}
+	}
+}
+
+.product-detail {
+	&__wrapper {
+		position: relative;
+		display: grid;
+		grid-template-columns: 60% 40%;
+		grid-template-rows: min-content min-content min-content 70px;
+		grid-template-areas: "mainImg sidebar" "desc sidebar" "imgs sidebar" "footer footer";
+		padding: 30px;
+		aside {
+			grid-area: sidebar;
+			position: relative;
+			margin-bottom: 20px;
+			padding: 5px 0 0 20px;
+		}
+		.shadow-fade {
+			position: absolute;
+			width: 100vw;
+			height: 120px;
+			bottom: 0;
+			left: calc((100% - 100vw)/2);
+			background: linear-gradient(to top, $mainBgc, $mainBgc 110px, transparent 120px);
+			//background: linear-gradient(to bottom, $mainBgc, $mainBgc 100px, transparent 110px);
+			//background: linear-gradient(to top, $altBgc, $altBgc 100px, transparent 110px);
+			z-index: 1;
+			
+		}
+	}
+	&__mainImg {
+		margin: 0 0 20px;
+	}
+	&__sidebar {
+		position: sticky;
+		top: 30px;
+		&__title {
+			margin-bottom: 20px;
+		}
+		&__price {
+			margin-bottom: 20px;
+			s {
+				font-size: 80%;
+			}
+		}
+		&__variants {
+			h5 {
+				margin-bottom: 10px;
+			}
+			margin-bottom: 20px;
+		}
+		&__variants-toggle {
+			label {
+				height: 100%;
+				&:hover div {
+					&::after {
+						opacity: 0.5;
+					}
+				}
+				.toggle__frame__variants {
+					border: 2px solid $colorOptional;
+					border-radius: 2px;
+				}
+			}
+			input:checked + label div {
+				&::after {
+					opacity: 0;
+				}
+			}
+		}
+		//product-detail__sidebar__cart-info
+		&__cart-info {
+			margin-bottom: 15px;
+		}
+	}
+	&__desc {
+		margin: 0 0 20px;
+		padding: 20px;
+		text-align: left;
+		background-color: $altBgc;
+		p {
+			font-size: 80%;
+			margin-bottom: 0.5em;
+			&.text {
+				font-size: 70%;
+			}
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+	&__otherImgs {
+		margin: 0 0 20px;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 5px;
+		figure {
+			min-width: 40%;
+			flex: 1 1 40%;
+		}
+	}
+	&__footer {
+		grid-area: footer;
+		position: sticky;
+		bottom: 0;
+		margin: 0;
+		font-size: 70%;
+		background-color: $mainBgc;
+		z-index: 10;
+		
+	}
+	&__footer-inner {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		padding: 10px 20px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		z-index: 10;
+		ul {
+			display: flex;
+			justify-content: center;
+			margin: 0 auto 5px;
+			width: 70%;
+			flex: 0 0 60%;
+			li {
+				flex: 0 0 40%;
+				&:first-child {
+					flex: 0 1 40%;
+				}
+				&:last-child {
+					flex: 0 0 40%;
+				}
+			}
+		}
+		p {
+			flex: 1 1 40%;
+		}
+	}
+	&__footer-overlay {
+		grid-area: footer;
+		position: sticky;
+		width: 100vw;
+		height: 1px;
+		bottom: 70px;
+		margin-left: calc((100% - 100vw)/2);
+		box-shadow: 0 0 10px 2px #aaa;
+		z-index: 0;
+		&::after {
+			content: "";
+			position: absolute;
+			bottom: -15px;
+			width: 100%;
+			height: 16px;
+			box-shadow: none;
+			background-color: $mainBgc;
+			z-index: 0;
+		}
+	}
+	&__stylewith, &__alsobought {
+		text-align: left;
+	}
+}
+
+.notFound {
+	min-height: 50vh;
+	padding: 10px 20px;
+	.iconized.logo {
+		font-size: 300%;
+		width: 5em;
+		padding-left: 5em;
+		margin: 0 auto;
+		a {
+			position: absolute;
+			width: 5em;
+			height: 100%;
+			left: 0;
+		}
+		.icon-container {
+			width: 5em;
+		}
+		svg {
+			fill: #222;
+		}
+	}
+	h2 {
+		font-variant: small-caps;
+		margin-bottom: 10px;
+	}
+	p {
+		margin-bottom: 20px;
+	}
+}
+
+@media (max-width: ($md1 + px)) {
+	.product-detail {
+		&__footer-inner {
+			flex-direction: column;
+		}
+	}
+}
+
+@media (max-width: ($md2 + px)) {
+	.product-detail {
+		&__footer-inner {
+			padding: 10px 10px;
+			ul {
+				width: 80%;
+			}
+		}
+	}
+}
+
+@media (max-width: ($md3 + px)) {
+	.product-detail {
+		&__footer-inner {
+			padding: 10px 10px;
+			ul {
+				width: 100%;
+			}
+		}
+	}
+}
+
+@media (max-width: ($md4 + px)) {
+	.notFound {
+		text-align: center;
 	}
 }

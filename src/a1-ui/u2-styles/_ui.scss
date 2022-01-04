@@ -40,22 +40,6 @@ a {
 	}
 }
 
-.span__decorated {
-	position: relative;
-	display: flex;
-    align-items: center;
-	&.right {
-		span {
-			height: 1em;
-			padding-right: 30px;
-			padding-left: 0;
-		}
-	}
-	span {
-		padding-left: 30px;
-	}
-}
-
 .title {
 	color: $primary;
 	text-transform: uppercase;
@@ -89,6 +73,14 @@ a {
 	}
 }
 
+.paragraph {
+	font-size: 90%;
+	line-height: 1.5;
+	text-indent: 3em;
+	padding-top: 0.5em;
+	margin-bottom: 2em;
+}
+
 .button-container {
 	height: 50px;
 	display: flex;
@@ -96,6 +88,12 @@ a {
 	justify-content: center;
 	button {
 		height: 40px;
+	}
+}
+
+button {
+	.button-text {
+		margin-top: 1px;
 	}
 }
 

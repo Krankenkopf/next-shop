@@ -1,3 +1,4 @@
+import { CurrencyISO } from './TProduct'
 export type TProductDetail = {
     code: string
     name: string
@@ -27,7 +28,7 @@ export type TProductDetail = {
     customerGroup: string
     functions: any[]
     newArrival: boolean
-    articlesList: ArticlesList[]
+    articlesList: TProductDetailArticle[]
     inStock: boolean
     productUrl: string
     swatchesType: string
@@ -39,7 +40,7 @@ export type TProductDetail = {
     newProduct: boolean
 }
 
-export interface ArticlesList {
+export type TProductDetailArticle = {
     code: string
     name: string
     description: string
@@ -126,14 +127,21 @@ export enum AssetType {
 
 export type TProductDetailPrice = {
     price: number;
-    currency: Currency;
+    currency: CurrencyISO;
     referenceFlag: boolean;
     startDate: number;
     endDate: number;
 }
 
-export enum Currency {
-    Usd = "USD",
+export enum CurrencySymbol {
+    BYN = 'Br',
+    CAD = '$',
+    EUR = '€',
+    GBP = '£',
+    PLN = 'zł', 
+    RUB = '₽',
+    UAH = '₴', 
+    USD = '$',
 }
 
 export interface StyleWith {
