@@ -1,3 +1,4 @@
+import { TProductDetail, TProductDetailArticle } from './../a0-common/c1-types/t1-instance/TProductDetail'
 import { TCheckedProduct } from './../a0-common/c1-types/t1-instance/TCheckedProduct'
 import { TProduct } from "../a0-common/c1-types/t1-instance/TProduct"
 import db from "../../db.json"
@@ -77,10 +78,26 @@ export const getCartItems = (): AppThunk => async dispatch => {
     }
 }
 
-export const addCartItem = (product: TProduct): AppThunk => async dispatch => {
+export const addCartItem = (productHeapData: TProduct | TProductDetailArticle, from: "list" | "detail" = "list"): AppThunk => async dispatch => {
     try {
         dispatch(setAppStatus("user data loading"))
-        const productDTO = {
+        let product
+        let productDTO
+        if (from === "detail") {
+            product = productHeapData as TProductDetailArticle
+            productDTO = {
+                code: product.code,
+                name: product.name,
+                color: product.color.text,
+                size: "S",
+                quantity: 1,
+                price: product.whitePrice.price,
+                imgSrc: product.galleryDetails[0].url + "&call=url[file:/product/main]",
+                imgSrcAlt: product.galleryDetails.find(item => item.assetType === "DESCRIPTIVESTILLLIFE")?.url + "&call=url[file:/product/main]",
+            }
+        } else {
+            product = productHeapData as TProduct
+        productDTO = {
             code: product.articles[0].code,
             name: product.name,
             color: product.articles[0].color.text,
@@ -90,6 +107,8 @@ export const addCartItem = (product: TProduct): AppThunk => async dispatch => {
             imgSrc: product.images[0].url,
             imgSrcAlt: product.articles[0].normalPicture[0].url,
         }
+        }
+        
         const response = await userAPI.addCartItem(productDTO)
         dispatch(addItem(response.data))
         dispatch(setAppStatus('succeeded'))
