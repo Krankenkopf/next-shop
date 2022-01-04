@@ -5,16 +5,14 @@ import { wrapper } from '../src/a2-bll/store'
 import { useRouter } from "next/router";
 import { SpritesMap } from "../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/SpritesMap";
 import { TCategoriesResponse } from "../src/a0-common/c1-types/t3-response/TCategoriesResponse";
-import { setCategories } from "../src/a2-bll/categories-reducer";
+import { getCategories, setCategories } from "../src/a2-bll/categories-reducer";
 import { DebugContainer } from "../src/a1-ui/u1-components/cp1-elements/el18-DebugPanel/DebugContainer";
 import { useWindowSize } from "../src/a0-common/c3-hooks/useWindowSize";
 import { useAppDispatch, useAppSelector } from "../src/a0-common/c3-hooks";
 import { setDeviceType } from "../src/a2-bll/layout-reducer";
 import { me } from "../src/a2-bll/auth-reducer";
 import { LoadingScreen } from "../src/a1-ui/u1-components/cp1-elements/el11-Preloader/LoadingScreen";
-import { setCSR } from "../src/a2-bll/app-reducer";
-import { pagesUri } from "../src/a0-common/c4-utils/pages-uri";
-
+import { setAppStatus, setCSR, setError } from "../src/a2-bll/app-reducer";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useAppDispatch()
@@ -26,6 +24,14 @@ const App = ({ Component, pageProps }: AppProps) => {
   console.log("app");
   
   useEffect(() => {
+    const onLoad = async () => { 
+      dispatch(getCategories())
+    }
+    if (!pageProps.categories) {
+      console.log("app client request");
+      onLoad()
+    }
+    
     setTimeout(() => {
       setLoadingStage("initialization")
       dispatch(setCSR())
@@ -69,7 +75,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     }
   }, [width])
 
-  return <div suppressHydrationWarning>
+  return <div style={{position: "relative"}} suppressHydrationWarning>
     {typeof window === 'undefined' && isCSR
       ? null
       : <>
@@ -83,17 +89,24 @@ const App = ({ Component, pageProps }: AppProps) => {
       </>}
   </div>
 }
-let counter = 0
+
 App.getInitialProps = wrapper.getInitialAppProps(store => async ({ Component, ctx }) => {
-  const response = await fetch("http://localhost:4200/categories")
-  const categories = await response.json() as TCategoriesResponse
-  store.dispatch(setCategories(categories))
-  counter+=1
-  console.log(counter);
+  if (!ctx.req || (ctx.req.url && ctx.req.url.startsWith('/_next/data'))) {
+    console.log("ss request dumped");
+    return { pageProps: { } }
+  }
+  try {
+      const response = await fetch("http://localhost:4200/categories")
+      const categories = await response.json() as TCategoriesResponse
+      store.dispatch(setCategories(categories))
+  } catch (error: any) {
+    store.dispatch(setError(error.message))
+    store.dispatch(setAppStatus("ssr failed"))
+  }
   
   return {
     pageProps: {
-      categories
+      //categories
       // Call page-level getInitialProps
       // DON'T FORGET TO PROVIDE STORE TO PAGE
       //...(Component.getInitialProps ? await Component.getInitialProps({ ...ctx, store }) : {}),

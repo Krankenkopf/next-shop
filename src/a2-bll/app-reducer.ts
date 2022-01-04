@@ -50,6 +50,7 @@ export const closeModal = () => (
 export type TRequestStatus = "idle" | "succeeded"
     | "auth loading" | "content loading" | "user data loading" 
     | "auth failed" | "content failed" | "user data failed"
+    | "ssr failed"
 export type TAppState = typeof initialState
 export type TAppActions =
     ReturnType<typeof setAppStatus>

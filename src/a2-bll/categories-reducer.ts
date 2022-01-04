@@ -1,5 +1,10 @@
+import { TGetCategoriesListRequestRequiredData } from './../a0-common/c1-types/t2-request/index'
 import { TCategoriesResponse} from './../a0-common/c1-types/t3-response/TCategoriesResponse'
 import { Nullable, TRootCategory } from './../a0-common/c1-types/t1-instance/index'
+import { setAppStatus, setError } from './app-reducer'
+import { AppThunk } from './store'
+import { ProductsAPI } from '../a3-dal/hm/products-api'
+import { handleServerNetworkError } from '../a0-common/c4-utils/state/errorHandler'
 
 
 const initialState = { // keys must be equal to pages url
@@ -39,7 +44,26 @@ export const setCategories = (categories: TCategoriesResponse) => (
         }
     } as const)
 
-
+export const getCategories = (): AppThunk =>
+    async (dispatch, getState) => {
+        try {
+            dispatch(setAppStatus("content loading"))
+            const state = getState()
+            const requiredParams: TGetCategoriesListRequestRequiredData = {
+                country: state.regions.country,
+                lang: state.regions.lang,
+            }
+            //const response = await ProductsAPI.getCategories(requiredParams)
+            //const categories = response.data
+            const response = await fetch("http://localhost:4200/categories")
+            const categories = await response.json() as TCategoriesResponse
+            dispatch(setCategories(categories))
+            dispatch(setError(null))
+            dispatch(setAppStatus("succeeded"))
+        } catch (e) {
+            handleServerNetworkError(e, "content", dispatch)
+        }
+    }
 
 // types
 export type TCategoriesState = typeof initialState
