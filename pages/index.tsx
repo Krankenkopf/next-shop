@@ -1,5 +1,5 @@
 import Link from "next/link"
-import React, { MouseEventHandler, useState } from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import Button from "../src/a1-ui/u1-components/cp1-elements/el02-Button/Button";
 import { Timer } from "../src/a1-ui/u1-components/cp1-elements/el20-Timer/Timer";
 import { MainLayout } from "../src/a1-ui/u1-components/cp4-layouts/MainLayout";
@@ -14,8 +14,10 @@ import { Usp } from "../src/a1-ui/u1-components/cp2-modules/Ads/Usp";
 import { Banner } from "../src/a1-ui/u1-components/cp2-modules/Ads/Banner";
 import { Campaign } from "../src/a1-ui/u1-components/cp2-modules/Ads/Campaign";
 import { useAppSelector } from "../src/a0-common/c3-hooks";
+import { useRouter } from "next/router";
 
 export default function Index({ history, props }: any) {
+    const router = useRouter()
     const categories = useAppSelector(state => state.categories)
     const carouselSources = [
         { title: "", p: "", src: images[0] },
@@ -39,6 +41,12 @@ export default function Index({ history, props }: any) {
     const setStageHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         setStage(e.currentTarget.value)
     }
+
+    useEffect(() => {
+        if (router.asPath !== "/") {
+            router.push("/")
+        }
+    }, [router.asPath])
 
     const carousel = carouselSources.map((item) => {
         return (
