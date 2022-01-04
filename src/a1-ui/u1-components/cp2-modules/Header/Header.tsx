@@ -51,7 +51,7 @@ export const Header: FC<THeaderProps> = () => {
         dispatch(setModal("mainMenu"))
     }, [dispatch])
 
-    return (
+    return <>
         <header id="header">
             {(deviceType === "laptop" || deviceType === "desktop") && <nav>
                 <ul className="header-menu-services">
@@ -120,5 +120,9 @@ export const Header: FC<THeaderProps> = () => {
                 </div>
             </nav>}
         </header>
-    )
+        {(deviceType === "mobile" || deviceType === "tablet") && <>
+            <div className="header-overlay" />
+            <div className="shadow-fade top" />
+        </>}
+        </>  
 }
