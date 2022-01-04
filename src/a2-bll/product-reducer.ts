@@ -1,52 +1,20 @@
-import { ArticlesList, Collection, MaterialDetail, TProductDetailCategory, TProductDetailPrice } from './../a0-common/c1-types/t1-instance/TProductDetail'
-import { TColor } from '../a0-common/c1-types/t1-instance/TProductDetail'
-import { Nullable} from './../a0-common/c1-types/t1-instance/index'
+import { TGetProductDetailRequestRequiredData } from './../a0-common/c1-types/t2-request/index'
+import { TProductDetail } from './../a0-common/c1-types/t1-instance/TProductDetail'
+import { Nullable } from './../a0-common/c1-types/t1-instance/index'
+import { AppThunk } from './store'
+import { setAppStatus, setError } from './app-reducer'
+import { ProductsAPI } from '../a3-dal/hm/products-api'
+import { TProductDetailResponse } from '../a0-common/c1-types/t3-response/TProductDetailResponse'
+import { handleServerNetworkError } from '../a0-common/c4-utils/state/errorHandler'
 
 const initialState = {
-    code: null as Nullable<string>,
-    name: null as Nullable<string>,
-    description: null as Nullable<string>,
-    sapProductName: null as Nullable<string>,
-    sellingAttributes: [] as any[],
-    color: null as Nullable<TColor>,
-    whitePrice: null as Nullable<TProductDetailPrice>,
-    redPrice: null as Nullable<TProductDetailPrice>,
-    priceType: null as Nullable<string>,
-    importedBy: null as Nullable<string>,
-    importedDate: null as Nullable<string>,
-    netQuantity: null as Nullable<string>,
-    countryOfProduction: null as Nullable<string>,
-    productTypeName: null as Nullable<string>,
-    measurements: [] as Array<string>,
-    descriptiveLenght: [] as Array<string>,
-    assortmentTypeKey: null as Nullable<string>,
-    lengthCollection: null as Nullable<Array<Collection>>,
-    fits: [] as Array<string>,
-    showPriceMarker: null as Nullable<boolean>,
-    baseProductCode: null as Nullable<string>,
-    ancestorProductCode: null as Nullable<string>,
-    mainCategory: null as Nullable<TProductDetailCategory>,
-    supercategories: null as Nullable<Array<TProductDetailCategory>>,
-    constructionDescr: null as Nullable<string>,
-    customerGroup: null as Nullable<string>,
-    functions: [] as any[],
-    newArrival: null as Nullable<boolean>,
-    articlesList: null as Nullable<Array<ArticlesList>>,
-    inStock: null as Nullable<boolean>,
-    productUrl: null as Nullable<string>,
-    swatchesType: null as Nullable<string>,
-    rootCategoryPath: null as Nullable<string>,
-    styles: [] as Array<string>,
-    styleCollection: null as Nullable<Array<Collection>>,
-    materialDetails: null as Nullable<Array<MaterialDetail>>,
-    presentationTypes: null as Nullable<string>,
-    newProduct: null as Nullable<boolean>,
+    product: null as Nullable<TProductDetail>
 }
 
 export const productReducer =
 (state: TProductState = initialState, action: TProductActions): TProductState => {
 switch (action.type) {
-    case productActionVariables.SET_:
+    case productActionVariables.SET_PRODUCT:
         return {
             ...state,
             ...action.payload
@@ -55,11 +23,34 @@ switch (action.type) {
     }
 }
 // actions
-export const setProduct = () => (
+export const setProduct = (product: TProductDetail) => (
 {
-    type: productActionVariables.SET_,
-    payload: {}
+    type: productActionVariables.SET_PRODUCT,
+    payload: {product}
 } as const)
+
+export const getProduct = (code: number): AppThunk =>
+    async (dispatch, getState) => {
+        try {
+            dispatch(setAppStatus("content loading"))
+            const state = getState()
+            const requiredParams: TGetProductDetailRequestRequiredData = {
+                country: state.regions.country,
+                lang: state.regions.lang,
+                productcode: code,
+            }
+            //const response = await ProductsAPI.getProductDetail(requiredParams)
+
+            const response = await (await fetch("http://localhost:4200/detail")).json() as TProductDetailResponse
+            const product = response.product
+            dispatch(setProduct(product))
+            dispatch(setError(null))
+            dispatch(setAppStatus("succeeded"))
+        } catch (e) {
+            handleServerNetworkError(e, "content", dispatch)
+        }
+    }
+
 
 // types
 export type TProductState = typeof initialState
@@ -68,5 +59,5 @@ export type TProductActions =
 
 // variables
 const productActionVariables = {
-    SET_: "" as const,
+    SET_PRODUCT: "PRODUCT/SET-PRODUCT" as const,
 }
