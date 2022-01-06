@@ -151,10 +151,17 @@ header#header {
   }
 }
 @media screen and (max-width: ($md4 + px)) {
-  nav.nav-mobile {
+  header#header nav.nav-mobile {
     grid-template-columns: 50px 40px 1fr;
     grid-template-rows: 34px;
     font-size: 80%;
+  }
+  .header-overlay {
+    top: 59px;
+  }
+  .shadow-fade.top {
+    height: 85px !important;
+    background: linear-gradient(to bottom, $mainBgc, $mainBgc 75px, transparent 85px) !important;
   }
 }
 

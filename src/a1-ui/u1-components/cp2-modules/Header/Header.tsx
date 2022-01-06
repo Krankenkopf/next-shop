@@ -52,6 +52,7 @@ export const Header: FC<THeaderProps> = () => {
     }, [dispatch])
 
     return <>
+        {(deviceType === "mobile" || deviceType === "tablet") && <div className="header-overlay" />}
         <header id="header">
             {(deviceType === "laptop" || deviceType === "desktop") && <nav>
                 <ul className="header-menu-services">
@@ -121,7 +122,6 @@ export const Header: FC<THeaderProps> = () => {
             </nav>}
         </header>
         {(deviceType === "mobile" || deviceType === "tablet") && <>
-            <div className="header-overlay" />
             <div className="shadow-fade top" />
         </>}
         </>  

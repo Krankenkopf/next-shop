@@ -1,3 +1,4 @@
+@use 'sass:math';
 $box: 42px;
 $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
 
@@ -41,8 +42,8 @@ $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
 }
 .color {
     @include circle($innerBox);
-    left: calc(50% - #{$innerBox/2});
-    top: calc(50% - #{$innerBox/2});
+    left: calc(50% - #{math.div($innerBox, 2)});
+    top: calc(50% - #{math.div($innerBox, 2)});
 }
 
 .multi {

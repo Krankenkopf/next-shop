@@ -1,3 +1,5 @@
+$altBgc: #fdd6d6;
+
 .header {
     text-align: center;
     margin-bottom: 20px;
@@ -130,7 +132,7 @@
         margin-bottom: 90px;
         position: sticky;
         top: 0;
-        background-color: #fdd6d6;
+        background-color: $altBgc;
         p {
             width: 100%;
             font-size: 80%;
