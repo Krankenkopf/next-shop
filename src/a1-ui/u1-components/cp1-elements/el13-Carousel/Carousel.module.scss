@@ -1,0 +1,96 @@
+$mainBgc: #ffffeb;
+
+.carousel {
+    &__container {
+        position: relative;
+        overflow: hidden;
+        ul {
+            display: flex;
+			align-content: center;
+            justify-content: space-between;
+			flex-wrap: nowrap;
+        }
+    }
+    &__item__container {
+        display: flex;
+        justify-content: center;
+        padding: 5px;
+    }
+    &__item {
+        flex: 0 1 0%;
+    }
+    &__controls__arrows {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        visibility: hidden;
+        & > div {
+            visibility: visible;
+            position: absolute;
+            top: 0;
+            width: 1.5em;
+            height: 100%;
+            & > div {
+                height: 100%;
+            }
+        }
+        >:first-child {       
+            left: 0;
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to left, transparent, $mainBgc);
+            }
+        }
+        >:last-child {
+            right: 0;
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to right, transparent, $mainBgc);
+            }
+        }
+    }
+    &__controls__dots {
+        padding: 1em 2em;
+        ul {
+            display: flex;
+            justify-content: center;
+            li {
+                margin-right: 1.15em;
+                &:last-child {
+				margin-right: 0;
+			}
+            }
+        }
+        .carousel__controls__input {
+            position: absolute;
+            width: 0;
+            height: 0;
+            opacity: 0;
+        }
+        .carousel__controls__dot {
+            cursor: pointer;
+            height: 0.7em;
+			width: 0.7em;
+            box-shadow: 0 0 0 0.15em #222;
+			//border: 0.15em solid #222;
+			border-radius: 50%;	
+            
+        }
+        input:checked + label .carousel__controls__dot  {
+            background-color: #E50010; 
+            box-shadow: 0 0 0 0.15em #E50010;
+        }
+    }
+}
