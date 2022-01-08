@@ -35,6 +35,7 @@ const rootReducer = (state: TState | undefined, action: AnyAction): TState => {
             if (state?.app) {
                 nextState.app.isInitialized = state.app.isInitialized
                 nextState.app.isCSR = state.app.isCSR
+                nextState.app.modal = state.app.modal
             }
             if (state?.layout) nextState.layout = state.layout
             return nextState

@@ -95,7 +95,6 @@ export const Modals: FC<TModalsProps> = ({ }) => {
             //setScrollLock(true)   
             if (freezed && modalToClose !== freezed) {  // now is two modals in view
                 setModalsState((prev) => ({ ...prev, [modalToClose]: false }))
-                console.log("closed " + modalToClose)
                 revealModal(freezed) // set global toggler to lower modal
                 //setScrollLock(false)
                 setTimeout(() => {
@@ -201,7 +200,7 @@ export const Modals: FC<TModalsProps> = ({ }) => {
                     current={current}
                     isOpen={modalsState.mainMenu}
                     onClose={handleCloseModal}>
-                    <MainMenu />
+                    <MainMenu closeModal={handleCloseModal}/>
                 </SideMenu>
             </div>
         )
