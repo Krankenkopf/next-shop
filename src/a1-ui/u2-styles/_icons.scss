@@ -39,6 +39,13 @@
 			}
 		}
 	}
+	&.multiline {
+		height: initial;
+		min-height: 1.25em;
+		.icon-container {
+			height: 1.25em;
+		}
+	}
 }
 
 .icon-container {

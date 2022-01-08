@@ -132,10 +132,10 @@ header#header {
   }
   .header-overlay {
     position: sticky;
-		width: 110vw;
+		width: 100vw;
 		height: 1px;
 		top: 80px;
-		margin-left: calc((100% - 110vw) / 2);
+		margin-right: calc((100% - 100vw)/2);
 		box-shadow: 0 0 10px 2px #aaa;
 		z-index: 99;
 		&::after {
@@ -152,6 +152,7 @@ header#header {
 }
 @media screen and (max-width: ($md4 + px)) {
   header#header nav.nav-mobile {
+    padding: 15px 10px;
     grid-template-columns: 50px 40px 1fr;
     grid-template-rows: 34px;
     font-size: 80%;
