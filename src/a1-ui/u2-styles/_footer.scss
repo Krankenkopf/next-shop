@@ -4,6 +4,7 @@
 	left: 0;
 	width: 100%;
 	padding: 30px 20px 20px;
+	overflow-x: hidden;
 	background-color: #bbffff;
 	//.footer-content
 	&-content {
@@ -111,5 +112,13 @@
 		position: relative;
 		right: 1%;
 		text-align: center;
+	}
+}
+
+@media (max-width: ($md4 + px)) {
+	.footer {
+		&-logo {
+			font-size: 300%;
+		}
 	}
 }

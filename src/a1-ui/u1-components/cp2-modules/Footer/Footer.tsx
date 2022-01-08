@@ -129,7 +129,7 @@ export const Footer = React.memo(() => {
             <div className="footer-logo">
                 <Link href="/">
                     <div className="iconized">
-                        <BrandIcon name="handmfull" size="max"/>
+                        <BrandIcon name="handmfull" size="full"/>
                     </div>
                 </Link>
             </div>
