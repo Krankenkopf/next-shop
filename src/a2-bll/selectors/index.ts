@@ -11,7 +11,17 @@ export const selectModal = (state: TState) => state.app.modal
 export const selectItemsTotalCount = (state: TState) => state.navigation.totalNumberOfResults
 export const selectItemsTotalCountUnfiltered = (state: TState) => state.navigation.totalNumberOfResultsUnfiltered
 export const selectCartItems = (state: TState) => state.cart.products
+export const selectCartItemCodes = (state: TState) => state.cart.products.map((product) => product.code)
 export const selectAppStatus = (state: TState) => state.app.status
+export const selectIsMobileDevice = (state: TState) => {
+    switch (state.layout.device) {
+        case 'desktop':
+        case 'laptop': return false
+        case 'tablet':
+        case 'mobile': return true
+
+    }   
+}
 
 export const selectPageCategory = createSelector(
     [

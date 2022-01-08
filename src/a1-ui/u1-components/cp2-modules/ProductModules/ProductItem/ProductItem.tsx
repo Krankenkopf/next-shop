@@ -186,11 +186,12 @@ export const ProductItem: FC<TProductItems> = (props) => {
                         <div className={css.card__button}>
                             {isInCart
                                 ? <Link href="/cart"><a>
-                                    <Button variant="ok__alt">
+                                    <Button variant="ok__alt" orientation="left">
                                         {"Go to cart"}
                                     </Button>
                                 </a></Link>
                                 : <Button variant={"ok"}
+                                    orientation="left"
                                     onClick={onCartButtonClick}>
                                     {"Add to cart"}
                                 </Button>}
