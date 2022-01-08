@@ -14,7 +14,7 @@ const BurgerMenu: FC<TBurgerMenuProps> = ({toggleMenu, menuStatus}) => {
         // project modification
         setTimeout(() => {
             setStatus(false)
-        }, 500)
+        }, 700)
         //
     }
     //const burgerStyle = `${css.burger} ${status ? css.active : null}`
