@@ -1,5 +1,5 @@
 import Link from "next/link"
-import React, { MouseEventHandler, useEffect, useState } from "react";
+import React, { MouseEventHandler, useEffect, useMemo, useState } from "react";
 import Button from "../src/a1-ui/u1-components/cp1-elements/el02-Button/Button";
 import { Timer } from "../src/a1-ui/u1-components/cp1-elements/el20-Timer/Timer";
 import { MainLayout } from "../src/a1-ui/u1-components/cp4-layouts/MainLayout";
@@ -15,56 +15,69 @@ import { Banner } from "../src/a1-ui/u1-components/cp2-modules/Ads/Banner";
 import { Campaign } from "../src/a1-ui/u1-components/cp2-modules/Ads/Campaign";
 import { useAppSelector } from "../src/a0-common/c3-hooks";
 import { useRouter } from "next/router";
+import { Carousel } from "../src/a1-ui/u1-components/cp1-elements/el13-Carousel/Carousel";
+import { Icon } from "../src/a1-ui/u1-components/cp1-elements/el10-Icons/Icon";
+
+const carouselSources = [
+        { title: "Women", p: "Pants", src: images[0], link: "/ladies", },
+        { title: "Women", p: "Tops", src: images[1], link: "/ladies", },
+        { title: "Women", p: "Shirts & Blouses", src: images[2], link: "/ladies", },
+        { title: "Women", p: "Jeans", src: images[3], link: "/ladies", },
+        { title: "Women", p: "Jackets & Coats", src: images[4], link: "/ladies", },
+        { title: "Women", p: "Hoodies & Sweatshirts", src: images[5], link: "/ladies", },
+        { title: "Women", p: "Dresses", src: images[6], link: "/ladies", },
+        { title: "Women", p: "Cardigans & Sweaters", src: images[7], link: "/ladies", },
+        { title: "Men", p: "T-shirts & Tanks", src: images[8], link: "/men", },
+        { title: "Men", p: "Pants", src: images[9], link: "/men", },
+        { title: "Men", p: "Cardigans & Sweaters", src: images[10], link: "/men", },
+        { title: "Baby", p: "Clothing", src: images[11], link: "/baby", },
+        { title: "Kids", p: "New Arrivals", src: images[12], link: "/kids", },
+        { title: "Kids", p: "Outerwear", src: images[13], link: "/kids", },
+        { title: "Kids", p: "Girls", src: images[14], link: "/kids", },
+        { title: "Kids", p: "Boys", src: images[15], link: "/kids", },
+    ]
 
 export default function Index({ history, props }: any) {
     const router = useRouter()
+    const device = useAppSelector(state => state.layout.device)
     const categories = useAppSelector(state => state.categories)
-    const carouselSources = [
-        { title: "", p: "", src: images[0] },
-        { title: "", p: "", src: images[1] },
-        { title: "", p: "", src: images[2] },
-        { title: "", p: "", src: images[3] },
-        { title: "", p: "", src: images[4] },
-        { title: "", p: "", src: images[5] },
-        { title: "", p: "", src: images[6] },
-        { title: "", p: "", src: images[7] },
-        { title: "", p: "", src: images[8] },
-        { title: "", p: "", src: images[9] },
-        { title: "", p: "", src: images[10] },
-        { title: "", p: "", src: images[11] },
-        { title: "", p: "", src: images[12] },
-        { title: "", p: "", src: images[13] },
-        { title: "", p: "", src: images[14] },
-        { title: "", p: "", src: images[15] },
+    
+    const carouselItems = carouselSources.map((item) => {
+        return (
+            <Link href={item.link} >
+                <a className="carousel-item">
+                    <div className="carousel__imgContainer">
+                        <img src={item.src} alt="carouselImg" />
+                    </div>
+                    <h4>{item.title}</h4>
+                    <p>{item.p}</p>
+                </a>
+            </Link>
+        )
+    })
+    const carouselArrows = [
+        <div className="iconized">
+            <Icon name="chevron-right" side="left" rotate={3} />
+        </div>,
+        <div className="iconized right">
+            <Icon name="chevron-right" side="right" />
+        </div>
     ]
-    const [stage, setStage] = useState('0');
-    const setStageHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-        setStage(e.currentTarget.value)
-    }
+    const carouselViewSize = useMemo(() => {
+        switch (device) {
+            case ("mobile"): return 2
+            case ("tablet"): return 4
+            case ("laptop"): return 6
+            case ("desktop"): return 8
+        }
+    }, [device])
+
 
     useEffect(() => {
         if (router.asPath !== "/") {
             router.push("/")
         }
     }, [router.asPath])
-
-    const carousel = carouselSources.map((item) => {
-        return (
-            <li key={item.src} className="carousel__item__container">
-                <Link href="/">
-                    <a>
-                        <div className="carousel__item">
-                            <div className="carousel__imgContainer">
-                                <img src={item.src} alt="carouselImg" />
-                            </div>
-                            <h5>{item.title}</h5>
-                            <p>{item.p}</p>
-                        </div>
-                    </a>
-                </Link>
-            </li>
-        )
-    })
     return (
         <MainLayout title="H&M" categories={categories} history={history}>
             <Usp />
@@ -80,34 +93,14 @@ export default function Index({ history, props }: any) {
                 text="Soft, layerable knits to see you through winter"
                 img={campaign01}
                 imgAltText="campaign01" />
-            <section id="carousel"> {/*HARDCODED to 16 items, no responsive!!!*/}
-                <h3>Trendin' rait nau</h3>
-                <div className="carousel" style={{ transform: `translateX(${-100 * (+stage)}%)` }} >
-                    <ul>
-                        {carousel}
-                    </ul>
-                </div>
-                <div className="carousel__controls">
-                    <ul>
-                        <li><button value={'0'}
-                            onClick={setStageHandler}
-                            style={stage === "0" ? { backgroundColor: "#E50010", borderColor: "#E50010" } : undefined}
-                            className="carousel__controls__button" /></li>
-                        <li><button value={'1'}
-                            onClick={setStageHandler}
-                            style={stage === "1" ? { backgroundColor: "#E50010", borderColor: "#E50010" } : undefined}
-                            className="carousel__controls__button" /></li>
-                        <li><button value={'1.333333333'}
-                            onClick={setStageHandler}
-                            style={stage === "1.333333333" ? { backgroundColor: "#E50010", borderColor: "#E50010" } : undefined}
-                            className="carousel__controls__button" /></li>
-                    </ul>
-                </div>
+            <section id="carousel">
+                <h3>Trendin' rite now</h3>
+                <Carousel items={carouselItems} itemsPerView={carouselViewSize} arrows={carouselArrows} />
             </section>
             <Banner title="Let us upgrade you! Become an H&amp;M Member &amp; get 10% off your first purchase + rewards just for shopping">
                 <p>
-                                Don't forget to opt into Fashion News to have your offers and rewards delivered right to your inbox!
-                            </p>
+                    Don't forget to opt into Fashion News to have your offers and rewards delivered right to your inbox!
+                </p>
             </Banner>
             <Campaign title="The best kind of basic"
                 text="Just-in hoodies, joggers, sweatshirts &amp; more"

@@ -140,7 +140,7 @@ export const Carousel: FC<TCarouselProps> = ({ items, itemsPerView, arrows, arro
                         checked={stage === i || (fullWidth >= 2 ? stage === lastStageValue : (stage === lastStageValue || stage === firstStageValue))}
                         className={css.carousel__controls__input}
                     />
-                    <label title="first" htmlFor={String(i)}>
+                    <label htmlFor={String(i)}>
                         <div className={css.carousel__controls__dot} />
                     </label>
                 </li>)
@@ -157,7 +157,7 @@ export const Carousel: FC<TCarouselProps> = ({ items, itemsPerView, arrows, arro
                         checked={stage === fullWidth - 1 || stage === (isNoPartialSlide ? firstStageValue : secondStageValue)}
                         className={css.carousel__controls__input}
                     />
-                    <label title="last" htmlFor={String(Math.floor(fullWidth))}>
+                    <label htmlFor={String(Math.floor(fullWidth))}>
                         <div className={css.carousel__controls__dot} />
                     </label>
                 </li>)
@@ -174,7 +174,7 @@ export const Carousel: FC<TCarouselProps> = ({ items, itemsPerView, arrows, arro
                         checked={stage === i || stage === firstStageValue}
                         className={css.carousel__controls__input}
                     />
-                    <label title="secondlast" htmlFor={String(i)}>
+                    <label htmlFor={String(i)}>
                         <div className={css.carousel__controls__dot} />
                     </label>
                 </li>)
@@ -191,7 +191,7 @@ export const Carousel: FC<TCarouselProps> = ({ items, itemsPerView, arrows, arro
                     checked={stage === i}
                     className={css.carousel__controls__input}
                 />
-                <label title="rest" htmlFor={String(i)}>
+                <label htmlFor={String(i)}>
                     <div className={css.carousel__controls__dot} />
                 </label>
             </li>)
