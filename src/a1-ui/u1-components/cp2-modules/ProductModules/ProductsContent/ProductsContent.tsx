@@ -1,14 +1,13 @@
 import { useRouter } from "next/router"
 import React, { FC, useEffect, useState } from "react"
 import { Nullable } from "../../../../../a0-common/c1-types/t1-instance"
-import { TCheckedProduct } from "../../../../../a0-common/c1-types/t1-instance/TCheckedProduct"
 import { TProduct } from "../../../../../a0-common/c1-types/t1-instance/TProduct"
 import { useAppDispatch, useAppSelector } from "../../../../../a0-common/c3-hooks"
 import { TRequestStatus } from "../../../../../a2-bll/app-reducer"
 import { setProductsLayout, TLayoutState } from "../../../../../a2-bll/layout-reducer"
 import { TNavigationState } from "../../../../../a2-bll/navigation-reducer"
-import { clearProducts, getProducts } from "../../../../../a2-bll/products-reducer"
-import { selectAppStatus, selectCartItems } from "../../../../../a2-bll/selectors"
+import { getProducts } from "../../../../../a2-bll/products-reducer"
+import { selectAppStatus, selectCartItemCodes } from "../../../../../a2-bll/selectors"
 import { Paginator } from "../../../cp1-elements/el08-Paginator/Paginator"
 import { Preloader } from "../../../cp1-elements/el11-Preloader/Preloader"
 import { Filters } from "../../Filters/Filters"
@@ -25,16 +24,15 @@ export const ProductsContent: FC<TProductsContentProps> = ({ productsSS }) => {
     const { currentPage, category, pageSize, numberOfPages, totalNumberOfResults } = useAppSelector<TNavigationState>(state => state.navigation)
     const { device, productsLayout, productsFirstImage } = useAppSelector<TLayoutState>(state => state.layout)
     const products = useAppSelector<Nullable<Array<TProduct>>>(state => state.products.products)
-    const cart = useAppSelector<Array<TCheckedProduct>>(selectCartItems).map((product) => product.code)
+    const cart = useAppSelector(selectCartItemCodes)
     const [favorites, setFavorites] = useState<Array<string>>([]);
     
     useEffect(() => {
         const onLoad = async () => {
             const queryCategories = query.categories as Array<string>
-            dispatch(getProducts(pathname, queryCategories))
+            dispatch(getProducts(asPath, queryCategories))
         }
         if (!productsSS) {
-            console.log("client");
             onLoad()
         }
     }, [asPath])
