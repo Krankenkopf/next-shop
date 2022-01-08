@@ -59,7 +59,6 @@ krankAPI.interceptors.response.use(
                     localStorage.setItem("NonameShopAccessToken", accessToken)
                     localStorage.setItem("NonameShopRefreshToken", refreshToken)
                 }
-                console.log("response intercepted")
                 return krankAPI.request(originalRequest)
             } catch (error) {
                 console.log("Error while refreshing");

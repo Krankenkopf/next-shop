@@ -39,10 +39,10 @@ export const getProduct = (code: number): AppThunk =>
                 lang: state.regions.lang,
                 productcode: code,
             }
-            //const response = await ProductsAPI.getProductDetail(requiredParams)
+            const response = await ProductsAPI.getProductDetail(requiredParams)
 
-            const response = await (await fetch("http://localhost:4200/detail")).json() as TProductDetailResponse
-            const product = response.product
+            //const response = await (await fetch("http://localhost:4200/detail")).json() as TProductDetailResponse
+            const product = response.data.product
             dispatch(setProduct(product))
             dispatch(setError(null))
             dispatch(setAppStatus("succeeded"))

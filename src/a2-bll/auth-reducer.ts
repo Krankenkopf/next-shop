@@ -116,11 +116,6 @@ export const signup = (): AppThunk => async (dispatch, getState) => {
     try {
         dispatch(setAppStatus('auth loading'))  
         const signupData = getState().auth.signupUserData as TSignupData
-       /*  await new Promise((res) => {
-            setTimeout(() => {
-                res(console.log("Registered"))
-            }, 100)
-        }) */
         const response = await authAPI.register(signupData)
         const {accessLevel} = response.data
         dispatch(setUserData(response.data))

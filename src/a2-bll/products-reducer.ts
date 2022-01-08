@@ -67,17 +67,22 @@ export const getProducts = (path: string, queryCategories: Array<string>): AppTh
         const optionalFilters = extendWithNonNullables({}, state.filters.current as TGetProductsListRequestOptionalFilters)
         const optionalParams: TGetProductsListRequestOptionalData = { ...optionalCategories, ...optionalSortBy, ...optionalFilters }
         
-        const results = await fetch("http://localhost:4200/results")
-        const products = await results.json() as Array<TProduct>
-        const pagination = await fetch("http://localhost:4200/pagination")
+        //const results = await fetch("http://localhost:4200/results")
+        //const products = await results.json() as Array<TProduct>
+        //const pagination = await fetch("http://localhost:4200/pagination")
+        //const { currentPage, pageSize,
+        //    numberOfPages, totalNumberOfResults,
+        //    totalNumberOfResultsUnfiltered, sort } = await pagination.json() as TPagination
+        //const facets = await fetch("http://localhost:4200/facets")
+        //const anyFacets = await facets.json() as Array<TAnyFacet>
+        
+        const response = await ProductsAPI.getList(requiredParams, optionalParams)
+        const products = response.data.results
         const { currentPage, pageSize,
             numberOfPages, totalNumberOfResults,
-            totalNumberOfResultsUnfiltered, sort } = await pagination.json() as TPagination
-        const facets = await fetch("http://localhost:4200/facets")
-        const anyFacets = await facets.json() as Array<TAnyFacet>
+            totalNumberOfResultsUnfiltered, sort } = response.data.pagination
+        const anyFacets = response.data.facets
         const relevantFacets = extractRelevantFacets(anyFacets, state.filters.facets)    
-        //const response = await ProductsAPI.getList(requiredParams, optionalParams)
-        //const products = response.data.results
         batch(() => {
             dispatch(setProducts(products))
             //navigation

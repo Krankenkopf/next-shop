@@ -13,6 +13,7 @@ import { MainLayout } from "../../src/a1-ui/u1-components/cp4-layouts/MainLayout
 import { getProduct, setProduct } from "../../src/a2-bll/product-reducer";
 import { selectAppStatus, selectCartItemCodes, selectIsMobileDevice } from "../../src/a2-bll/selectors";
 import { wrapper } from "../../src/a2-bll/store";
+import { ProductsAPI } from "../../src/a3-dal/hm/products-api";
 
 type TProductPageSSProps = {
     productSS: Nullable<TProductDetail>
@@ -61,7 +62,6 @@ export default function ProductPage({ history, productSS }: TProductPageSSProps 
         if (!history || history.length < 2) { // to main page
             router.push('/');
         } else {
-            console.log(history[history.length - 2]);
             router.push(history[history.length - 2]);
         }
     }
@@ -129,15 +129,12 @@ export default function ProductPage({ history, productSS }: TProductPageSSProps 
 
 export const getServerSideProps = wrapper
     .getServerSideProps<TProductPageSSProps>(store => async ({ req, query, resolvedUrl }) => {
-        console.log("ss request")
         if (!req || (req.url && req.url.startsWith('/_next/data'))) {
-            console.log("ss request dumped");
             return { props: { productSS: null } }
         }
         try {
             const state = store.getState()
             const queryId = query.id as string
-            //const targetedCategory = getRequestedCategory(resolvedUrl, queryCategories, state.categories)
             if (!queryId) {
                 return { notFound: true }
             }
@@ -149,17 +146,16 @@ export const getServerSideProps = wrapper
                 productcode: +queryId
             }
 
-            const response = await (await fetch("http://localhost:4200/detail")).json() as TProductDetailResponse
-            const productSS = response.product
+            //const response = await (await fetch("http://localhost:4200/detail")).json() as TProductDetailResponse
+            //const productSS = response.product
 
-            //const response = await ProductsAPI.getList(requiredParams, optionalParams)
-            //const productsSS = response.data.results
-            //products
+            const response = await ProductsAPI.getProductDetail(requiredParams)
+            const productSS = response.data.product
+            
             store.dispatch(setProduct(productSS))
 
             return { props: { productSS } }
         } catch (e) {
-            console.log(e);
             return { props: { productSS: null } }
         }
     })

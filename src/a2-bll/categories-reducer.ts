@@ -53,10 +53,10 @@ export const getCategories = (): AppThunk =>
                 country: state.regions.country,
                 lang: state.regions.lang,
             }
-            //const response = await ProductsAPI.getCategories(requiredParams)
-            //const categories = response.data
-            const response = await fetch("http://localhost:4200/categories")
-            const categories = await response.json() as TCategoriesResponse
+            const response = await ProductsAPI.getCategories(requiredParams)
+            const categories = response.data
+            //const response = await fetch("http://localhost:4200/categories")
+            //const categories = await response.json() as TCategoriesResponse
             dispatch(setCategories(categories))
             dispatch(setError(null))
             dispatch(setAppStatus("succeeded"))

@@ -81,7 +81,6 @@ export const getServerSideProps = wrapper
             const targetedCategory = getRequestedCategory(resolvedUrl, queryCategories, state.categories)
             if (!targetedCategory) {
                 return { notFound: true }
-                //return { props: { productsSS: null } }
             }
             const region = state.regions
             const navigation = state.navigation
@@ -95,8 +94,8 @@ export const getServerSideProps = wrapper
             const optionalParams: TGetProductsListRequestOptionalData = {
                 categories: targetedCategory?.tagCodes
             }
-            const response = await fetch("http://localhost:4200/results")
-            const productsSS = await response.json() as Array<TProduct>
+            //const response = await fetch("http://localhost:4200/results")
+            //const productsSS = await response.json() as Array<TProduct>
             const paginationSS = await fetch("http://localhost:4200/pagination")
             const { currentPage, pageSize,
                 numberOfPages, totalNumberOfResults,
@@ -104,8 +103,8 @@ export const getServerSideProps = wrapper
             const facetsSS = await fetch("http://localhost:4200/facets")
             const anyFacetsSS = await facetsSS.json() as Array<TAnyFacet>
             const relevantFacetsSS = extractRelevantFacets(anyFacetsSS, state.filters.facets)
-            //const response = await ProductsAPI.getList(requiredParams, optionalParams)
-            //const productsSS = response.data.results
+            const response = await ProductsAPI.getList(requiredParams, optionalParams)
+            const productsSS = response.data.results
             //products
             store.dispatch(setProducts(productsSS))
             //navigation

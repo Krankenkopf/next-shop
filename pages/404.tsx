@@ -14,7 +14,6 @@ export default function NotFound({ history, props }: any) {
     if (!history || history.length < 2) { // to main page
       router.push('/');
     } else {
-      console.log(history[history.length - 2]);
       router.push(history[history.length - 2]);
     }
   }

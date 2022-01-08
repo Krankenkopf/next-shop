@@ -13,6 +13,8 @@ import { setDeviceType } from "../src/a2-bll/layout-reducer";
 import { me } from "../src/a2-bll/auth-reducer";
 import { LoadingScreen } from "../src/a1-ui/u1-components/cp1-elements/el11-Preloader/LoadingScreen";
 import { setAppStatus, setCSR, setError } from "../src/a2-bll/app-reducer";
+import { TGetCategoriesListRequestRequiredData } from "../src/a0-common/c1-types/t2-request";
+import { ProductsAPI } from "../src/a3-dal/hm/products-api";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useAppDispatch()
@@ -21,21 +23,16 @@ const App = ({ Component, pageProps }: AppProps) => {
   const {isInitialized, isCSR} = useAppSelector(state => state.app)
   const [loadingStage, setLoadingStage] = useState<"loading" | "initialization" | "complete">("loading");
   const [isLoadingScreenVisible, setisLoadingScreenVisible] = useState(true);
-  console.log("app");
   
   useEffect(() => {
     const onLoad = async () => { 
       dispatch(getCategories())
     }
     if (!pageProps.categories) {
-      console.log("app client request");
       onLoad()
     }
-    
-    setTimeout(() => {
-      setLoadingStage("initialization")
-      dispatch(setCSR())
-    }, 1000)
+    setLoadingStage("initialization")
+    dispatch(setCSR())
   }, [])
   useEffect(() => {
     isInitialized && setLoadingStage("complete");
@@ -80,7 +77,6 @@ const App = ({ Component, pageProps }: AppProps) => {
       ? null
       : <>
       {/* <DebugContainer /> */}
-    {/* <Component history={history} {...pageProps} /> */}
     {loadingStage === "complete" && <>
       <SpritesMap />
       <Component history={history} {...pageProps} />
@@ -90,14 +86,20 @@ const App = ({ Component, pageProps }: AppProps) => {
   </div>
 }
 
-App.getInitialProps = wrapper.getInitialAppProps(store => async ({ Component, ctx }) => {
-  if (!ctx.req || (ctx.req.url && ctx.req.url.startsWith('/_next/data'))) {
-    console.log("ss request dumped");
-    return { pageProps: { } }
-  }
+App.getStaticProps = wrapper.getStaticProps(store => async ({ }) => {
+  //if (!ctx.req || (ctx.req.url && ctx.req.url.startsWith('/_next/data'))) {
+ //  return { props: { } }
+  //}
   try {
-      const response = await fetch("http://localhost:4200/categories")
-      const categories = await response.json() as TCategoriesResponse
+    const state = store.getState() 
+    const requiredParams: TGetCategoriesListRequestRequiredData = {
+      country: state.regions.country,
+      lang: state.regions.lang,
+    }
+      const response = await ProductsAPI.getCategories(requiredParams)
+      const categories = response.data
+      //const response = await fetch("http://localhost:4200/categories")
+      //const categories = await response.json() as TCategoriesResponse
       store.dispatch(setCategories(categories))
   } catch (error: any) {
     store.dispatch(setError(error.message))
@@ -105,7 +107,7 @@ App.getInitialProps = wrapper.getInitialAppProps(store => async ({ Component, ct
   }
   
   return {
-    pageProps: {
+    props: {
       //categories
       // Call page-level getInitialProps
       // DON'T FORGET TO PROVIDE STORE TO PAGE

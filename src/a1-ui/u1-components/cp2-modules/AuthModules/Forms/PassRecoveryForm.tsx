@@ -45,7 +45,7 @@ export const PassRecoveryForm: FC<TPassRecoveryFormProps> = ({revealModal, close
     const [dashed, setDashed] = useState<keyof EmailFormData | null>(null)
 
     const onSubmit: SubmitHandler<EmailFormData> = data => {
-        console.log(data)
+        
     }
     const changeFocusHandler = (name: keyof EmailFormData, focus: boolean) => {
         // for first field changing errors won't show
