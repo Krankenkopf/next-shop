@@ -47,7 +47,7 @@ export type TIconName = ElementType<typeof ids> // this is correctly inferred as
 export const IconSpritesMap = () => {
     return <svg id="main-sprite" xmlns="http://www.w3.org/2000/svg" style={{display: "none"}}>
         <defs></defs>
-        <symbol id="angle-right" viewBox="0 0 256 512">
+{/*         <symbol id="angle-right" viewBox="0 0 256 512">
             <path d="M72.001 448C62.126 448 52.22 444.375 44.485 437.032C28.454 421.846 27.767 396.536 42.97 380.506L160.907 256.017L42.97 131.528C27.767 115.498 28.454 90.188 44.485 75.002C60.501 59.753 85.813 60.441 101.032 76.533L245.031 228.52C259.656 243.924 259.656 268.11 245.031 283.515L101.032 435.501C93.173 443.813 82.594 448 72.001 448Z" className="fa-secondary" fill="var(--secondary)" fillOpacity="var(--secondary-opacity)"></path><path d="" className="fa-primary" fill="var(--primary)" fillOpacity="var(--primary-opacity)"></path>
         </symbol>
         <symbol id="arrow-down-1-9" viewBox="0 0 512 512">
@@ -376,6 +376,6 @@ export const IconSpritesMap = () => {
         </symbol>
         <symbol id="xmark" viewBox="0 0 320 512">
             <path d="M308.281 347.717C323.906 363.342 323.906 388.655 308.281 404.28C292.647 419.914 267.339 419.9 251.719 404.28L160 312.561L68.281 404.28C52.647 419.914 27.339 419.9 11.719 404.28C-3.906 388.655 -3.906 363.342 11.719 347.717L103.438 255.999L11.719 164.281C-3.906 148.656 -3.906 123.344 11.719 107.719S52.656 92.094 68.281 107.719L160 199.437L251.719 107.719C267.344 92.094 292.656 92.094 308.281 107.719S323.906 148.656 308.281 164.281L216.562 255.999L308.281 347.717Z" className="fa-secondary" fill="var(--secondary)" fillOpacity="var(--secondary-opacity)"></path><path d="" className="fa-primary" fill="var(--primary)" fillOpacity="var(--primary-opacity)"></path>
-        </symbol>
+        </symbol> */}
     </svg>
 }

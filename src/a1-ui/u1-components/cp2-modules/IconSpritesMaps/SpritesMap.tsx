@@ -10,7 +10,7 @@ import { FilterSpritesMap } from "./FilterSpritesMap"
 import { LayoutSpritesMap } from "./LayoutSpritesMap"
 
 export const SpritesMap = () => {
-    return <>
+    return <div>
         <ArrowNavSpritesMap />
         <FilterSpritesMap />
         <CommonUISpritesMap />
@@ -20,5 +20,5 @@ export const SpritesMap = () => {
         <LayoutSpritesMap />
         <CRUDSpritesMap />
         <BrandSpritesMap />
-    </>
+    </div>
 }
