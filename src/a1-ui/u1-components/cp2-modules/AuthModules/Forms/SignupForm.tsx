@@ -29,7 +29,7 @@ const signupSchema = yup.object().shape({
     password: yup
         .string()
         .required("Password is required")
-        .min(4, `Password must be at least 4 symbols`),
+        .min(8, `Password must be at least 8 symbols`),
     passConfirmed: yup
         .string()
         .notRequired()  
@@ -129,7 +129,7 @@ export const SignupForm = ({ revealModal}: TSignupFormProps) => {
                 {errors.email && helperState.email && <Icon name="exclamation" primaryColor={IconColor.ERROR} secondaryColor={IconColor.ERROR} />}
                 {(!errors.email && dirtyFields.email) && <Icon name="check" side="right" size="max" primaryColor={IconColor.OK} secondaryColor={IconColor.OK}/>}
                 <div className="field__input">
-                    <Input {...register("email", {value: "test@test.com"})}
+                    <Input {...register("email", {value: "@test.com"})}
                         onChangeFocus={(state) => { changeFocusHandler("email", state) }}
                         name="email"
                        />
@@ -169,7 +169,7 @@ export const SignupForm = ({ revealModal}: TSignupFormProps) => {
                     : <Icon name="eye-slash" onClick={togglePasswordVisibility} side="right" size="full" primaryColor={IconColor.INITIAL} secondaryColor={IconColor.INITIAL} primaryOpacity="0.5" secondaryOpacity="0.5"/>}
                 
                 <div className="field__input">
-                    <Input {...register("password", { value: "test1" })}
+                    <Input {...register("password", { value: "test" })}
                         type={passwordShown ? "text" : "password"}
                         name="password"
                         onChangeText={(value) => setPassword(value)}
