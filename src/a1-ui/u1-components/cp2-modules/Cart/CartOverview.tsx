@@ -195,9 +195,13 @@ export const CartOverview = () => {
                         </p>
                         <div className={css.deliveryInfo__container}>
                             <div className={css.deliveryInfo}>
-                                <Icon name="truck" side="left" />
-                                <span>Shipping & return options</span>
-                                <Icon name="chevron-right" side="right" className="icon__chevron-btn" />
+                                <div className="iconized wide">
+                                    <Icon name="truck" side="left"/>
+                                    <span>Shipping & return options</span>
+                                </div>
+                                <div className="iconized narrow">
+                                    <Icon name="chevron-right" side="right" className="icon__chevron-btn" />
+                                </div> 
                             </div>
                         </div>
                     </aside>

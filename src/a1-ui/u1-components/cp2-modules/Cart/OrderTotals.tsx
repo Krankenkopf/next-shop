@@ -1,4 +1,5 @@
 import React, { FC } from "react"
+import { Icon } from "../../cp1-elements/el10-Icons/Icon"
 import css from "./CartOverview.module.scss"
 
 type TOrderTotalsProps = {
@@ -21,7 +22,10 @@ export const OrderTotals: FC<TOrderTotalsProps> = ({ orderValue, deliveryCost, c
         </>
             : <div style={{ height: "10px" }}></div>}
         <footer className={css.total__footer}>
-            <span><strong>Total</strong></span>
+            <div className="iconized">
+                <Icon name={"calculator"} size="full" primaryColor="#222" secondaryColor="#fdd6d6"/>
+                <strong>Total</strong>
+            </div>
             <span>
                 <strong>
                     {orderValue

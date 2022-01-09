@@ -220,13 +220,14 @@ $altBgc: #fdd6d6;
                position: relative;
                display: flex;
                align-items: center;
+               justify-content: space-between;
                margin: 15px;
                span {
                     display: flex;
                     align-items: center;
                     height: 2em;
                     font-size: 80%;
-                    padding: 0 35px;
+                    //padding: 0 35px;
                }    
            }
        } 
@@ -235,11 +236,12 @@ $altBgc: #fdd6d6;
 
 .total {
     width: 100%;
+    font-size: 80%;
     & > * {
         display: flex;
         justify-content: space-between;
         margin-bottom: 10px;
-        font-size: 80%;
+        
     }
     footer {
         position: relative;
