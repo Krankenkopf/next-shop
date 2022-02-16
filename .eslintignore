@@ -1,0 +1,7 @@
+*.css
+*.scss
+*.json
+*.d.ts
+**/.next/**
+**/_next/**
+**/dist/**
