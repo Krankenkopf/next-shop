@@ -1,121 +1,140 @@
-import "../src/a1-ui/u2-styles/style.scss"
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+import '../src/ui/styles/style.scss';
 import React, { useEffect, useState } from 'react';
-import type { AppProps } from 'next/app'
-import { wrapper } from '../src/a2-bll/store'
-import { useRouter } from "next/router";
-import { SpritesMap } from "../src/a1-ui/u1-components/cp2-modules/IconSpritesMaps/SpritesMap";
-import { TCategoriesResponse } from "../src/a0-common/c1-types/t3-response/TCategoriesResponse";
-import { getCategories, setCategories } from "../src/a2-bll/categories-reducer";
-import { DebugContainer } from "../src/a1-ui/u1-components/cp1-elements/el18-DebugPanel/DebugContainer";
-import { useWindowSize } from "../src/a0-common/c3-hooks/useWindowSize";
-import { useAppDispatch, useAppSelector } from "../src/a0-common/c3-hooks";
-import { setDeviceType } from "../src/a2-bll/layout-reducer";
-import { me } from "../src/a2-bll/auth-reducer";
-import { LoadingScreen } from "../src/a1-ui/u1-components/cp1-elements/el11-Preloader/LoadingScreen";
-import { setAppStatus, setCSR, setError } from "../src/a2-bll/app-reducer";
-import { TGetCategoriesListRequestRequiredData } from "../src/a0-common/c1-types/t2-request";
-import { ProductsAPI } from "../src/a3-dal/hm/products-api";
+
+import {
+  setAppStatus,
+  setCSR,
+  setError,
+  me,
+  getCategories,
+  setCategories,
+  setDeviceType,
+} from '../src/bll/reducers';
+import { wrapper } from '../src/bll/store';
+import { useAppDispatch, useAppSelector, useWindowSize } from '../src/common/hooks';
+import { TGetCategoriesListRequestRequiredData } from '../src/common/types/request';
+import { TCategoriesResponse } from '../src/common/types/response/TCategoriesResponse';
+import { ProductsAPI } from '../src/dal/hm/products-api';
+import { LoadingScreen } from '../src/ui/components/elements';
+import { SpritesMap } from '../src/ui/components/modules/iconSpritesMaps/SpritesMap';
+
+import type { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const dispatch = useAppDispatch()
-  const router = useRouter()
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   const { asPath } = router;
-  const {isInitialized, isCSR} = useAppSelector(state => state.app)
-  const [loadingStage, setLoadingStage] = useState<"loading" | "initialization" | "complete">("loading");
+  const { isInitialized, isCSR } = useAppSelector(state => state.app);
+  const [loadingStage, setLoadingStage] = useState<
+    'loading' | 'initialization' | 'complete'
+  >('loading');
   const [isLoadingScreenVisible, setisLoadingScreenVisible] = useState(true);
-  
+
   useEffect(() => {
-    const onLoad = async () => { 
-      dispatch(getCategories())
-    }
+    const onLoad = async () => {
+      dispatch(getCategories());
+    };
     if (!pageProps.categories) {
-      onLoad()
+      onLoad();
     }
-    setLoadingStage("initialization")
-    dispatch(setCSR())
-  }, [])
+    setLoadingStage('initialization');
+    dispatch(setCSR());
+  }, []);
   useEffect(() => {
-    isInitialized && setLoadingStage("complete");
-  }, [isInitialized])
+    isInitialized && setLoadingStage('complete');
+  }, [isInitialized]);
 
   const [history, setHistory] = useState<Array<string>>([]);
   useEffect(() => {
     if (history[history.length - 1] !== asPath) {
-      setHistory((prev) => ([...prev, asPath]));
-    }  
-  }, [asPath])
-
-  useEffect(() => {
-    dispatch(me())
-  }, [dispatch])
-
-  const device = useAppSelector(state => state.layout.device)
-  const { width } = useWindowSize()
-  useEffect(() => {
-    //$md1: 1182;
-    //$md2: 991.98;
-    //$md3: 767.98;
-    //$md4: 479.98;
-    switch (true) {
-      case (width <= 479.98): {
-        device !== "mobile" && dispatch(setDeviceType("mobile")); break
-      }
-      case (width > 479.98 && width <= 767.98): {
-        device !== "tablet" && dispatch(setDeviceType("tablet")); break
-      }
-      case (width > 767.98 && width <= 991.98): {
-        device !== "laptop" && dispatch(setDeviceType("laptop")); break
-      }
-      case (width > 991.98): {
-        device !== "desktop" && dispatch(setDeviceType("desktop")); break
-      }
+      setHistory(prev => [...prev, asPath]);
     }
-  }, [width])
+  }, [asPath]);
 
-  return <div style={{position: "relative"}} suppressHydrationWarning>
-    {typeof window === 'undefined' && isCSR
-      ? null
-      : <>
-      {/* <DebugContainer /> */}
-    {loadingStage === "complete" && <>
-      <SpritesMap />
-      <Component history={history} {...pageProps} />
-    </>}
-    {isLoadingScreenVisible && <LoadingScreen stage={loadingStage}/>}
-      </>}
-  </div>
-}
+  useEffect(() => {
+    dispatch(me());
+  }, [dispatch]);
 
-App.getStaticProps = wrapper.getStaticProps(store => async ({ }) => {
-  //if (!ctx.req || (ctx.req.url && ctx.req.url.startsWith('/_next/data'))) {
- //  return { props: { } }
-  //}
+  const device = useAppSelector(state => state.layout.device);
+  const { width } = useWindowSize();
+  useEffect(() => {
+    // $md1: 1182;
+    // $md2: 991.98;
+    // $md3: 767.98;
+    // $md4: 479.98;
+    switch (true) {
+      case width <= 479.98: {
+        device !== 'mobile' && dispatch(setDeviceType('mobile'));
+        break;
+      }
+      case width > 479.98 && width <= 767.98: {
+        device !== 'tablet' && dispatch(setDeviceType('tablet'));
+        break;
+      }
+      case width > 767.98 && width <= 991.98: {
+        device !== 'laptop' && dispatch(setDeviceType('laptop'));
+        break;
+      }
+      case width > 991.98: {
+        device !== 'desktop' && dispatch(setDeviceType('desktop'));
+        break;
+      }
+      // no default
+    }
+  }, [width]);
+
+  return (
+    <div style={{ position: 'relative' }} suppressHydrationWarning>
+      {typeof window === 'undefined' && isCSR ? null : (
+        <>
+          {/* <DebugContainer /> */}
+          {loadingStage === 'complete' && (
+            <>
+              <SpritesMap />
+              <Component history={history} {...pageProps} />
+            </>
+          )}
+          {isLoadingScreenVisible && <LoadingScreen stage={loadingStage} />}
+        </>
+      )}
+    </div>
+  );
+};
+
+App.getInitialProps = wrapper.getInitialAppProps(store => async ({ Component, ctx }) => {
+  if (!ctx.req || (ctx.req.url && ctx.req.url.startsWith('/_next/data'))) {
+    // eslint-disable-next-line no-console
+    console.log('ss request dumped');
+    return { pageProps: {} };
+  }
   try {
-    const state = store.getState() 
+    const state = store.getState();
     const requiredParams: TGetCategoriesListRequestRequiredData = {
       country: state.regions.country,
       lang: state.regions.lang,
-    }
-      const response = await ProductsAPI.getCategories(requiredParams)
-      const categories = response.data
-      //const response = await fetch("http://localhost:4200/categories")
-      //const categories = await response.json() as TCategoriesResponse
-      store.dispatch(setCategories(categories))
+    };
+    const response = await ProductsAPI.getCategories(requiredParams);
+    const categories = response.data;
+    // const response = await fetch("http://localhost:4200/categories")
+    // const categories = await response.json() as TCategoriesResponse
+    store.dispatch(setCategories(categories));
   } catch (error: any) {
-    store.dispatch(setError(error.message))
-    store.dispatch(setAppStatus("ssr failed"))
+    store.dispatch(setError(error.message));
+    store.dispatch(setAppStatus('ssr failed'));
   }
-  
+
   return {
-    props: {
-      //categories
+    pageProps: {
+      // categories
       // Call page-level getInitialProps
       // DON'T FORGET TO PROVIDE STORE TO PAGE
-      //...(Component.getInitialProps ? await Component.getInitialProps({ ...ctx, store }) : {}),
+      // ...(Component.getInitialProps ? await Component.getInitialProps({ ...ctx, store }) : {}),
       // Some custom thing for all pages
-      //pathname: ctx.pathname,
+      // pathname: ctx.pathname,
     },
-  }
-})
+  };
+});
 
-export default wrapper.withRedux(App)
+export default wrapper.withRedux(App);

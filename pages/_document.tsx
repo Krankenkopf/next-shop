@@ -1,25 +1,30 @@
-import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
+import React from 'react';
+
+import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
 
 export default class MyDocument extends Document {
-   /*  static async getInitialProps(ctx: DocumentContext) {
+  /*  static async getInitialProps(ctx: DocumentContext) {
         const initialProps = await Document.getInitialProps(ctx)
         return { ...initialProps }
     } */
 
-    render() {
-        return (
-            <Html>
-                <Head>
-                <link rel="preconnect" href="https://fonts.googleapis.com" />
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-                <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-                </Head>
-                <body>
-                    <Main />
-                    <div id="modal-root"></div>
-                    <NextScript />
-                </body>
-            </Html>
-        )
-    }
+  render() {
+    return (
+      <Html>
+        <Head>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+            rel="stylesheet"
+          />
+        </Head>
+        <body>
+          <Main />
+          <div id="modal-root" />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
 }

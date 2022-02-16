@@ -19,11 +19,11 @@ module.exports = {
           source: '/:any',
           destination: '/404',
         },
-      ], 
+      ],
       fallback: [
         // These rewrites are checked after both pages/public files
         // and dynamic routes are checked
       ],
-    }
+    };
   },
-}
+};
