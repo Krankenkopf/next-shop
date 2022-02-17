@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-import { setFacets } from '../../src/bll/reducers/filters';
 import {
+  setProducts,
   setCategory,
   setCurrentPage,
   setPageSize,
   setTotalNumbers,
-} from '../../src/bll/reducers/navigation';
-import { setProducts } from '../../src/bll/reducers/products';
-import { setSortBy } from '../../src/bll/reducers/sort';
+  setSortBy,
+  setFacets,
+} from '../../src/bll/reducers';
 import { selectPageCategory, selectPageMeta } from '../../src/bll/selectors';
 import { wrapper } from '../../src/bll/store';
 import { useAppSelector } from '../../src/common/hooks';
@@ -23,15 +23,8 @@ import {
   TGetProductsListRequestRequiredData,
   TGetProductsListRequestOptionalData,
 } from '../../src/common/types/request';
-import {
-  TAnyFacet,
-  TPagination,
-} from '../../src/common/types/response/TProductsResponse';
-import {
-  extractRelevantFacets,
-  getKeys,
-  getRequestedCategory,
-} from '../../src/common/utils/state';
+import { TAnyFacet, TPagination } from '../../src/common/types/response/TProductsResponse';
+import { extractRelevantFacets, getKeys, getRequestedCategory } from '../../src/common/utils/state';
 import { ProductsAPI } from '../../src/dal/hm/products-api';
 import { Timer } from '../../src/ui/components/elements';
 import { MainLayout } from '../../src/ui/components/layouts/MainLayout';
@@ -62,9 +55,7 @@ export default function Category({
   const rootCategory = useAppSelector<TCategory>(state =>
     selectPageCategory(state, currentCategory),
   );
-  const pageMeta = useAppSelector<TPageMeta>(state =>
-    selectPageMeta(state, currentCategory),
-  );
+  const pageMeta = useAppSelector<TPageMeta>(state => selectPageMeta(state, currentCategory));
 
   useEffect(() => {
     if (appError === 'not found') {
@@ -126,7 +117,7 @@ export const getServerSideProps = wrapper.getServerSideProps<TCategorySSProps>(
         };
         // const response = await fetch("http://localhost:4200/results")
         // const productsSS = await response.json() as Array<TProduct>
-        const paginationSS = await fetch('http://localhost:4200/pagination');
+        /* const paginationSS = await fetch('http://localhost:4200/pagination');
         const {
           currentPage,
           pageSize,
@@ -137,29 +128,34 @@ export const getServerSideProps = wrapper.getServerSideProps<TCategorySSProps>(
         } = (await paginationSS.json()) as TPagination;
         const facetsSS = await fetch('http://localhost:4200/facets');
         const anyFacetsSS = (await facetsSS.json()) as Array<TAnyFacet>;
-        const relevantFacetsSS = extractRelevantFacets(anyFacetsSS, state.filters.facets);
+        const relevantFacetsSS = extractRelevantFacets(anyFacetsSS, state.filters.facets); */
         const response = await ProductsAPI.getList(requiredParams, optionalParams);
         const productsSS = response.data.results;
         // products
         store.dispatch(setProducts(productsSS));
         // navigation
+        const {
+          currentPage,
+          pageSize,
+          numberOfPages,
+          totalNumberOfResults,
+          totalNumberOfResultsUnfiltered,
+          sort,
+        } = response.data.pagination;
         targetedCategory && store.dispatch(setCategory(targetedCategory));
         store.dispatch(setCurrentPage(currentPage));
         store.dispatch(setPageSize(pageSize));
         store.dispatch(
-          setTotalNumbers(
-            numberOfPages,
-            totalNumberOfResults,
-            totalNumberOfResultsUnfiltered,
-          ),
+          setTotalNumbers(numberOfPages, totalNumberOfResults, totalNumberOfResultsUnfiltered),
         );
         // sort&filters
+        const anyFacetsSS = response.data.facets;
+        const relevantFacetsSS = extractRelevantFacets(anyFacetsSS, state.filters.facets);
         store.dispatch(setSortBy(sort));
         store.dispatch(setFacets(relevantFacetsSS));
 
         return { props: { productsSS, categorySS: targetedCategory } };
       } catch (e) {
-        // eslint-disable-next-line no-console
         console.log(e);
         return { props: { productsSS: null } };
       }

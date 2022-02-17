@@ -5,7 +5,7 @@ import { TUserData } from '../bll/reducers';
 import { StatusCode } from '../common/constants';
 
 const HMAPI_URL = 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/';
-export const KRANKAPI_URL = 'http://localhost:5000/api/';
+export const KRANKAPI_URL = 'https://krank-shop-service.herokuapp.com/api/';
 
 export const HMAPI = axios.create({
   baseURL: HMAPI_URL,
@@ -49,16 +49,13 @@ krankAPI.interceptors.response.use(
         const token = localStorage.getItem('NonameShopRefreshToken');
         localStorage.removeItem('NonameShopAccessToken');
         localStorage.removeItem('NonameShopRefreshToken');
-        const response = await axios.get<TAuthResponse<TUserData>>(
-          `${KRANKAPI_URL}auth/refresh`,
-          {
-            withCredentials: true,
-            headers: {
-              'API-KEY': 'krankenkopf',
-              Authorization: token ? `Bearer ${token}` : '',
-            },
+        const response = await axios.get<TAuthResponse<TUserData>>(`${KRANKAPI_URL}auth/refresh`, {
+          withCredentials: true,
+          headers: {
+            'API-KEY': 'krankenkopf',
+            Authorization: token ? `Bearer ${token}` : '',
           },
-        );
+        });
         const { accessToken, refreshToken } = response.data.auth;
         if (accessToken && refreshToken) {
           localStorage.setItem('NonameShopAccessToken', accessToken);
@@ -66,7 +63,6 @@ krankAPI.interceptors.response.use(
         }
         return krankAPI.request(originalRequest);
       } catch (e) {
-        // eslint-disable-next-line no-console
         console.log('Error while refreshing');
       }
     }
