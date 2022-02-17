@@ -1,12 +1,5 @@
 import { HYDRATE, createWrapper } from 'next-redux-wrapper';
-import {
-  compose,
-  applyMiddleware,
-  AnyAction,
-  combineReducers,
-  createStore,
-  Store,
-} from 'redux';
+import { compose, applyMiddleware, AnyAction, combineReducers, createStore, Store } from 'redux';
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 import {
@@ -64,9 +57,11 @@ const rootReducer = (state: TState | undefined, action: AnyAction): TState => {
       };
       // if (state?.products.products) nextState.products.products = state.products.products // preserve value on client side navigation
       // if (state?.navigation.category) nextState.navigation.category = state.navigation.category // preserve value on client side navigation
-      if (state?.categories) nextState.categories = state.categories;
+      /* if (state?.categories) nextState.categories = state.categories; */
       if (state?.app) {
-        nextState.app.isInitialized = state.app.isInitialized;
+        /* nextState.app.isInitialized = state.app.isInitialized;
+        nextState.app.isLoaded = state.app.isLoaded;
+        nextState.app.error = state.app.error; */
         nextState.app.isCSR = state.app.isCSR;
         nextState.app.modal = state.app.modal;
       }
@@ -97,12 +92,7 @@ const initStore = () => createStore(rootReducer, enhancer);
 export const wrapper = createWrapper<Store<TState>>(initStore, { debug: false });
 
 // types
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  TState,
-  unknown,
-  TActions
->;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, TState, unknown, TActions>;
 export type AppThunkDispatch = ThunkDispatch<TState, void, TActions>;
 export type RootState = ReturnType<typeof rootReducer>;
 export type TState = {

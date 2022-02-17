@@ -5,7 +5,7 @@ import { handleServerNetworkError } from '../../common/utils/state/errorHandler'
 import { TSignupData, TLoginData, authAPI } from '../../dal/krank/auth-api';
 import { AppThunk } from '../store';
 
-import { getCartItems } from './cart';
+import { getCartItems, clearCart } from './cart';
 
 import { setAppStatus, setInitialized } from '.';
 
@@ -34,10 +34,7 @@ const initialState = {
   userData: null as Nullable<TUserData>,
 };
 
-export const authReducer = (
-  state: TAuthState = initialState,
-  action: TAuthActions,
-): TAuthState => {
+export const authReducer = (state: TAuthState = initialState, action: TAuthActions): TAuthState => {
   switch (action.type) {
     case 'AUTH/SET_USER_DATA':
     case 'AUTH/SET_IS_SIGNUP_PASS_CONFIRMED':
@@ -133,6 +130,7 @@ export const signup = (): AppThunk => async (dispatch, getState) => {
         dispatch(setIsSignupPassConfirmed(null));
         dispatch(setSignupUserData(null));
         dispatch(setIsLoggedIn(true));
+        dispatch(clearCart());
       });
     }
     dispatch(setAppStatus('succeeded'));
