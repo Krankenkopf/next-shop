@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios';
+
 import { Nullable, TRootCategory } from '../../common/types/instance';
 import { TGetCategoriesListRequestRequiredData } from '../../common/types/request';
 import { TCategoriesResponse } from '../../common/types/response/TCategoriesResponse';
@@ -5,7 +7,7 @@ import { handleServerNetworkError } from '../../common/utils/state/errorHandler'
 import { ProductsAPI } from '../../dal/hm/products-api';
 import { AppThunk } from '../store';
 
-import { setAppStatus, setError } from './app';
+import { setAppStatus, setError, setLoaded } from './app';
 
 const initialState = {
   // keys must be equal to pages url
@@ -49,23 +51,33 @@ export const setCategories = (categories: TCategoriesResponse) =>
   } as const);
 
 export const getCategories = (): AppThunk => async (dispatch, getState) => {
-  try {
-    dispatch(setAppStatus('content loading'));
-    const state = getState();
-    const requiredParams: TGetCategoriesListRequestRequiredData = {
-      country: state.regions.country,
-      lang: state.regions.lang,
-    };
-    const response = await ProductsAPI.getCategories(requiredParams);
-    const categories = response.data;
-    // const response = await fetch("http://localhost:4200/categories")
-    // const categories = await response.json() as TCategoriesResponse
-    dispatch(setCategories(categories));
-    dispatch(setError(null));
-    dispatch(setAppStatus('succeeded'));
-  } catch (e) {
-    handleServerNetworkError(e, 'content', dispatch);
-  }
+  dispatch(setAppStatus('content loading'));
+  const state = getState();
+  const requiredParams: TGetCategoriesListRequestRequiredData = {
+    country: state.regions.country,
+    lang: state.regions.lang,
+  };
+  const timeout = new Promise((res, rej) => {
+    setTimeout(() => {
+      rej(new Error('cs request timeout'));
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    }, 3000);
+  });
+  const response = ProductsAPI.getCategories(requiredParams);
+  Promise.race([response, timeout])
+    .then(res => {
+      const categories = (res as AxiosResponse<TCategoriesResponse>).data;
+      // const response = await fetch("http://localhost:4200/categories")
+      // const categories = await response.json() as TCategoriesResponse
+      dispatch(setCategories(categories));
+      dispatch(setError(null));
+      dispatch(setLoaded());
+      dispatch(setAppStatus('succeeded'));
+    })
+    .catch(error => {
+      handleServerNetworkError(error, 'content', dispatch);
+      dispatch(setLoaded());
+    });
 };
 
 // types
