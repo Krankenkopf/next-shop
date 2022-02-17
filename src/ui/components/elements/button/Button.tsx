@@ -57,14 +57,7 @@ export const Button: React.FC<ExtraButtonPropsType> = ({
         </div>
       );
     case 'icon':
-      return (
-        <button
-          type="button"
-          style={style && style}
-          className={className}
-          {...restProps}
-        />
-      );
+      return <button type="button" style={style && style} className={className} {...restProps} />;
     // no default
   }
 };

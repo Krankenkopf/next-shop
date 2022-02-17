@@ -28,8 +28,7 @@ export const BurgerMenu: FC<TBurgerMenuProps> = ({ toggleMenu, menuStatus }) => 
       type="button"
       className={burgerStyle}
       onClick={toggleActive}
-      style={menuStatus ? { right: '28px' } : {}}
-    >
+      style={menuStatus ? { right: '28px' } : {}}>
       <div className={css.burgerInner} />
     </button>
   );

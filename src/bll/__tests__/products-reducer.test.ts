@@ -5,10 +5,7 @@
 /* eslint-disable no-undef */
 import db from '../../../db.json';
 import { TGetProductsListRequestOptionalCategories } from '../../common/types/request';
-import {
-  extendWithNonNullables,
-  extractRelevantFacets,
-} from '../../common/utils/state/index';
+import { extendWithNonNullables, extractRelevantFacets } from '../../common/utils/state/index';
 import { TFacets, TFilters } from '../reducers/filters';
 
 const initialFiltersState = {
@@ -46,10 +43,7 @@ test('not nulled fields should be added', () => {
   const initialOptionalParams: TGetProductsListRequestOptionalCategories = {
     categories: ['2', '4', '4'],
   };
-  const optionalParams = extendWithNonNullables(
-    initialOptionalParams,
-    initialFiltersState.current,
-  );
+  const optionalParams = extendWithNonNullables(initialOptionalParams, initialFiltersState.current);
 
   expect(optionalParams.contexts).toStrictEqual(['Casual', 'Formal']);
   expect(optionalParams.fits).toBeUndefined();

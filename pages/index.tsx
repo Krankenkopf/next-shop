@@ -109,16 +109,12 @@ export default function Index({ history, props }: any) {
       />
       <section id="carousel">
         <h3>Trendin&apos; rite now</h3>
-        <Carousel
-          items={carouselItems}
-          itemsPerView={carouselViewSize}
-          arrows={carouselArrows}
-        />
+        <Carousel items={carouselItems} itemsPerView={carouselViewSize} arrows={carouselArrows} />
       </section>
       <Banner title="Let us upgrade you! Become an H&amp;M Member &amp; get 10% off your first purchase + rewards just for shopping">
         <p>
-          Don&apos;t forget to opt into Fashion News to have your offers and rewards
-          delivered right to your inbox!
+          Don&apos;t forget to opt into Fashion News to have your offers and rewards delivered right
+          to your inbox!
         </p>
       </Banner>
       <Campaign
