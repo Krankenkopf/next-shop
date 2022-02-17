@@ -36,8 +36,8 @@ $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
 }
 .umbrella {
     @include circle($box);
-    left: calc(50% - #{$box/2});
-    top: calc(50% - #{$box/2});
+    left: calc(50% - #{math.div($box, 2)});
+    top: calc(50% - #{math.div($box, 2)});
     background-color: #ff3ba7;
 }
 .color {
@@ -59,12 +59,12 @@ $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
 }
 .color,
 .color:nth-child(n + 5):after {
-    clip: rect(0, $innerBox, $innerBox, #{$innerBox/2});
+    clip: rect(0, $innerBox, $innerBox, #{math.div($innerBox, 2)});
 }
 .color:after,
 .color:nth-child(n + 5) {
     @include circle($innerBox);
-    clip: rect(0, #{$innerBox/2}, $innerBox, 0);
+    clip: rect(0, #{math.div($innerBox, 2)}, $innerBox, 0);
 }
 
 $colors: (#9ed110, #50b517, #476eaf, #cc42a2, #ff3ba7, #ff8100, #feac00, #ede604);
