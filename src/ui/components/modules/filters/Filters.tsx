@@ -44,9 +44,7 @@ export const Filters = () => {
   );
   const device = useAppSelector(state => state.layout.device);
   const { sortBy, sortValues } = useAppSelector<TSortState>(selectSort);
-  const totalCount = useAppSelector<number>(
-    state => state.navigation.totalNumberOfResults,
-  );
+  const totalCount = useAppSelector<number>(state => state.navigation.totalNumberOfResults);
 
   // menus togglers
   const [isAnyOpen, setIsAnyOpen] = useState(false);
@@ -179,8 +177,7 @@ export const Filters = () => {
           options={sortValues}
           value={sortBy}
           className={css.radio}
-          onChangeOption={onSortOptionChange}
-        >
+          onChangeOption={onSortOptionChange}>
           <Icon
             name="circle"
             size="max"
@@ -237,7 +234,6 @@ export const Filters = () => {
   // sustainMenu =======================================================================================
 
   const onSustainOptionChange = (state: boolean, value: string) => {
-    // eslint-disable-next-line no-console
     console.log('Not implemented');
   };
   const getSustainMenu = useCallback(
@@ -267,8 +263,7 @@ export const Filters = () => {
               disabled
               onChangeChecked={onSustainOptionChange}
               className={`${css.checkbox}`}
-              titleClassName={css.checkbox__inner}
-            >
+              titleClassName={css.checkbox__inner}>
               <div className={css.checkbox__text}>
                 <p style={{ color: '#f00', fontSize: '75%' }}>Not available</p>
               </div>
@@ -317,7 +312,6 @@ export const Filters = () => {
 
   // patternsMenu
   const onPatternsOptionChange = (state: boolean, value: string) => {
-    // eslint-disable-next-line no-console
     console.log('Not implemented');
   };
   const getPatternsMenu = useCallback(
@@ -345,8 +339,7 @@ export const Filters = () => {
               disabled
               onChangeChecked={onPatternsOptionChange}
               className={`${css.checkbox}`}
-              titleClassName={css.checkbox__inner}
-            >
+              titleClassName={css.checkbox__inner}>
               <div className={css.checkbox__text}>
                 <p style={{ color: '#f00', fontSize: '75%' }}>Not available</p>
               </div>
@@ -469,17 +462,8 @@ export const Filters = () => {
               <legend>{FilterNames.ALLFILTERS}</legend>
               <div>
                 {/* eslint-disable-next-line jsx-a11y/interactive-supports-focus */}
-                <div
-                  role="button"
-                  className="iconized wide right"
-                  onClick={onFiltersMenuClick}
-                >
-                  <Icon
-                    name="filters"
-                    size="max"
-                    side="right"
-                    className={css.filter__btn__icon}
-                  />
+                <div role="button" className="iconized wide right" onClick={onFiltersMenuClick}>
+                  <Icon name="filters" size="max" side="right" className={css.filter__btn__icon} />
                   <span>{FilterNames.ALLFILTERS}</span>
                 </div>
                 <div />

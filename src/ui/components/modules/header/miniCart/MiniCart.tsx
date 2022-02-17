@@ -46,17 +46,12 @@ export const MiniCart: FC<TMiniCartProps> = ({ items }) => {
   const [currencySign, setCurrencySign] = useState('£');
 
   const [stage, setStage] = useState(0);
-  const setStageHandler = (
-    e: React.MouseEvent<HTMLElement | SVGSVGElement>,
-    direction: number,
-  ) => {
+  const setStageHandler = (e: React.MouseEvent<HTMLElement | SVGSVGElement>, direction: number) => {
     setStage(prev => prev + direction);
   };
   const orderValue =
     items.length &&
-    Math.round(
-      items.map(product => product.price).reduce((acc, next) => acc + next) * 100,
-    ) / 100;
+    Math.round(items.map(product => product.price).reduce((acc, next) => acc + next) * 100) / 100;
   const deliveryCost = 0;
   return (
     <div className={css.minicart}>
@@ -77,8 +72,7 @@ export const MiniCart: FC<TMiniCartProps> = ({ items }) => {
             <div className={css.carousel__view}>
               <div
                 style={{ transform: `translateY(${-7.2 * +stage}em)` }}
-                className={css.minicart__items}
-              >
+                className={css.minicart__items}>
                 <ul>{mappedItems}</ul>
               </div>
             </div>

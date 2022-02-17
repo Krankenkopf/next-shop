@@ -136,9 +136,7 @@ export const CartOverview = () => {
               <h4>YOUR SHOPPING CART IS EMPTY!</h4>
               {!isLoggedIn && (
                 <>
-                  <p>
-                    Sign in to save or access already saved items in your shopping cart.
-                  </p>
+                  <p>Sign in to save or access already saved items in your shopping cart.</p>
                   <button type="button" onClick={onLoginClick}>
                     Sign in
                   </button>
@@ -222,8 +220,7 @@ export const CartOverview = () => {
               </ul>
             </div>
             <p className={css.generalText}>
-              The estimated tax will be confirmed once you added your shipping address in
-              checkout.
+              The estimated tax will be confirmed once you added your shipping address in checkout.
             </p>
             <p className={css.generalText}>
               30-day returns. Read more about our&nbsp;

@@ -30,9 +30,7 @@ export default function NotFound({ history, props }: any) {
           </Link>
         </div>
         <h2>page not found</h2>
-        <p>
-          We&apos;re sorry, but the page you&apos;re looking for is currently unavailable
-        </p>
+        <p>We&apos;re sorry, but the page you&apos;re looking for is currently unavailable</p>
         <Button variant="ok__alt" onClick={onGotoPreviousClick} orientation="left">
           <div className="iconized wide">
             <Icon name="chevron-right" size="full" rotate={3} />

@@ -21,15 +21,7 @@ export const MainMenu: FC<TMainMenuProps> = ({ closeModal }) => {
   const { isLoggedIn } = useAppSelector(state => state.auth);
   const modal = useAppSelector(state => state.app.modal);
   const categories = useAppSelector(state => state.categories);
-  const mainMenuCategoriesTitles = [
-    'Women',
-    'Divided',
-    'Men',
-    'Baby',
-    'Kids',
-    'H&M Home',
-    'Sale',
-  ];
+  const mainMenuCategoriesTitles = ['Women', 'Divided', 'Men', 'Baby', 'Kids', 'H&M Home', 'Sale'];
 
   const [currentMenu, setCurrentMenu] = useState('');
   const setParentMenu = useCallback(
@@ -125,11 +117,7 @@ export const MainMenu: FC<TMainMenuProps> = ({ closeModal }) => {
     <div className="mainmenu">
       <div className="link-account">
         <div className="iconized">
-          {isLoggedIn ? (
-            <Icon name="user-check" size="full" />
-          ) : (
-            <Icon name="user" size="full" />
-          )}
+          {isLoggedIn ? <Icon name="user-check" size="full" /> : <Icon name="user" size="full" />}
           <span>Account</span>
         </div>
       </div>

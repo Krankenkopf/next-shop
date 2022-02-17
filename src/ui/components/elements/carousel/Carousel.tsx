@@ -1,13 +1,6 @@
 /* eslint-disable no-continue */
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import React, {
-  FC,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { FC, ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 
 import css from './Carousel.module.scss';
 
@@ -76,9 +69,7 @@ export const Carousel: FC<TCarouselProps> = ({
     if (controlDots && e.currentTarget.dataset.value) {
       setIsRolling(true);
       if (controlDots[Math.ceil(stage + +e.currentTarget.dataset.value)]) {
-        setStage(
-          +controlDots[Math.ceil(stage + +e.currentTarget.dataset.value)].props.value,
-        );
+        setStage(+controlDots[Math.ceil(stage + +e.currentTarget.dataset.value)].props.value);
       }
       if (+e.currentTarget.dataset.value === -1 && stage === 0) {
         isNoPartialSlide ? setStage(firstStageValue) : setStage(secondStageValue);
@@ -95,78 +86,70 @@ export const Carousel: FC<TCarouselProps> = ({
     }
   };
 
-  const [firstSlideItems, midSlideItems, secondToLastSlideItems, lastSlideItems] =
-    useMemo(() => {
-      const first = [];
-      const mid = [];
-      const secondtolast = [];
-      const last = [];
-      for (let i = 0; i < items.length; i++) {
-        if (i < itemsPerView) {
-          // FIRST VIEW SET
-          first.push(
-            <li
-              key={i + Math.random()}
-              style={{ flex: `1 0 ${100 / itemsPerView}%` }}
-              className={css.carousel__item__container}
-            >
-              <div className={css.carousel__item}>{items[i]}</div>
-            </li>,
-          );
-          if (i >= itemsPerView * (fullSlidesAmount - 1) && fullWidth <= 2) {
-            // SECOND-TO-LAST VIEW SET
-            secondtolast.push(
-              <li
-                key={i}
-                style={{ flex: `1 0 ${100 / itemsPerView}%` }}
-                className={css.carousel__item__container}
-              >
-                <div className={css.carousel__item}>{items[i]}</div>
-              </li>,
-            );
-          }
-        } else if (
-          i >=
-          (isNoPartialSlide
-            ? itemsPerView * (fullSlidesAmount - 1)
-            : itemsPerView * fullSlidesAmount)
-        ) {
-          // LAST VIEW SET
-          last.push(
-            <li
-              key={i}
-              style={{ flex: `1 0 ${100 / itemsPerView}%` }}
-              className={css.carousel__item__container}
-            >
-              <div className={css.carousel__item}>{items[i]}</div>
-            </li>,
-          );
-        } else if (i >= itemsPerView * (fullSlidesAmount - 1) && !isNoPartialSlide) {
+  const [firstSlideItems, midSlideItems, secondToLastSlideItems, lastSlideItems] = useMemo(() => {
+    const first = [];
+    const mid = [];
+    const secondtolast = [];
+    const last = [];
+    for (let i = 0; i < items.length; i++) {
+      if (i < itemsPerView) {
+        // FIRST VIEW SET
+        first.push(
+          <li
+            key={i + Math.random()}
+            style={{ flex: `1 0 ${100 / itemsPerView}%` }}
+            className={css.carousel__item__container}>
+            <div className={css.carousel__item}>{items[i]}</div>
+          </li>,
+        );
+        if (i >= itemsPerView * (fullSlidesAmount - 1) && fullWidth <= 2) {
           // SECOND-TO-LAST VIEW SET
           secondtolast.push(
             <li
               key={i}
               style={{ flex: `1 0 ${100 / itemsPerView}%` }}
-              className={css.carousel__item__container}
-            >
-              <div className={css.carousel__item}>{items[i]}</div>
-            </li>,
-          );
-        } else {
-          // REST VIEW SETS
-          mid.push(
-            <li
-              key={i}
-              style={{ flex: `1 0 ${100 / itemsPerView}%` }}
-              className={css.carousel__item__container}
-            >
+              className={css.carousel__item__container}>
               <div className={css.carousel__item}>{items[i]}</div>
             </li>,
           );
         }
+      } else if (
+        i >=
+        (isNoPartialSlide ? itemsPerView * (fullSlidesAmount - 1) : itemsPerView * fullSlidesAmount)
+      ) {
+        // LAST VIEW SET
+        last.push(
+          <li
+            key={i}
+            style={{ flex: `1 0 ${100 / itemsPerView}%` }}
+            className={css.carousel__item__container}>
+            <div className={css.carousel__item}>{items[i]}</div>
+          </li>,
+        );
+      } else if (i >= itemsPerView * (fullSlidesAmount - 1) && !isNoPartialSlide) {
+        // SECOND-TO-LAST VIEW SET
+        secondtolast.push(
+          <li
+            key={i}
+            style={{ flex: `1 0 ${100 / itemsPerView}%` }}
+            className={css.carousel__item__container}>
+            <div className={css.carousel__item}>{items[i]}</div>
+          </li>,
+        );
+      } else {
+        // REST VIEW SETS
+        mid.push(
+          <li
+            key={i}
+            style={{ flex: `1 0 ${100 / itemsPerView}%` }}
+            className={css.carousel__item__container}>
+            <div className={css.carousel__item}>{items[i]}</div>
+          </li>,
+        );
       }
-      return [first, mid, secondtolast, last];
-    }, [items, itemsPerView]);
+    }
+    return [first, mid, secondtolast, last];
+  }, [items, itemsPerView]);
 
   const controlDots = useMemo(() => {
     const dots = [];
@@ -262,15 +245,13 @@ export const Carousel: FC<TCarouselProps> = ({
     <div className={css.carousel}>
       <div
         style={{ padding: arrows && items.length > itemsPerView ? '0 1.5em' : '0' }}
-        className={css.carousel__container}
-      >
+        className={css.carousel__container}>
         <ul
           style={{
             transform: `translateX(${-100 * stage - -100 * firstStageValue}%)`,
             transition: `transform ${isRolling ? `${transitionTime}ms` : '0s'} ease-out`,
             filter: `blur(${isRolling ? '1px' : '0px'})`,
-          }}
-        >
+          }}>
           {fullWidth > 1 && secondToLastSlideItems} {/* start duplicates tail section */}
           {fullWidth > 1 && lastSlideItems} {/* start duplicates tail section */}
           {firstSlideItems} {/* main set - initial position */}

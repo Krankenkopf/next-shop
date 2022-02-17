@@ -24,20 +24,14 @@ type TSizesSideMenuProps = {
 type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
 
-export const SizesSideMenu: FC<TSizesSideMenuProps> = ({
-  sizes,
-  selected,
-  onOptionChange,
-}) => {
+export const SizesSideMenu: FC<TSizesSideMenuProps> = ({ sizes, selected, onOptionChange }) => {
   const rootTitle = 'Filter&Sort';
   const [currentMenuTitle, setCurrentMenuTitle] = useState(rootTitle);
   const menuTypes = ['womenswear', 'menswear', 'waist', 'footwear'] as const;
   const [currentMenu, setCurrentMenu] = useState<'' | ArrayElement<typeof menuTypes>>('');
   const onMenuToggle = (type: '' | ArrayElement<typeof menuTypes>) => {
     setCurrentMenu(type);
-    setCurrentMenuTitle(
-      SIZETITLES.find(filter => filter.code === type)?.title || rootTitle,
-    );
+    setCurrentMenuTitle(SIZETITLES.find(filter => filter.code === type)?.title || rootTitle);
   };
 
   const sortedSizes = sortNonZeroFirst(sizes.values, 'count');
@@ -66,8 +60,7 @@ export const SizesSideMenu: FC<TSizesSideMenuProps> = ({
       onClick={() => {
         onMenuToggle(title.code);
       }}
-      className={gcss.menuTitle}
-    >
+      className={gcss.menuTitle}>
       <div className="iconized right">
         <Icon
           name="chevron-right"
@@ -99,11 +92,8 @@ export const SizesSideMenu: FC<TSizesSideMenuProps> = ({
                   <li
                     key={size.code}
                     className={
-                      isActive
-                        ? `${gcss.menuoption} ${gcss.active}`
-                        : `${gcss.menuoption}`
-                    }
-                  >
+                      isActive ? `${gcss.menuoption} ${gcss.active}` : `${gcss.menuoption}`
+                    }>
                     <Checkbox
                       name={size.title}
                       disabled={!isActive}
@@ -111,11 +101,8 @@ export const SizesSideMenu: FC<TSizesSideMenuProps> = ({
                       value={size.code}
                       onChangeChecked={onOptionChange}
                       className={gcss.checkbox}
-                      titleClassName={gcss.checkbox__inner}
-                    >
-                      <div className={gcss.checkbox__text}>
-                        {size.title.toUpperCase()}
-                      </div>
+                      titleClassName={gcss.checkbox__inner}>
+                      <div className={gcss.checkbox__text}>{size.title.toUpperCase()}</div>
 
                       <div className={gcss.checkbox__item}>
                         <div className={gcss.checkbox__count}>

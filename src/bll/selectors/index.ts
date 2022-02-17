@@ -1,10 +1,6 @@
 import { createSelector } from 'reselect';
 
-import {
-  TCategory,
-  TPageMeta,
-  TRootCategoryValue,
-} from '../../common/types/instance/index';
+import { TCategory, TPageMeta, TRootCategoryValue } from '../../common/types/instance/index';
 import { capitalizeFirst } from '../../common/utils/ui';
 import { TState } from '../store';
 
@@ -13,8 +9,7 @@ const selectCategories = (state: TState) => state.categories;
 export const selectFilters = (state: TState) => state.filters;
 export const selectSort = (state: TState) => state.sort;
 export const selectModal = (state: TState) => state.app.modal;
-export const selectItemsTotalCount = (state: TState) =>
-  state.navigation.totalNumberOfResults;
+export const selectItemsTotalCount = (state: TState) => state.navigation.totalNumberOfResults;
 export const selectItemsTotalCountUnfiltered = (state: TState) =>
   state.navigation.totalNumberOfResultsUnfiltered;
 export const selectCartItems = (state: TState) => state.cart.products;

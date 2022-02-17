@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import React, { FC, useState } from 'react';
 
 import { Icon } from '../icons/Icon';
@@ -21,13 +22,12 @@ export const DebugPanel: FC<TDebugPanelProps> = ({ keys, values }) => {
     <>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div className={css.button} onClick={() => setIsRevealed(!isRevealed)}>
-        <Icon
+        {/* <Icon
           name="chevron-right"
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
           rotate={isRevealed ? 4 : 2}
           primaryColor={isRevealed ? '#ff0' : '#292825'}
           secondaryColor={isRevealed ? '#ff0' : '#292825'}
-        />
+        /> */}
       </div>
       {isRevealed && (
         <div className={css.panel}>

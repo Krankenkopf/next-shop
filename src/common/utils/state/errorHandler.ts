@@ -12,7 +12,6 @@ export const handleServerNetworkError = (
   const error = e.response ? e.response.data.error : e.message;
   dispatch(setError(error));
   dispatch(setAppStatus(`${type} failed`));
-  // eslint-disable-next-line no-console
   console.log('Error: ', e.message);
   if (type === ('auth' || 'user data')) {
     setTimeout(() => {

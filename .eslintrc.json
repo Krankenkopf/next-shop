@@ -87,6 +87,7 @@
     "no-case-declarations": "off",
     "no-cond-assign": ["warn", "except-parens"],
     "no-const-assign": "warn",
+    "no-console": "off",
     "no-control-regex": "warn",
     "no-delete-var": "warn",
     "no-dupe-args": "warn",

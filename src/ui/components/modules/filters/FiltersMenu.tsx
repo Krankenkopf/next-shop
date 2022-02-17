@@ -44,18 +44,12 @@ export const FiltersMenu = () => {
   const [currentMenu, setCurrentMenu] = useState<'' | ArrayElement<typeof menuTypes>>('');
   const onMenuToggle = (type: '' | ArrayElement<typeof menuTypes>) => {
     setCurrentMenu(type);
-    setCurrentMenuTitle(
-      FILTERSSORTTITLES.find(filter => filter.code === type)?.title || rootTitle,
-    );
+    setCurrentMenuTitle(FILTERSSORTTITLES.find(filter => filter.code === type)?.title || rootTitle);
   };
 
   const mappedFilters = FILTERSSORTTITLES.map(title => (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-    <li
-      key={title.code}
-      onClick={() => onMenuToggle(title.code)}
-      className={css.menuTitle}
-    >
+    <li key={title.code} onClick={() => onMenuToggle(title.code)} className={css.menuTitle}>
       <div className="iconized right">
         <Icon
           name="chevron-right"
@@ -93,8 +87,7 @@ export const FiltersMenu = () => {
             options={sortValues}
             value={sortBy}
             className={css.radio}
-            onChangeOption={onSortOptionChange}
-          >
+            onChangeOption={onSortOptionChange}>
             <Icon
               name="circle"
               size="max"

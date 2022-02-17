@@ -93,10 +93,7 @@ export const SizesMenu: FC<TSizesMenuProps> = ({ selected, sizes, onOptionChange
             return (
               <li
                 key={size.code}
-                className={
-                  isActive ? `${gcss.menuoption} ${gcss.active}` : `${gcss.menuoption}`
-                }
-              >
+                className={isActive ? `${gcss.menuoption} ${gcss.active}` : `${gcss.menuoption}`}>
                 <Checkbox
                   name={size.title}
                   disabled={!isActive}
@@ -104,8 +101,7 @@ export const SizesMenu: FC<TSizesMenuProps> = ({ selected, sizes, onOptionChange
                   value={size.code}
                   onChangeChecked={onOptionChange}
                   className={gcss.checkbox}
-                  titleClassName={gcss.checkbox__inner}
-                >
+                  titleClassName={gcss.checkbox__inner}>
                   <div className={gcss.checkbox__text}>{size.title.toUpperCase()}</div>
 
                   <div className={gcss.checkbox__item}>

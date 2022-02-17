@@ -12,10 +12,7 @@ const initialState = {
   recentlyRemoved: [] as Array<TCheckedProduct>,
 };
 
-export const cartReducer = (
-  state: TCartState = initialState,
-  action: TCartActions,
-): TCartState => {
+export const cartReducer = (state: TCartState = initialState, action: TCartActions): TCartState => {
   switch (action.type) {
     case cartActionVariables.SET_ITEMS:
       return {
@@ -30,9 +27,7 @@ export const cartReducer = (
     case cartActionVariables.REMOVE_ITEM:
       return {
         ...state,
-        products: state.products.filter(
-          product => product.code !== action.payload.product.code,
-        ),
+        products: state.products.filter(product => product.code !== action.payload.product.code),
         recentlyRemoved: [...state.recentlyRemoved, action.payload.product],
       };
     case cartActionVariables.CLEAR_CART:
@@ -81,10 +76,7 @@ export const getCartItems = (): AppThunk => async dispatch => {
 };
 
 export const addCartItem =
-  (
-    productHeapData: TProduct | TProductDetailArticle,
-    from: 'list' | 'detail' = 'list',
-  ): AppThunk =>
+  (productHeapData: TProduct | TProductDetailArticle, from: 'list' | 'detail' = 'list'): AppThunk =>
   async dispatch => {
     try {
       dispatch(setAppStatus('user data loading'));
@@ -101,8 +93,7 @@ export const addCartItem =
           price: product.whitePrice.price,
           imgSrc: `${product.galleryDetails[0].url}&call=url[file:/product/main]`,
           imgSrcAlt: `${
-            product.galleryDetails.find(item => item.assetType === 'DESCRIPTIVESTILLLIFE')
-              ?.url
+            product.galleryDetails.find(item => item.assetType === 'DESCRIPTIVESTILLLIFE')?.url
           }&call=url[file:/product/main]`,
         };
       } else {
