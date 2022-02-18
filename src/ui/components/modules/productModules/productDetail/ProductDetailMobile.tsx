@@ -23,9 +23,9 @@ export const ProductDetailMobile: FC<TProductDetailMobileProps> = ({
   currentArticle,
   articleCodes,
   articleTitles,
+  isInCart,
   onArticleVariantsToggle,
 }) => {
-  const isInCart = true;
   const dispatch = useAppDispatch();
 
   const [imgs, setImgs] = useState<Array<Ail>>([]);
@@ -149,21 +149,16 @@ export const ProductDetailMobile: FC<TProductDetailMobileProps> = ({
               )}
             </div>
             {isInCart && (
-              <p className="product-detail-mobile__footer__cart-info text center">
-                In your cart
-              </p>
+              <p className="product-detail-mobile__footer__cart-info text center">In your cart</p>
             )}
             <div className="cart-button">
               <Button
                 variant={isInCart ? 'cancel' : 'ok'}
                 orientation="right"
-                onClick={onCartButtonClick}
-              >
+                onClick={onCartButtonClick}>
                 <div className="iconized right wide multiline">
                   <Icon name="cart-shopping" size="full" side="right" />
-                  <div className="button-text">
-                    {isInCart ? 'Remove from cart' : 'Add to cart'}
-                  </div>
+                  <div className="button-text">{isInCart ? 'Remove from cart' : 'Add to cart'}</div>
                 </div>
               </Button>
             </div>
