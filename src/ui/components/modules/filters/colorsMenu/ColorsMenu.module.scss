@@ -3,7 +3,6 @@ $box: 42px;
 $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
 
 .transparent {
-    position: relative;
     &::before,
     &::after {
         content: "";
@@ -25,7 +24,6 @@ $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
 @mixin circle($size) {
     content: "";
     position: absolute;
-    //border-radius: 50%;
     width: $size;
     height: $size;
 }
@@ -33,9 +31,11 @@ $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
 .multi {
     @include circle($box);
     box-shadow: 0 0 1px 1px black inset;
+    overflow: hidden;
 }
 .umbrella {
     @include circle($box);
+    position: relative;
     left: calc(50% - #{math.div($box, 2)});
     top: calc(50% - #{math.div($box, 2)});
     background-color: #ff3ba7;
@@ -46,17 +46,6 @@ $innerBox: 65px; // *1.5 - must be a little bit more than size*sqrt(2)
     top: calc(50% - #{math.div($innerBox, 2)});
 }
 
-.multi {
-    overflow: hidden;
-    width: $box;
-    height: $box;
-    position: relative;
-}
-.umbrella {
-    position: relative;
-    //filter: blur(1.7em);
-    //transform: scale(1.35);
-}
 .color,
 .color:nth-child(n + 5):after {
     clip: rect(0, $innerBox, $innerBox, #{math.div($innerBox, 2)});
