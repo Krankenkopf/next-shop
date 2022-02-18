@@ -40,14 +40,16 @@ body {
   font-size: calc(13px + 0.5vw);
   background-color: #ffffeb;
   font-family: 'Roboto', sans-serif;
+  width: 100vw;
   overflow-x: hidden;
   overflow-y: inherit;
   line-height: 1.25;
-//  &._lock {
-//    overflow: hidden;
-//    overflow-x: hidden;
-//    overflow-y: hidden;
-//  }
+  ._lock {
+    height: 100vh;
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
 }
 // </NULLIFICATION> ================================================================================================
 

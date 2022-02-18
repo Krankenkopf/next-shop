@@ -37,6 +37,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   const { asPath } = router;
   const { isLoaded, isInitialized, isCSR } = useAppSelector(state => state.app);
   const [loadingStage, setLoadingStage] = useState<LOADING_STAGE>(1);
+  const [scrollLock, setScrollLock] = useState(true);
   const [isLoadingScreenVisible, setisLoadingScreenVisible] = useState(true);
 
   useEffect(() => {
@@ -53,6 +54,9 @@ const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     if (isInitialized && isLoaded) {
       setLoadingStage(3);
+      setTimeout(() => {
+        setScrollLock(false);
+      }, 500)
     }
   }, [isLoaded, isInitialized]);
 
@@ -96,18 +100,18 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [width]);
 
   return (
-    <div style={{ position: 'relative' }} suppressHydrationWarning>
+    <div className={scrollLock ? "_lock" : undefined} style={{ position: 'relative' }} suppressHydrationWarning>
       {typeof window === 'undefined' && isCSR ? null : (
         <>
           {/* <DebugContainer /> */}
-          {loadingStage === LOADING_STAGE.complete && (
+          {isLoadingScreenVisible && <LoadingScreen stage={loadingStage} />}
+          {loadingStage >= LOADING_STAGE.initialization && (
             <>
-              <DebugContainer />
+              {process.env.NEXT_PUBLIC_NODE_ENV === 'development' && <DebugContainer />}
               <SpritesMap />
               <Component history={history} {...pageProps} />
             </>
-          )}
-          {isLoadingScreenVisible && <LoadingScreen stage={loadingStage} />}
+          )} 
         </>
       )}
     </div>
@@ -126,7 +130,6 @@ App.getInitialProps = wrapper.getInitialAppProps(store => async ({ Component, ct
   };
   const timeout = new Promise((res, rej) => {
     setTimeout(() => {
-      console.log('ss request timeout');
       rej(new Error('ss request timeout'));
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     }, 8000);

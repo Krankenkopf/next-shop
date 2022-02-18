@@ -15,7 +15,7 @@ $md4: 479.98;
     grid-template-areas: "fillT fillT fillT" "fillL splash fillR" "fillB fillB fillB";
     overflow: hidden;
     z-index: 1000;
-    animation: screen 0.3s ease-in-out forwards;
+    //animation: screen 0.3s ease-in-out forwards;
     &.out {
         animation: screenOut 700ms cubic-bezier(1, 0, 1, 1) forwards;
         //animation: screenOut 700ms linear forwards;
@@ -203,9 +203,13 @@ $md4: 479.98;
         opacity: 1;
         transform: scale(2);
     }
-    99% {
+    98% {
         opacity: 0;
         transform: scale(10);
+    }
+    99% {
+        opacity: 0;
+        transform: scale(1);
     }
     100% {
         visibility: hidden;
