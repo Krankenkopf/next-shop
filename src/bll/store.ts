@@ -55,17 +55,19 @@ const rootReducer = (state: TState | undefined, action: AnyAction): TState => {
         ...state, // use previous state
         ...action.payload, // apply delta from hydration
       };
+      nextState.app.isCSR = state?.app.isCSR;
       // if (state?.products.products) nextState.products.products = state.products.products // preserve value on client side navigation
-      // if (state?.navigation.category) nextState.navigation.category = state.navigation.category // preserve value on client side navigation
-      /* if (state?.categories) nextState.categories = state.categories; */
-      if (state?.app) {
-        /* nextState.app.isInitialized = state.app.isInitialized;
+      if (state?.navigation.category) nextState.navigation.category = state.navigation.category; // preserve value on client side navigation
+      if (state?.app.isCSR) {
+        nextState.categories = state.categories;
+        //
+        nextState.app.isInitialized = state.app.isInitialized;
         nextState.app.isLoaded = state.app.isLoaded;
-        nextState.app.error = state.app.error; */
-        nextState.app.isCSR = state.app.isCSR;
+        nextState.app.error = state.app.error;
         nextState.app.modal = state.app.modal;
+        //
+        nextState.layout = state.layout;
       }
-      if (state?.layout) nextState.layout = state.layout;
       return nextState;
 
     default: {

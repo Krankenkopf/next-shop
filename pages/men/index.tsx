@@ -52,8 +52,8 @@ export default function Men(props: TMenSSProps & TMenProps) {
           />
           <Banner title="Become an H&M Member & get 10% off your first purchase + rewards just for shopping!">
             <p>
-              Don&apos;t forget to opt into Fashion News to have your offers and rewards
-              delivered right to your inbox!
+              Don&apos;t forget to opt into Fashion News to have your offers and rewards delivered
+              right to your inbox!
             </p>
           </Banner>
           <Campaign
