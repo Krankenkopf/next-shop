@@ -1,3 +1,4 @@
+$md5: 479.98;
 $mainBgc: #ffffeb;
 
 .carousel {
@@ -45,7 +46,7 @@ $mainBgc: #ffffeb;
                 left: 0;
                 right: -5px;
                 height: 100%;
-                background: linear-gradient(to left, transparent, $mainBgc 90%, $mainBgc);
+                background: linear-gradient(to left, #ffffeb11, $mainBgc 90%, $mainBgc);
             }
         }
         >:last-child {
@@ -57,7 +58,7 @@ $mainBgc: #ffffeb;
                 left: -5px;
                 right: 0;
                 height: 100%;
-                background: linear-gradient(to right, transparent, $mainBgc 90%, $mainBgc);
+                background: linear-gradient(to right, #ffffeb11, $mainBgc 90%, $mainBgc);
             }
         }
     }
@@ -85,12 +86,23 @@ $mainBgc: #ffffeb;
 			width: 0.7em;
             box-shadow: 0 0 0 0.15em #222;
 			//border: 0.15em solid #222;
-			border-radius: 50%;	
+			border-radius: 50%;
+            @media (max-width: ($md5 + px)) {
+		        height: 20px;
+			    width: 20px;
+                padding: 2px;
+                border-radius: 11px;
+                transform: scale(0.7);
+                box-shadow: 0 0 0 4px #222;
+	        }	
             
         }
         input:checked + label .carousel__controls__dot  {
             background-color: #E50010; 
             box-shadow: 0 0 0 0.15em #E50010;
+            @media (max-width: ($md5 + px)) {
+                box-shadow: 0 0 0 4px #E50010;
+            }
         }
     }
 }

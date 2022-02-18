@@ -43,8 +43,7 @@ export const Header: FC<THeaderProps> = () => {
               width: `calc(100%/${arr.length})`,
               height: '30px',
               textAlign: 'center',
-            }}
-          >
+            }}>
             <Link href="/ladies">
               <a>Women</a>
             </Link>
@@ -59,8 +58,7 @@ export const Header: FC<THeaderProps> = () => {
               width: `calc(100%/${arr.length})`,
               height: '30px',
               textAlign: 'center',
-            }}
-          >
+            }}>
             <Link href="/home">
               <a>H&M Home</a>
             </Link>
@@ -74,8 +72,7 @@ export const Header: FC<THeaderProps> = () => {
             width: `calc(100%/${arr.length})`,
             height: '30px',
             textAlign: 'center',
-          }}
-        >
+          }}>
           <Link href={`/${name}`}>
             <a>{capitalizeFirst(name)}</a>
           </Link>
@@ -89,9 +86,7 @@ export const Header: FC<THeaderProps> = () => {
 
   return (
     <>
-      {(deviceType === 'mobile' || deviceType === 'tablet') && (
-        <div className="header-overlay" />
-      )}
+      {(deviceType === 'mobile' || deviceType === 'tablet') && <div className="header-overlay" />}
       <header id="header">
         {(deviceType === 'laptop' || deviceType === 'desktop') && (
           <nav>
@@ -166,7 +161,17 @@ export const Header: FC<THeaderProps> = () => {
       </header>
       {(deviceType === 'mobile' || deviceType === 'tablet') && (
         <>
-          <div className="shadow-fade top" />
+          <div className="shadow-fade-test top">
+            <svg width="100vw" height="100%" style={{ display: 'none' }}>
+              <linearGradient id="fade-gradient" x1="0" y1="0%" x2="0" y2="100%">
+                <stop offset="0%" stopColor="#ffffeb" className="stop-1" />
+                <stop offset="90%" stopColor="#ffffeb" className="stop-1" />
+                <stop offset="100%" stopColor="#ffffeb11" className="stop-3" />
+              </linearGradient>
+              <rect width="100vw" height="100%" fill="url(#fade-gradient)" />
+            </svg>
+          </div>
+          {/* <div className="shadow-fade top" /> */}
         </>
       )}
     </>

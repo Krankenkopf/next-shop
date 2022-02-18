@@ -99,6 +99,7 @@ const ids = [
   'ruler-triangle',
   'server',
   'sliders',
+  'square-full',
   'star',
   'star-half-stroke',
   'tag',

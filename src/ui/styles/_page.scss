@@ -374,13 +374,13 @@
 		right: calc(100%  - 100vw);
 		height: 120px;
 		bottom: 0;
-		background: linear-gradient(to top, $mainBgc, $mainBgc 110px, transparent 120px);
+		background: linear-gradient(to top, $mainBgc, $mainBgc 110px, #ffffeb11 120px);
 	}
 	&.top {
 		height: 100px;
 		top: 0;
 		right: calc(100% - 100vw);
-		background: linear-gradient(to bottom, $mainBgc, $mainBgc 90px, transparent 100px);
+		background: linear-gradient(to bottom, $mainBgc, $mainBgc 90px, #ffffeb11 100px);
 		z-index: 99;
 	}
 }
