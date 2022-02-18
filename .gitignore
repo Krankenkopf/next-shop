@@ -32,3 +32,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+
+.vscode
+.idea
+/pages/test
+db.json

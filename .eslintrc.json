@@ -210,6 +210,9 @@
     "react/require-default-props": "off",
     "react/style-prop-object": "warn",
     "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": ["error", {
+      "additionalHooks": "useDispatch"
+    }],
     "prettier/prettier": "error",
     "react/prop-types": 0,
     "react/display-name": "off",
