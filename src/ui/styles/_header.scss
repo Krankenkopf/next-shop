@@ -150,7 +150,7 @@ header#header {
 		}
   }
 }
-@media screen and (max-width: ($md4 + px)) {
+@media screen and (max-width: ($md5 + px)) {
   header#header nav.nav-mobile {
     padding: 15px 10px;
     grid-template-columns: 50px 40px 1fr;

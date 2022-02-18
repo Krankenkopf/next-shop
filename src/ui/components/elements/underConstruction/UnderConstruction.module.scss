@@ -1,5 +1,5 @@
 $md3: 767.98;
-$md4: 479.98;
+$md5: 479.98;
 
 .underconstruction {
     padding: 0 20px;
@@ -70,7 +70,7 @@ $md4: 479.98;
         }
     }
 }
-@media screen and (max-width: ($md4 + px)) {
+@media screen and (max-width: ($md5 + px)) {
     .underconstruction {
         header {
             font-size: 60%;

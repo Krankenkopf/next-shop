@@ -20,11 +20,13 @@ $code-font-stack: 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono',
 // <VARIABLES> =====================================================================================================
 $minWidth: 320px;
 $maxWidth: 1920;
-$maxWidthContainer: 1170;
+$maxWidthContainer: 1200;
 $md1: $maxWidthContainer + 12;
 $md2: 991.98;
 $md3: 767.98;
-$md4: 479.98;
+$md4: 666.98;
+$md5: 479.98;
+$md6: 413.98;
 $mainBgc: #ffffeb;
 $altBgc: #fdd6d6;
 $softRed: #ffcccc;
@@ -40,7 +42,6 @@ body {
   font-size: calc(13px + 0.5vw);
   background-color: #ffffeb;
   font-family: 'Roboto', sans-serif;
-  width: 100vw;
   overflow-x: hidden;
   overflow-y: inherit;
   line-height: 1.25;

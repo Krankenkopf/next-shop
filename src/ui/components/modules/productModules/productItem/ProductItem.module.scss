@@ -1,4 +1,4 @@
-$md4: 479.98;
+$md5: 479.98;
 .card__cell {
     //width: calc(100% / 3 - 0.01px);
     display: inline-block;
@@ -48,10 +48,10 @@ $md4: 479.98;
             }
         }
         &.listItem {
-            @media (min-width: ($md4 + px)) {
+            @media (min-width: ($md5 + px)) {
                 display: flex;
                 .imgContainer {
-                    @media (max-width: ($md4 + px)) {
+                    @media (max-width: ($md5 + px)) {
                         padding: 0 10px;
                     }
                     width: 30%;

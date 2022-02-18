@@ -77,7 +77,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     // $md1: 1182;
     // $md2: 991.98;
     // $md3: 767.98;
-    // $md4: 479.98;
+    // $md5: 479.98;
     switch (true) {
       case width <= 479.98: {
         device !== 'mobile' && dispatch(setDeviceType('mobile'));

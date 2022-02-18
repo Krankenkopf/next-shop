@@ -10,7 +10,7 @@
 		min-height: 100vh;
 		padding: 0 20px;
 	}
-	@media (max-width: ($md4 + px)) {
+	@media (max-width: ($md5 + px)) {
 		padding: 0;
 	}
 }
@@ -426,7 +426,7 @@
 	}
 }
 
-@media (max-width: ($md4 + px)) {
+@media (max-width: ($md5 + px)) {
 	.product-detail-mobile {
 		&__wrapper {
 			padding: 20px 0;

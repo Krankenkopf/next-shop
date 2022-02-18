@@ -1,6 +1,6 @@
 @use 'sass:math';
 $md3: 767.98;
-$md4: 479.98;
+$md5: 479.98;
 
 .screen {
     position: absolute;
@@ -151,7 +151,7 @@ $md4: 479.98;
     }
 }
 
-@media (max-width: ($md4 + px)) {
+@media (max-width: ($md5 + px)) {
     .screen {
         grid-template-columns: 1fr 53vw 1fr;
         .splash {

@@ -1,3 +1,6 @@
+$md3: 767.98;
+$md4: 666.98;
+$md5: 479.98;
 $altBgc: #fdd6d6;
 
 .header {
@@ -6,11 +9,19 @@ $altBgc: #fdd6d6;
 }
 .cart {
     display: flex;
+    @media (max-width: ($md3 + px)) {
+        flex-direction: column;
+    }
 }
 .cartlist {
     width: 65%;
     margin-right: 5%;
     flex: 1 0 auto;
+    @media (max-width: ($md3 + px)) {
+        width: 100%;
+        margin-right: 0;
+        padding: 0 15px;
+    }
     .item {
         //height: 150px;
         display: flex;
@@ -133,6 +144,9 @@ $altBgc: #fdd6d6;
         position: sticky;
         top: 0;
         background-color: $altBgc;
+        @media (max-width: ($md3 + px)) {
+            background-color: inherit;
+        }
         p {
             width: 100%;
             font-size: 80%;
@@ -167,6 +181,12 @@ $altBgc: #fdd6d6;
             margin-bottom: 5px;
             button {
                 width: 100%;
+                @media (max-width: ($md3 + px)) {
+                    width: 45%;
+                }
+                @media (max-width: ($md5 + px)) {
+                    width: 80%;
+                }
             }
         } 
         .marketingMessage {
