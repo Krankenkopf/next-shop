@@ -57,7 +57,6 @@ export const Modals: FC<TModalsProps> = () => {
   const [freezed, setFreezed] = useState<TModal>(null);
 
   const [scrollLock, setScrollLock] = useState(false);
-
   useEffect(() => {
     if (modal && !current) {
       // no opened modals
@@ -94,8 +93,12 @@ export const Modals: FC<TModalsProps> = () => {
   const revealModal = useCallback(
     modalToReveal => {
       dispatch(setModal(modalToReveal));
+      if (modalToReveal !== current) {
+        setFreezed(current);
+        setCurrent(modalToReveal);
+      }
     },
-    [dispatch],
+    [current],
   );
 
   const handleCloseModal = useCallback(
@@ -164,8 +167,7 @@ export const Modals: FC<TModalsProps> = () => {
           current={current}
           isOpen={modalsState.signup}
           isFreezed={freezed === 'signup'}
-          onClose={handleCloseModal}
-        >
+          onClose={handleCloseModal}>
           <Signup
             revealModal={revealModal}
             freezePrevious={modalToFreeze => setFreezed(modalToFreeze)}
@@ -177,8 +179,7 @@ export const Modals: FC<TModalsProps> = () => {
           scrollLock={scrollLock}
           current={current}
           isOpen={modalsState.login}
-          onClose={handleCloseModal}
-        >
+          onClose={handleCloseModal}>
           <Login revealModal={revealModal} />
         </Popup>
         <Popup
@@ -187,12 +188,8 @@ export const Modals: FC<TModalsProps> = () => {
           current={current}
           layout={2}
           isOpen={modalsState.signupPassUnconfirmed}
-          onClose={handleCloseModal}
-        >
-          <SignupPassUnconfirmed
-            revealModal={revealModal}
-            closeModal={handleCloseModal}
-          />
+          onClose={handleCloseModal}>
+          <SignupPassUnconfirmed revealModal={revealModal} closeModal={handleCloseModal} />
         </Popup>
         <Popup
           modalType="passRecovery"
@@ -200,8 +197,7 @@ export const Modals: FC<TModalsProps> = () => {
           current={current}
           layout={2}
           isOpen={modalsState.passRecovery}
-          onClose={handleCloseModal}
-        >
+          onClose={handleCloseModal}>
           <PassRecovery revealModal={revealModal} closeModal={handleCloseModal} />
         </Popup>
 
@@ -211,8 +207,7 @@ export const Modals: FC<TModalsProps> = () => {
           scrollLock={scrollLock}
           current={current}
           isOpen={modalsState.filtersMenu}
-          onClose={handleCloseModal}
-        >
+          onClose={handleCloseModal}>
           <FiltersMenu />
         </SideMenu>
         <SideMenu
@@ -221,8 +216,7 @@ export const Modals: FC<TModalsProps> = () => {
           scrollLock={scrollLock}
           current={current}
           isOpen={modalsState.mainMenu}
-          onClose={handleCloseModal}
-        >
+          onClose={handleCloseModal}>
           <MainMenu closeModal={handleCloseModal} />
         </SideMenu>
       </div>

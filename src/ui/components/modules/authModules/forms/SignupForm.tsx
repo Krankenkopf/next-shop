@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 
 import {
@@ -11,6 +10,7 @@ import {
   signup,
 } from '../../../../../bll/reducers/auth';
 import { IconColor } from '../../../../../common/constants';
+import { useAppDispatch } from '../../../../../common/hooks';
 import { TSignupData } from '../../../../../dal/krank/auth-api';
 import { Icon, Input, Button } from '../../../elements';
 import { TModal } from '../../modal/Modals';
@@ -40,7 +40,7 @@ const signupSchema = yup.object().shape({
 });
 
 export const SignupForm = ({ revealModal }: TSignupFormProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -75,12 +75,13 @@ export const SignupForm = ({ revealModal }: TSignupFormProps) => {
       email: data.email,
       password: data.password,
     };
-    const isPassConfirmed = data.password === data.passConfirmed; // BUG not nullified when exit                                                                   // Order is important!
-    dispatch(setIsSignupPassConfirmed(data.password === data.passConfirmed)); // 1
+    const isPassConfirmed = data.password === data.passConfirmed; // Order is important!
+    // dispatch(setIsSignupPassConfirmed(data.password === data.passConfirmed)); // 1
     dispatch(setSignupUserData(signupData)); // 2
     if (isPassConfirmed) {
-      // FIXME !!!
       dispatch(signup());
+    } else {
+      revealModal('signupPassUnconfirmed');
     }
   };
   const changeFocusHandler = (name: keyof SignupFormData, focus: boolean) => {
@@ -115,9 +116,7 @@ export const SignupForm = ({ revealModal }: TSignupFormProps) => {
       const passConfirmedValue = getValues('passConfirmed');
       if (passConfirmedValue) {
         setPassConfirmationMessage(
-          passwordValue === passConfirmedValue
-            ? ''
-            : 'You entered two different passwords',
+          passwordValue === passConfirmedValue ? '' : 'You entered two different passwords',
         );
       }
       if (!passConfirmedValue && dirtyFields.passConfirmed) {
@@ -185,7 +184,7 @@ export const SignupForm = ({ revealModal }: TSignupFormProps) => {
         )}
         <div className="field__input">
           <Input
-            {...register('email', { value: '@test.com' })}
+            {...register('email', { value: 'aaa@aa.aa' })}
             onChangeFocus={state => {
               changeFocusHandler('email', state);
             }}
@@ -288,7 +287,7 @@ export const SignupForm = ({ revealModal }: TSignupFormProps) => {
 
         <div className="field__input">
           <Input
-            {...register('password', { value: 'test' })}
+            {...register('password', { value: '12345678' })}
             type={passwordShown ? 'text' : 'password'}
             name="password"
             onChangeText={value => setPassword(value)}
@@ -420,9 +419,7 @@ export const SignupForm = ({ revealModal }: TSignupFormProps) => {
       </ul>
       <section className="field iconized__LR">
         <label className="field__label">Confirm password</label>
-        {!passConfirmationMessage ||
-        !helperState.passConfirmed ||
-        !dirtyFields.passConfirmed ? (
+        {!passConfirmationMessage || !helperState.passConfirmed || !dirtyFields.passConfirmed ? (
           !passConfirmationMessage && dirtyFields.passConfirmed ? (
             <Icon
               name="key"

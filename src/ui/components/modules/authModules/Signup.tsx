@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
 
-import { useSelector } from 'react-redux';
-
-import { TAuthState, TRequestStatus } from '../../../../bll/reducers';
+import { setSignupUserData, TAuthState, TRequestStatus } from '../../../../bll/reducers';
 import { selectAppStatus } from '../../../../bll/selectors';
-import { TState } from '../../../../bll/store';
-import { useAppSelector } from '../../../../common/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../common/hooks';
 import { Preloader } from '../../elements';
 import { TModal, TRANSITION_TIME } from '../modal/Modals';
 
@@ -19,14 +16,18 @@ type TSignupProps = {
 };
 
 export const Signup = ({ revealModal, freezePrevious, closeModal }: TSignupProps) => {
-  const { signupUserData, isSignupPassConfirmed, isLoggedIn } = useSelector<
-    TState,
-    TAuthState
-  >(state => state.auth);
+  const dispatch = useAppDispatch();
+  const { signupUserData, isSignupPassConfirmed, isLoggedIn } = useAppSelector<TAuthState>(
+    state => state.auth,
+  );
+  const modal = useAppSelector<TModal>(state => state.app.modal);
   const status = useAppSelector<TRequestStatus>(selectAppStatus);
 
-  useEffect(() => {
-    if (!isSignupPassConfirmed && signupUserData && !isLoggedIn) {
+  /* useEffect(() => {
+    if (!modal && signupUserData) {
+      dispatch(setSignupUserData(null));
+    }
+    if (modal && !isSignupPassConfirmed && signupUserData && !isLoggedIn) {
       // when user setted signupData to state
       freezePrevious('signup');
       revealModal('signupPassUnconfirmed');
@@ -34,14 +35,13 @@ export const Signup = ({ revealModal, freezePrevious, closeModal }: TSignupProps
     if (isLoggedIn) {
       closeModal('signup');
     }
-  }, [signupUserData, isSignupPassConfirmed, isLoggedIn]);
+  }, [signupUserData, isSignupPassConfirmed, isLoggedIn, modal]); */
   return (
     <div className="signup">
       <header>
         <h3 className="title center">BECOME A MEMBER</h3>
         <p className="text center">
-          Become a Member — you&apos;ll enjoy exclusive deals, offers, invites and
-          rewards.
+          Become a Member — you&apos;ll enjoy exclusive deals, offers, invites and rewards.
         </p>
       </header>
       <div className="signup__form">

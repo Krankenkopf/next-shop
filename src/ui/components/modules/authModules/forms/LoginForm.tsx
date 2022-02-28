@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 
 import { login, setLoginUserData } from '../../../../../bll/reducers/auth';
 import { IconColor } from '../../../../../common/constants';
+import { useAppDispatch } from '../../../../../common/hooks';
 import { TLoginData } from '../../../../../dal/krank/auth-api';
 import { Icon, Input, Checkbox, Button } from '../../../elements';
 import { TModal } from '../../modal/Modals';
@@ -35,7 +35,7 @@ const signupSchema = yup.object().shape({
 });
 
 export const LoginForm = ({ revealModal }: TLoginFormProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -108,12 +108,7 @@ export const LoginForm = ({ revealModal }: TLoginFormProps) => {
           )
         ) : null}
         {errors.email && helperState.email && (
-          <Icon
-            name="envelope"
-            width="wide"
-            primaryOpacity="0.5"
-            secondaryOpacity="0.5"
-          />
+          <Icon name="envelope" width="wide" primaryOpacity="0.5" secondaryOpacity="0.5" />
         )}
         {errors.email && helperState.email && (
           <Icon
@@ -144,7 +139,7 @@ export const LoginForm = ({ revealModal }: TLoginFormProps) => {
         )}
         <div className="field__input">
           <Input
-            {...register('email', { value: '@test.com' })}
+            {...register('email', { value: '' })}
             onChangeFocus={state => {
               changeFocusHandler('email', state);
             }}
@@ -232,7 +227,7 @@ export const LoginForm = ({ revealModal }: TLoginFormProps) => {
 
         <div className="field__input">
           <Input
-            {...register('password', { value: 'test' })}
+            {...register('password', { value: '' })}
             type={passwordShown ? 'text' : 'password'}
             name="password"
             onChangeFocus={state => {

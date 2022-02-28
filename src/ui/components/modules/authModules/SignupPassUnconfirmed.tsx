@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { useDispatch } from 'react-redux';
-
-import { signup } from '../../../../bll/reducers';
+import { setIsSignupPassConfirmed, signup } from '../../../../bll/reducers';
+import { useAppDispatch } from '../../../../common/hooks';
 import { Button } from '../../elements';
 import { TModal } from '../modal/Modals';
 
@@ -11,16 +10,14 @@ type TSignupPassUnconfirmedProps = {
   closeModal: (modalType: TModal) => void;
 };
 
-export const SignupPassUnconfirmed = ({
-  revealModal,
-  closeModal,
-}: TSignupPassUnconfirmedProps) => {
-  const dispatch = useDispatch();
+export const SignupPassUnconfirmed = ({ revealModal, closeModal }: TSignupPassUnconfirmedProps) => {
+  const dispatch = useAppDispatch();
   const returnToSignup = () => {
     closeModal('signupPassUnconfirmed');
   };
   const proceedSignup = () => {
     closeModal('signupPassUnconfirmed');
+    dispatch(setIsSignupPassConfirmed(null));
     dispatch(signup());
   };
   return (
@@ -30,9 +27,7 @@ export const SignupPassUnconfirmed = ({
         <p className="text center">
           Password confirmation is preferable to avoid mistakes when typing
         </p>
-        <p className="text center">
-          Are you sure you don&apos;t want to confirm your password?
-        </p>
+        <p className="text center">Are you sure you don&apos;t want to confirm your password?</p>
       </header>
       <div className="info__signup">
         <div className="info__signup__container">
