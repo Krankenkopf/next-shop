@@ -142,7 +142,7 @@ export default function Index({ history, props }: any) {
                 <Link href="/">
                   <a>
                     <div className="magazine__imgContainer">
-                      <Image src={magazine01} alt="magazine01" />
+                      <Image src={magazine01} alt="magazine01" layout="responsive" />
                     </div>
                     <h5>INSIDE H&M</h5>
                     <h4>
@@ -158,7 +158,7 @@ export default function Index({ history, props }: any) {
                 <Link href="/">
                   <a>
                     <div className="magazine__imgContainer">
-                      <Image src={magazine02} alt="magazine02" />
+                      <Image src={magazine02} alt="magazine02" layout="responsive" />
                     </div>
                     <h5>INSIDE H&M</h5>
                     <h4>Designed by</h4>
@@ -170,7 +170,7 @@ export default function Index({ history, props }: any) {
                 <Link href="/">
                   <a>
                     <div className="magazine__imgContainer">
-                      <Image src={magazine03} alt="magazine03" />
+                      <Image src={magazine03} alt="magazine03" layout="responsive" />
                     </div>
                     <h5>INSIDE H&M</h5>
                     <h4>

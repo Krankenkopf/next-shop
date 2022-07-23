@@ -25,7 +25,7 @@ export const Campaign: FC<TCampaignProps> = React.memo(
         <a>
           <div className={css.imgBlankcover} />
           <figure>
-            <Image src={img} alt="campaign01" width={1170} height={780} />
+            <Image src={img} alt="campaign01" width={1170} height={780} layout="responsive" />
           </figure>
           <div className={css.imgFog} />
           <figcaption className={css.campaign__block}>

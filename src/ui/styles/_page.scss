@@ -171,7 +171,7 @@
 		width: 100vw;
 		height: 1px;
 		bottom: 70px;
-	  margin-left: calc((100% - 100vw)/2 + 9px);
+	  	margin-left: calc((100% - 100vw)/2);
 		//margin-left: -44px;
 		box-shadow: 0 0 10px 2px #aaa;
 		z-index: 0;
@@ -371,7 +371,7 @@
 		//width: 110vw;
 		//left: calc((100%  - 100vw)/2);
 		//right: calc((100%  - 100vw)/2);
-		right: calc(100%  - 100vw);
+		right: calc((100%  - 100vw)/2);
 		height: 120px;
 		bottom: 0;
 		background: linear-gradient(to top, $mainBgc, $mainBgc 110px, #ffffeb11 120px);

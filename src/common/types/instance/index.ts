@@ -13,24 +13,14 @@ export type TCategory = {
   tagCodes: string[];
 };
 
-export type TRootCategory<
-  V extends TRootCategoryValue,
-  C extends TRootCategoryTagCodes,
-> = {
+export type TRootCategory<V extends TRootCategoryValue, C extends TRootCategoryTagCodes> = {
   CatName: string;
   CategoryValue: V;
   CategoriesArray?: Array<TCategory>;
   tagCodes: C;
 };
 
-export type TRootCategoryValue =
-  | 'ladies'
-  | 'divided'
-  | 'men'
-  | 'baby'
-  | 'kids'
-  | 'home'
-  | 'sale';
+export type TRootCategoryValue = 'ladies' | 'divided' | 'men' | 'baby' | 'kids' | 'home' | 'sale';
 type TRootCategoryTagCodes =
   | []
   | [

@@ -56,7 +56,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       setLoadingStage(3);
       setTimeout(() => {
         setScrollLock(false);
-      }, 500)
+      }, 500);
     }
   }, [isLoaded, isInitialized]);
 
@@ -100,7 +100,10 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [width]);
 
   return (
-    <div className={scrollLock ? "_lock" : undefined} style={{ position: 'relative' }} suppressHydrationWarning>
+    <div
+      className={scrollLock ? '_lock' : undefined}
+      style={{ position: 'relative' }}
+      suppressHydrationWarning>
       {typeof window === 'undefined' && isCSR ? null : (
         <>
           {/* <DebugContainer /> */}
@@ -111,7 +114,7 @@ const App = ({ Component, pageProps }: AppProps) => {
               <SpritesMap />
               <Component history={history} {...pageProps} />
             </>
-          )} 
+          )}
         </>
       )}
     </div>

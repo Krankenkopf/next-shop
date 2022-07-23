@@ -9,15 +9,15 @@ import { AppThunk } from '../store';
 
 import { setAppStatus, setError, setLoaded } from './app';
 
-const initialState = {
+const initialState: TCategoriesState = {
   // keys must be equal to pages url
-  ladies: null as Nullable<TRootCategory<'ladies', ['ladies_all']>>,
-  divided: null as Nullable<TRootCategory<'divided', ['ladies_divided']>>,
-  men: null as Nullable<TRootCategory<'men', ['men_all']>>,
-  baby: null as Nullable<TRootCategory<'baby', ['kids_newbornbaby_viewall']>>,
-  kids: null as Nullable<TRootCategory<'kids', ['kids_all']>>,
-  home: null as Nullable<TRootCategory<'home', ['home_all']>>,
-  sale: null as Nullable<TRootCategory<'sale', []>>,
+  ladies: null,
+  divided: null,
+  men: null,
+  baby: null,
+  kids: null,
+  home: null,
+  sale: null,
 };
 
 export const categoriesReducer = (
@@ -26,9 +26,13 @@ export const categoriesReducer = (
 ): TCategoriesState => {
   switch (action.type) {
     case categoriesActionVariables.SET_CATEGORIES:
+      const copy = { ...state };
+      action.payload.forEach(category => {
+        Object.assign(copy, { [category.CategoryValue]: category });
+      });
       return {
         ...state,
-        ...action.payload,
+        ...copy,
       };
     default:
       return state;
@@ -39,15 +43,7 @@ export const categoriesReducer = (
 export const setCategories = (categories: TCategoriesResponse) =>
   ({
     type: categoriesActionVariables.SET_CATEGORIES,
-    payload: {
-      ladies: categories[0],
-      divided: categories[1],
-      men: categories[2],
-      baby: categories[3],
-      kids: categories[4],
-      home: categories[5],
-      sale: categories[6],
-    },
+    payload: categories,
   } as const);
 
 export const getCategories = (): AppThunk => async (dispatch, getState) => {
@@ -81,7 +77,16 @@ export const getCategories = (): AppThunk => async (dispatch, getState) => {
 };
 
 // types
-export type TCategoriesState = typeof initialState;
+export type TCategoriesState = {
+  // keys must be equal to pages url
+  ladies: Nullable<TRootCategory<'ladies', ['ladies_all']>>;
+  divided: Nullable<TRootCategory<'divided', ['ladies_divided']>>;
+  men: Nullable<TRootCategory<'men', ['men_all']>>;
+  baby: Nullable<TRootCategory<'baby', ['kids_newbornbaby_viewall']>>;
+  kids: Nullable<TRootCategory<'kids', ['kids_all']>>;
+  home: Nullable<TRootCategory<'home', ['home_all']>>;
+  sale: Nullable<TRootCategory<'sale', []>>;
+};
 export type TCategoriesActions = ReturnType<typeof setCategories>;
 
 // variables
